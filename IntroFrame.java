@@ -39,7 +39,7 @@ public class IntroFrame extends JFrame {
 
         add(mp);
         mp.add(intro);
-        typing(intro, "Loading.", "..", 2);
+        typing("Loading.", "..", 2);
 
         while(stai) {System.out.print(' '); System.out.print('\b');}
         Thread.sleep(1050);
@@ -55,54 +55,46 @@ public class IntroFrame extends JFrame {
         Continue.setText("Continue");
         newGame.setText("New Game");
 
-        Continue.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        Continue.addActionListener(e -> {
 
+            File fila = new File("Date Player");
+            if(!fila.exists())
+                return;
 
-                File fila = new File("Date Player");
-                if(!fila.exists())
-                    return;
+            dispose();
 
-                dispose();
+            Player player = new Player();
+            player.loadProgress();
 
-                Player player = new Player();
-                player.loadProgress();
-
-                ClickerFrame cf = new ClickerFrame();
-                cf.setResizable(false);
-
-            }
+            ClickerFrame cf = new ClickerFrame();
+            cf.setResizable(false);
         });
 
-        newGame.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        newGame.addActionListener(e -> {
 
-                File fila = new File("Date Player");
+            File fila = new File("Date Player");
 
-                if(fila.exists()) {
-                    String[] Optiuni = {"Da", "Nu"};
-                    int PromptResult = JOptionPane.showOptionDialog(null, "Esti sigur?", " Start a New Save",
-                            JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, Optiuni, Optiuni[1]);
-                    if (PromptResult != 0) {
-                        return;
-                    }
+            if(fila.exists()) {
+                String[] Optiuni = {"Da", "Nu"};
+                int PromptResult = JOptionPane.showOptionDialog(null, "Esti sigur?", " Start a New Save",
+                        JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, Optiuni, Optiuni[1]);
+                if (PromptResult != 0) {
+                    return;
                 }
-
-                dispose();
-                Player player = new Player();
-                player.save();
-
-                ClickerFrame cf = new ClickerFrame();
-                cf.setResizable(false);
-                cf.setVisible(true);
             }
+
+            dispose();
+            Player player = new Player();
+            player.save();
+
+            ClickerFrame cf = new ClickerFrame();
+            cf.setResizable(false);
+            cf.setVisible(true);
         });
     }
 
 
-    public void typing(JLabel text, String message, float speed) {
+    public void typing( String message, float speed) {
         int delay = (int) (100 / speed); // Delay between each character in milliseconds
 
         Timer timer = new Timer(delay, new ActionListener() {
@@ -112,7 +104,7 @@ public class IntroFrame extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 mp.setLayout(new FlowLayout());
                 if (index < message.length()) {
-                    text.setText(message.substring(0, index + 1));
+                    intro.setText(message.substring(0, index + 1));
                     index++;
                 } else {
                     stai = false;
@@ -123,21 +115,22 @@ public class IntroFrame extends JFrame {
         timer.start();
     }
 
-    public void typing(JLabel text, String first, String cuv, int times) {//secventa de inceput
+    public void typing(String first, String cuv, int times) {//secventa de inceput
+        intro.setText(first);
         Timer timer = new Timer(525, new ActionListener() {
             int count = 0;
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (count == cuv.length()) {
                     if (times > 0)
-                        typing(text, first, cuv, times - 1);
+                        typing( first, cuv, times - 1);
                     else {
                         intro.setText("");
-                        typing(intro, "Welcome to Digger Clicker", 0.75f);
+                        typing("Welcome to Digger Clicker", 0.75f);
                     }
                     ((Timer) e.getSource()).stop();
                 }
-                text.setText(first + cuv.substring(0, count));
+                intro.setText(first + cuv.substring(0, count));
                 count++;
             }
         });
