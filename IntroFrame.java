@@ -2,7 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
-import java.io.IOException;
 
 public class IntroFrame extends JFrame {
     // Interface
@@ -13,7 +12,7 @@ public class IntroFrame extends JFrame {
 
     public IntroFrame() throws InterruptedException {
         // Initialization
-        super("Digger Clicker");
+        super("Intro Clicker");
         setSize(600, 400);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -92,7 +91,6 @@ public class IntroFrame extends JFrame {
             cf.setVisible(true);
         });
     }
-
 
     public void typing( String message, float speed) {
         int delay = (int) (100 / speed); // Delay between each character in milliseconds

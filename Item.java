@@ -2,13 +2,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
 public class Item extends JPanel {
 
     Border border;
     ClickableSquare buton;
     JLabel desc;
     Color butonColor;
-    Color borderColor = new Color(80, 80, 80);
+    Culori culoare = new Culori();
+    Color borderColor = culoare.border;
 
     String name = "";
     boolean isBought = false;
@@ -20,8 +22,12 @@ public class Item extends JPanel {
         this.name = name;
         this.price = prais;
 
-        if(name.equals("???"))
-            borderColor = new Color(0, 0 ,0);
+        if(name.equals("")) {
+            prais = 0;//face pretu invisibil
+            borderColor = culoare.fundal;
+            //butonColor = culoare.fundal;
+        }
+
         border =  new Border(borderColor);
 
         if(prais != 0)
@@ -32,10 +38,10 @@ public class Item extends JPanel {
         desc = new JLabel(name); desc.setFont(new Font("Montserrat", Font.PLAIN, 20));
         desc.setHorizontalAlignment(SwingConstants.CENTER);
 
-
-        add(buton);
-        add(border);
-
+        if(!name.equals("")) {
+            add(buton);
+            add(border);
+        }
         if(!name.equals("bonus"))
             add(desc);
 
@@ -45,7 +51,8 @@ public class Item extends JPanel {
             public void mousePressed(MouseEvent e) {
                 if(e.getButton() != MouseEvent.BUTTON1)
                     return;
-                buton.recolor(butonColor.darker());
+                if (!butonColor.equals(culoare.fundal))
+                    buton.recolor(butonColor.darker());
             }
 
             @Override
@@ -61,6 +68,22 @@ public class Item extends JPanel {
 
     public void setPrice(int price) {
         buton.setText(String.valueOf(price));
+        this.price = price;
+    }
+
+    public void addText(String text) {
+        text = desc.getText() + text;
+        desc.setText(text);
+        add(desc);
+        name = text;
+        repaint();
+    }
+
+    public void setText(String text) {
+        desc.setText(text);
+        add(desc);
+        name = text;
+        repaint();
     }
 
     @Override
@@ -75,5 +98,12 @@ public class Item extends JPanel {
         border.setBounds(0, 30, width, height - 30); //2 pixeli grosime
         buton.setBounds(2, 32, width - 4, height - 34);
         desc.setBounds(0, 0, width, 30);
+
+        if(name.equals("bonus")) {
+            remove(desc);
+            desc.setVisible(false);
+            border.setBounds(0, 0, width, height - 28);
+            buton.setBounds(2, 3, width - 4, height - 33);
+        }
     }
 }

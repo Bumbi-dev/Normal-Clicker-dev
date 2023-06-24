@@ -11,20 +11,20 @@ public class Player {
 
     double clicks;
     double clickPower;
-    int rebirths;
+    int pretu;
     String upgradeuri;
 
-    public Player (double clicks, double clickPower, int rebirths, String upgradeuri) {
+    public Player (double clicks, double clickPower, int pretu, String upgradeuri) {
         this.clicks = clicks;
         this.clickPower = clickPower;
-        this.rebirths = rebirths;
+        this.pretu = pretu;
         this.upgradeuri = upgradeuri;
     }
 
     public Player () {
         clicks = 0;
         clickPower = 1;
-        rebirths = 0;
+        pretu = 100;
         upgradeuri = ".";
     }
 
@@ -34,7 +34,7 @@ public class Player {
 
             clicks = Float.parseFloat(scanner.next());
             clickPower = Float.parseFloat(scanner.next());
-            rebirths = Integer.parseInt(scanner.next());
+            pretu = Integer.parseInt(scanner.next());
             scanner.nextLine();
             upgradeuri = scanner.nextLine();
 
@@ -52,7 +52,7 @@ public class Player {
     }
 
     public void save () {// pe viitor sa fie criptate salvarile
-        String salvare = clicks + "\n" + clickPower + "\n" + rebirths + "\n" + "." + upgradeuri;
+        String salvare = clicks + "\n" + clickPower + "\n" + pretu + "\n." + upgradeuri;
         try {
             FileWriter fr = new FileWriter(fila);
             fr.write(salvare);
@@ -60,5 +60,6 @@ public class Player {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        //fila.setReadOnly();
     }
 }

@@ -38,7 +38,7 @@ public class Counter extends JLabel {
                 customClicks = "-" + customClicks.substring(2);
 
         if (clicks < 0)
-            setText("Count = -" + customClicks);
+            setText("Count = " + customClicks);
         else
             setText("Count = " + customClicks);
 

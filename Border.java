@@ -25,19 +25,9 @@ public class Border extends JPanel {
         setBounds(x, y , width, height);
     }
 
-    public Border(ClickableSquare cs, int nr1, int nr2, int nr3, int nr4, Color color) {
-        //in caz ca ii ceva in neregula se fac ajustari manuale la grosime
-        setLayout(null);
-        setVisible(true);
-
+    public void recolor(Color color) {
         this.color = color;
-
-        int x = cs.x - nr1 - 1;
-        int y = cs.y - nr2 - 1;
-        int width = cs.width + nr3 + 2;
-        int height = cs.height + nr4 + 2;
-
-        setBounds(x, y , width, height);
+        repaint();
     }
 
     @Override
