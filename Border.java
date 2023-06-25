@@ -2,13 +2,12 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Border extends JPanel {
-    Color color;
+    Culori colo = new Culori();
+    Color color = colo.border;
 
-    public Border(Color color) {
+    public Border() {
         setLayout(null);
         setVisible(true);
-
-        this.color = color;
     }
 
     public Border(ClickableSquare cs, Color color) {

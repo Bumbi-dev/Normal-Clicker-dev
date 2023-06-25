@@ -12,7 +12,7 @@ public class IntroFrame extends JFrame {
 
     public IntroFrame() throws InterruptedException {
         // Initialization
-        super("Intro Clicker");
+        super("Intro");
         setSize(600, 400);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -54,12 +54,11 @@ public class IntroFrame extends JFrame {
         Continue.setText("Continue");
         newGame.setText("New Game");
 
-        Continue.addActionListener(e -> {
+        File fila = new File("Date Player");
 
-            File fila = new File("Date Player");
+        Continue.addActionListener(e -> {
             if(!fila.exists())
                 return;
-
             dispose();
 
             Player player = new Player();
@@ -70,9 +69,6 @@ public class IntroFrame extends JFrame {
         });
 
         newGame.addActionListener(e -> {
-
-            File fila = new File("Date Player");
-
             if(fila.exists()) {
                 String[] Optiuni = {"Da", "Nu"};
                 int PromptResult = JOptionPane.showOptionDialog(null, "Esti sigur?", " Start a New Save",
@@ -124,7 +120,7 @@ public class IntroFrame extends JFrame {
                         typing( first, cuv, times - 1);
                     else {
                         intro.setText("");
-                        typing("Welcome to Digger Clicker", 0.75f);
+                        typing("Welcome to Normal Clicker", 0.75f);
                     }
                     ((Timer) e.getSource()).stop();
                 }

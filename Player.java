@@ -1,18 +1,19 @@
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Player {
 
     File fila = new File("Date Player");
 
-    double clicks;
-    double clickPower;
-    int pretu;
     String upgradeuri;
+    double clicks, clickPower;
+    int pretu;
 
     public Player (double clicks, double clickPower, int pretu, String upgradeuri) {
         this.clicks = clicks;
@@ -21,7 +22,7 @@ public class Player {
         this.upgradeuri = upgradeuri;
     }
 
-    public Player () {
+    public Player () {//inceputu
         clicks = 0;
         clickPower = 1;
         pretu = 100;
@@ -38,7 +39,7 @@ public class Player {
             scanner.nextLine();
             upgradeuri = scanner.nextLine();
 
-            DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+            DecimalFormatSymbols symbols = new DecimalFormatSymbols();//citeste doubles si le rotunjeste
             symbols.setDecimalSeparator('.');
             DecimalFormat decimalFormat = new DecimalFormat("#0.0", symbols);
 
@@ -46,20 +47,24 @@ public class Player {
             clicks = Double.parseDouble(roundedNumber);
 
             scanner.close();
+        } catch (NoSuchElementException e) {//daca ceva nu e bine la fila (a fost modificata gresit) se reseteaza tot
+            Player player = new Player();
+            player.save();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void save () {// pe viitor sa fie criptate salvarile
+    public void save () {
         String salvare = clicks + "\n" + clickPower + "\n" + pretu + "\n." + upgradeuri;
         try {
+            fila.setWritable(true);
             FileWriter fr = new FileWriter(fila);
             fr.write(salvare);
             fr.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //fila.setReadOnly();
+        fila.setReadOnly();
     }
 }

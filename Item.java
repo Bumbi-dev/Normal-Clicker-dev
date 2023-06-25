@@ -25,10 +25,9 @@ public class Item extends JPanel {
         if(name.equals("")) {
             prais = 0;//face pretu invisibil
             borderColor = culoare.fundal;
-            //butonColor = culoare.fundal;
         }
 
-        border =  new Border(borderColor);
+        border =  new Border();
 
         if(prais != 0)
             buton = new ClickableSquare(String.valueOf(prais), color);
@@ -51,7 +50,7 @@ public class Item extends JPanel {
             public void mousePressed(MouseEvent e) {
                 if(e.getButton() != MouseEvent.BUTTON1)
                     return;
-                if (!butonColor.equals(culoare.fundal))
+                if (!butonColor.equals(culoare.fundal))// da efectu de apasare
                     buton.recolor(butonColor.darker());
             }
 
@@ -88,7 +87,7 @@ public class Item extends JPanel {
 
     @Override
     public void setBounds(int x, int y, int width, int height) {
-        x = x - x % 4 + 3;
+        x = x - x % 4 + 3;//algoritm pentru aliniere, sa fie uniforma marginea
         y = y - y % 4 + 1;
         width = width - width % 4 + 1;
         height = height - height % 4 + 1;

@@ -3,11 +3,12 @@ import java.awt.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class ClickableSquare extends JPanel {
-    int x, y, width, height;
-    String cuv;
-
     JLabel text;
+
     Color color;
+
+    String cuv;
+    int x, y, width, height;
 
     public ClickableSquare (Color color) {
         this.color = color;
@@ -18,7 +19,6 @@ public class ClickableSquare extends JPanel {
 
         this.cuv = cuv;
         this.color = color;
-
     }
 
     public void recolor(Color color) {
