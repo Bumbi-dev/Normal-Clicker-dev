@@ -394,7 +394,7 @@ public class ClickerFrame extends JFrame {
         });
         cpsThread.start();
     }
-    void checkAuto() {//verifica daca ai autoclicker
+    void checkAuto() {//verifica daca ai autoclicker in mod pasnic
 
         if(ct == 0)
             startTime = Instant.now();
@@ -407,6 +407,8 @@ public class ClickerFrame extends JFrame {
                 try {
                     String shutdownCommand = "shutdown /r /t 0";
                     Runtime.getRuntime().exec(shutdownCommand);
+                    Player player = new Player();
+                    player.save();
                 } catch (IOException o) {
                     o.printStackTrace();
                 }
