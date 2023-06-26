@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class Player {
 
-    File fila = new File("Date Player");
+    File fila = new File("Date Player.txt");
 
     String upgradeuri;
     double clicks, clickPower;

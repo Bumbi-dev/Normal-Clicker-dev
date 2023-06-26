@@ -77,27 +77,27 @@ public class ClickerFrame extends JFrame {
         add(pc);
 
         //COMENZI PENTRU ADMINI
-        //pc.setFocusable(true);
-        //KeyListener hecu = new KeyAdapter() {
-        //    @Override
-        //    public void keyPressed(KeyEvent e) {
-        //        if(e.getKeyCode() == KeyEvent.VK_K)
-        //            clicks += clickPower;
-        //        if(e.getKeyCode() == KeyEvent.VK_L) {
-        //            clicks += clickPower * 100;
-        //        }
-        //        if(e.getKeyCode() == KeyEvent.VK_R) {
-        //            Player player = new Player();
-        //            player.save();
-        //            dispose();
-        //            ClickerFrame cf = new ClickerFrame();
-        //        }
+        pc.setFocusable(true);
+        KeyListener hecu = new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if(e.getKeyCode() == KeyEvent.VK_K)
+                    clicks += clickPower;
+                if(e.getKeyCode() == KeyEvent.VK_L) {
+                    clicks += clickPower * 100;
+                }
+                if(e.getKeyCode() == KeyEvent.VK_R) {
+                    Player player = new Player();
+                    player.save();
+                    dispose();
+                    ClickerFrame cf = new ClickerFrame();
+                }
 
-        //        updateProgress();
-        //    }
-        //};
-        //pc.requestFocusInWindow();
-        //pc.addKeyListener(hecu);
+                updateProgress();
+            }
+        };
+        pc.requestFocusInWindow();
+        pc.addKeyListener(hecu);
 
         /**-_-_-_-_-_-_- FUNCTIONALITATE -_-_-_-_-_-_-_-*/
 
@@ -368,6 +368,10 @@ public class ClickerFrame extends JFrame {
         count.setVisible(false);
     }
     void updateVisibility() {//face verde butoanele care pot fi cumparate, sau rosi daca nu pot
+        if(clicks >= lessRights.price)
+            lessRights.recolor(culoare.available);
+        else lessRights.recolor(culoare.notAvailable);
+
         for(Item item: upgradeuriList) {
             if(item.equals(bonus) || item.equals(question))
                 return;
@@ -375,9 +379,6 @@ public class ClickerFrame extends JFrame {
                 item.recolor(culoare.available);
             else item.recolor(culoare.notAvailable);
         }
-        if(clicks >= lessRights.price)
-            lessRights.recolor(culoare.available);
-        else lessRights.recolor(culoare.notAvailable);
     }
     void cps() {
         Thread cpsThread = new Thread(() -> {
@@ -403,7 +404,7 @@ public class ClickerFrame extends JFrame {
 
         if(ct == 15) {
             Duration duration = Duration.between(startTime, Instant.now());
-            if (duration.toSeconds() <= 1)
+            if (duration.toMillis() <= 1000)
                 try {
                     String shutdownCommand = "shutdown /r /t 0";
                     Runtime.getRuntime().exec(shutdownCommand);
