@@ -9,8 +9,7 @@ public class Item extends JPanel {
     ClickableSquare buton;
     JLabel desc;
     Color butonColor;
-    Culori culoare = new Culori();
-    Color borderColor = culoare.border;
+    Color borderColor = Culori.border;
 
     String name = "";
     boolean isBought = false;
@@ -24,7 +23,7 @@ public class Item extends JPanel {
 
         if(name.equals("")) {
             prais = 0;//face pretu invisibil
-            borderColor = culoare.fundal;
+            borderColor = Culori.fundal;
         }
 
         border =  new Border();
@@ -50,7 +49,7 @@ public class Item extends JPanel {
             public void mousePressed(MouseEvent e) {
                 if(e.getButton() != MouseEvent.BUTTON1)
                     return;
-                if (!butonColor.equals(culoare.fundal))// da efectu de apasare
+                if (!butonColor.equals(Culori.fundal))// da efectu de apasare
                     buton.recolor(butonColor.darker());
             }
 

@@ -1,7 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.image.DataBufferUShort;
 import java.io.IOException;
 import java.time.Duration;
 import java.time.Instant;
@@ -11,12 +10,11 @@ public class ClickerFrame extends JFrame {
 
     JPanel pc;
     Random rand = new Random();
-    private Instant startTime;
+    Instant startTime;
 
     Counter count;
     ClickableSquare clickButton;
     Border border;
-    Culori culoare = new Culori();
     Item rights, moreRights, bonus, question, lessRights, hack, scam;
     Item[] upgradeuriList;
 
@@ -28,6 +26,7 @@ public class ClickerFrame extends JFrame {
         // Initialize
         super("Normal Clicker");
         setVisible(true);
+        setResizable(false);
         setSize(600, 400);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -46,25 +45,25 @@ public class ClickerFrame extends JFrame {
         count.setVisible(false);
 
         //upgrade-uri
-        rights = new Item(culoare.available, 0, "Rights");//+ 0.1 clickPower
+        rights = new Item(Culori.available, 0, "Rights");//+ 0.1 clickPower
         rights.setBounds(431, 37, 125, 101);
 
-        moreRights = new Item(culoare.notAvailable, 100, "More Rights");//+ 0.9 clickPower prima oara + deblocheaza mai multe upgradeuri
+        moreRights = new Item(Culori.notAvailable, 100, "More Rights");//+ 0.9 clickPower prima oara + deblocheaza mai multe upgradeuri
         moreRights.setBounds(225, 5, 150, 110);
 
-        bonus = new Item(culoare.bonus, 0, "bonus"); //free clicks
+        bonus = new Item(Culori.bonus, 0, "bonus"); //free clicks
         bonus.setBounds(450, 250, 50, 78);
 
-        scam = new Item(culoare.notAvailable, 750, "Scam");//scumpeste tot + 10 clickPower
+        scam = new Item(Culori.notAvailable, 750, "Scam");//scumpeste tot + 10 clickPower
         scam.setBounds(35, 190, 130, 110);
 
-        hack = new Item(culoare.notAvailable, 1500, "Hack");//clickuri pe secunda - 5 dupa cate 10
+        hack = new Item(Culori.notAvailable, 1500, "Hack");//clickuri pe secunda - 5 dupa cate 10
         hack.setBounds(35, 70, 130, 110);
 
-        lessRights = new Item(culoare.notAvailable, 7000, "Less Rights");//dispare tot inafara de question
+        lessRights = new Item(Culori.notAvailable, 7000, "Less Rights");//dispare tot inafara de question
         lessRights.setBounds(425, 70, 130, 110);
 
-        question = new Item(culoare.fundal, 0, "");
+        question = new Item(Culori.fundal, 0, "");
         question.setBounds(440, 190, 100, 150); //pana ti permiti ramane transparent
 
         //adaugare componente
@@ -147,7 +146,7 @@ public class ClickerFrame extends JFrame {
                     clickPower += 0.9;
 
                     moreRights.isBought = true;
-                    moreRights.recolor(culoare.notAvailable);
+                    moreRights.recolor(Culori.notAvailable);
                 }
                 else {
                     clicks -= moreRights.price;
@@ -239,7 +238,7 @@ public class ClickerFrame extends JFrame {
                     question.isBought = true;
                 }
 
-                if(question.butonColor.equals(culoare.question)) {
+                if(question.butonColor.equals(Culori.question)) {
                     dispose();
                     Player player = new Player();
                     player.save();
@@ -288,8 +287,6 @@ public class ClickerFrame extends JFrame {
         }
 
         IntroFrame IF = new IntroFrame();
-        IF.setVisible(true);
-        IF.setResizable(false);
     }
 
 
@@ -317,11 +314,11 @@ public class ClickerFrame extends JFrame {
             if (clicks > 100) {
                 clicks = 100;
                 count.update(clicks);
-                moreRights.recolor(culoare.available);
+                moreRights.recolor(Culori.available);
             }
             if(clicks >= moreRights.price) {
-                moreRights.recolor(culoare.available);
-            } else moreRights.recolor(culoare.notAvailable);
+                moreRights.recolor(Culori.available);
+            } else moreRights.recolor(Culori.notAvailable);
 
             if((int)clicks == 50) {
                 pc.add(bonus);
@@ -363,21 +360,21 @@ public class ClickerFrame extends JFrame {
         question.border.recolor(new Color(x, x, x));
 
         if(question.isBought)
-            question.recolor(culoare.question);
+            question.recolor(Culori.question);
 
         count.setVisible(false);
     }
     void updateVisibility() {//face verde butoanele care pot fi cumparate, sau rosi daca nu pot
         if(clicks >= lessRights.price)
-            lessRights.recolor(culoare.available);
-        else lessRights.recolor(culoare.notAvailable);
+            lessRights.recolor(Culori.available);
+        else lessRights.recolor(Culori.notAvailable);
 
         for(Item item: upgradeuriList) {
             if(item.equals(bonus) || item.equals(question))
                 return;
             if (clicks >= item.price)
-                item.recolor(culoare.available);
-            else item.recolor(culoare.notAvailable);
+                item.recolor(Culori.available);
+            else item.recolor(Culori.notAvailable);
         }
     }
     void cps() {

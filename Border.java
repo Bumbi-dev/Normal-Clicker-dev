@@ -2,8 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Border extends JPanel {
-    Culori colo = new Culori();
-    Color color = colo.border;
+    Color color = Culori.border;
 
     public Border() {
         setLayout(null);

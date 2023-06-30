@@ -1,6 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class ClickableSquare extends JPanel {
     JLabel text;

@@ -13,10 +13,11 @@ public class IntroFrame extends JFrame {
     public IntroFrame() throws InterruptedException {
         // Initialization
         super("Intro");
+        setVisible(true);
+        setResizable(false);
         setSize(600, 400);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setVisible(true);
 
         intro = new JLabel();
         intro.setFont(new Font("Montserrat", Font.PLAIN, 24));
@@ -54,7 +55,7 @@ public class IntroFrame extends JFrame {
         Continue.setText("Continue");
         newGame.setText("New Game");
 
-        File fila = new File("Date Player");
+        File fila = new File("Date Player.txt");
 
         Continue.addActionListener(e -> {
             if(!fila.exists())
@@ -64,8 +65,7 @@ public class IntroFrame extends JFrame {
             Player player = new Player();
             player.loadProgress();
 
-            ClickerFrame cf = new ClickerFrame();
-            cf.setResizable(false);
+            new ClickerFrame();
         });
 
         newGame.addActionListener(e -> {
@@ -82,9 +82,7 @@ public class IntroFrame extends JFrame {
             Player player = new Player();
             player.save();
 
-            ClickerFrame cf = new ClickerFrame();
-            cf.setResizable(false);
-            cf.setVisible(true);
+            new ClickerFrame();
         });
     }
 

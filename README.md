@@ -1,1 +1,1 @@
-if autoclicker restart pc + new save
+made the Culori class a singleton + other minor tweaks
