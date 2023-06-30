@@ -1,1 +1,1 @@
-made the Culori class a singleton + other minor tweaks
+added final credits

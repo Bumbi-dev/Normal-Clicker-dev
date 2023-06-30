@@ -26,7 +26,6 @@ public class ClickerFrame extends JFrame {
         // Initialize
         super("Normal Clicker");
         setVisible(true);
-        setResizable(false);
         setSize(600, 400);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -238,10 +237,9 @@ public class ClickerFrame extends JFrame {
                     question.isBought = true;
                 }
 
-                if(question.butonColor.equals(Culori.question)) {
+                if(question.butonColor.equals(Culori.question)) {//first real ending
                     dispose();
-                    Player player = new Player();
-                    player.save();
+                    new Credits(1);
                 }
             }
             
