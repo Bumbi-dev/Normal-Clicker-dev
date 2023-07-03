@@ -56,11 +56,6 @@ public class Credits extends JPanel implements ActionListener {
         timer.start();
     }
 
-    public static void main(String []args) {
-        System.setProperty("sun.java2d.opengl", "true"); //hardware acceleration for smoother scrolling
-        SwingUtilities.invokeLater(() -> new Credits(1));
-    }
-
     public void actionPerformed(ActionEvent e) {
 
         if(textY <= -480) {

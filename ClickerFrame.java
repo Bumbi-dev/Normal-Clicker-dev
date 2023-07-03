@@ -100,6 +100,7 @@ public class ClickerFrame extends JFrame {
         /**-_-_-_-_-_-_- FUNCTIONALITATE -_-_-_-_-_-_-_-*/
 
         rights.buton.addMouseListener(new MouseAdapter(){
+            boolean x;// for better looking code
             @Override
             public void mouseReleased(MouseEvent e) {
                 if(e.getButton() != MouseEvent.BUTTON1)
@@ -113,9 +114,9 @@ public class ClickerFrame extends JFrame {
 
                 updateProgress();
             }
-            
         });
         bonus.buton.addMouseListener(new MouseAdapter() {
+            boolean x;
             @Override
             public void mouseReleased(MouseEvent e) {
                 if(e.getButton() != MouseEvent.BUTTON1)
@@ -135,6 +136,7 @@ public class ClickerFrame extends JFrame {
             
         });
         moreRights.buton.addMouseListener(new MouseAdapter() {
+            boolean x;
             @Override
             public void mouseReleased(MouseEvent e) {
                 if(e.getButton() != MouseEvent.BUTTON1 || clicks < moreRights.price)
@@ -162,6 +164,7 @@ public class ClickerFrame extends JFrame {
         });
 
         lessRights.buton.addMouseListener(new MouseAdapter() {
+            boolean x;
             @Override
             public void mouseReleased(MouseEvent e) {
                 if(clicks < lessRights.price || e.getButton() != MouseEvent.BUTTON1)
@@ -185,6 +188,7 @@ public class ClickerFrame extends JFrame {
             
         });
         hack.buton.addMouseListener(new MouseAdapter() {
+            boolean x;
             @Override
             public void mouseReleased(MouseEvent e) {
                 if(clicks < hack.price || e.getButton() != MouseEvent.BUTTON1)
@@ -206,6 +210,7 @@ public class ClickerFrame extends JFrame {
             
         });
         scam.buton.addMouseListener(new MouseAdapter() {
+            boolean x;
             @Override
             public void mouseReleased(MouseEvent e) {
                 if(clicks < scam.price || e.getButton() != MouseEvent.BUTTON1)
@@ -229,7 +234,8 @@ public class ClickerFrame extends JFrame {
             
         });
 
-        question.buton.addMouseListener(new MouseAdapter() {
+        question.buton.addMouseListener(new MouseAdapter() {//ending
+            boolean x;
             @Override
             public void mouseReleased(MouseEvent e) {
 
@@ -239,7 +245,9 @@ public class ClickerFrame extends JFrame {
 
                 if(question.butonColor.equals(Culori.question)) {//first real ending
                     dispose();
-                    new Credits(1);
+
+                    System.setProperty("sun.java2d.opengl", "true"); //hardware acceleration for smoother scrolling
+                    SwingUtilities.invokeLater(() -> new Credits(1));
                 }
             }
             
@@ -284,7 +292,7 @@ public class ClickerFrame extends JFrame {
             System.err.println("Failed to initialize");
         }
 
-        IntroFrame IF = new IntroFrame();
+        new IntroFrame();
     }
 
 
