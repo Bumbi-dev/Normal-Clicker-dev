@@ -14,6 +14,9 @@ public class Credits extends JPanel implements ActionListener {
 
     public Credits(int ending) {
 
+        System.setProperty("sun.java2d.opengl", "true");
+        SwingUtilities.invokeLater(() -> {
+
         window = new JFrame("Credits");
         window.add(this);
         window.setResizable(false);
@@ -35,6 +38,7 @@ public class Credits extends JPanel implements ActionListener {
 
         Player player = new Player();
         player.save();
+        });
     }
 
     public void paintComponent(Graphics g) {

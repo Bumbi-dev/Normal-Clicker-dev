@@ -246,8 +246,7 @@ public class ClickerFrame extends JFrame {
                 if(question.butonColor.equals(Culori.question)) {//first real ending
                     dispose();
 
-                    System.setProperty("sun.java2d.opengl", "true"); //hardware acceleration for smoother scrolling
-                    SwingUtilities.invokeLater(() -> new Credits(1));
+                    new Credits(1);
                 }
             }
             
@@ -383,6 +382,11 @@ public class ClickerFrame extends JFrame {
             else item.recolor(Culori.notAvailable);
         }
     }
+    void expansion() {
+        setResizable(true);
+        //adauga butoane noi
+    }
+
     void cps() {
         Thread cpsThread = new Thread(() -> {
             while (cpsVal > 0) {
