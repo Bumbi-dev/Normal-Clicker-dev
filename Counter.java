@@ -13,7 +13,7 @@ public class Counter extends JLabel {
     }
 
     public void update(double clicks) {
-        if((clicks <= 0 && clicks > -0.099) || (clicks >= 0 && clicks < 0.099))//apare 2e34.24 daca nu
+        if((clicks <= 0 && clicks > -0.099) || (clicks >= 0 && clicks < 0.099))//it appears some 23e132.2 number if not
             clicks = 0;
 
         String copy = Integer.toString((int) clicks);
@@ -39,6 +39,6 @@ public class Counter extends JLabel {
 
         setText("Count = " + customClicks);
 
-        setVisible(!customClicks.equals("0"));//daca ii egal cu 0 nu se afiseaza
+        setVisible(!customClicks.equals("0"));//if value = 0 doesnt show
     }
 }

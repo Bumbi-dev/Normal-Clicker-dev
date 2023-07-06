@@ -14,7 +14,7 @@ public class Encoder {
         return sb.toString();
     }
 
-    public String decryptingFile(File fila) throws FileNotFoundException {
+    public String decryptingFile(File fila) throws FileNotFoundException {//reads text from file in hex
         String text = fileToString(fila);
         char []ch = text.toCharArray();
         text = "";

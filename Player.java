@@ -10,36 +10,36 @@ public class Player {
 
     String upgradeuri;
     double clicks, clickPower;
-    int pretu;
+    int price;
 
-    public Player (double clicks, double clickPower, int pretu, String upgradeuri) {
+    public Player (double clicks, double clickPower, int price, String upgradeuri) {
         this.clicks = clicks;
         this.clickPower = clickPower;
-        this.pretu = pretu;
+        this.price = price;
         this.upgradeuri = upgradeuri;
     }
 
-    public Player () {//inceputu
+    public Player () {//new player
         clicks = 0;
         clickPower = 1;
-        pretu = 100;
+        price = 100;
         upgradeuri = ".";
     }
 
     public void loadProgress () {
         try {
-            File temp = File.createTempFile("TempFile", "txt");//creaza fisier temp care nu ii "criptat"
+            File temp = File.createTempFile("TempFile", "txt");//creates a normal file
             Scanner scanner = new Scanner(temp);
             Encoder bitcoin = new Encoder();
 
-            try {//daca se schimba ceva prin fisier => restart progress
+            try {//if the text in the file isn't associated with a save it restarts
             FileWriter fr = new FileWriter(temp);
             fr.write(bitcoin.decryptingFile(fila));
             fr.close();
 
                 clicks = Float.parseFloat(scanner.next());
                 clickPower = Float.parseFloat(scanner.next());
-                pretu = Integer.parseInt(scanner.next());
+                price = Integer.parseInt(scanner.next());
                 scanner.nextLine();
                 upgradeuri = scanner.nextLine();
             } catch (NumberFormatException | ArrayIndexOutOfBoundsException | NoSuchElementException e) {
@@ -49,7 +49,7 @@ public class Player {
 
             temp.delete();
 
-            DecimalFormatSymbols symbols = new DecimalFormatSymbols();//citeste doubles si le rotunjeste
+            DecimalFormatSymbols symbols = new DecimalFormatSymbols();//reads doubles and aproximates them
             symbols.setDecimalSeparator('.');
             DecimalFormat decimalFormat = new DecimalFormat("#0.0", symbols);
 
@@ -64,7 +64,7 @@ public class Player {
 
     public void save () {
         Encoder bitcoin = new Encoder();
-        String salvare = clicks + "\n" + clickPower + "\n" + pretu + "\n." + upgradeuri;
+        String salvare = clicks + "\n" + clickPower + "\n" + price + "\n." + upgradeuri;
 
         try {
             FileWriter fr = new FileWriter(fila);

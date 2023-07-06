@@ -62,7 +62,7 @@ public class ClickerFrame extends JFrame {
         lessRights = new Item(Culori.notAvailable, 7000, "Less Rights");//makes everything disappear except question
         lessRights.setBounds(425, 70, 130, 110);
 
-        question = new Item(Culori.fundal, 0, "");
+        question = new Item(Culori.backround, 0, "");
         question.setBounds(440, 190, 100, 150); //until you afford it it is transparent
 
         //Adding components
@@ -262,6 +262,7 @@ public class ClickerFrame extends JFrame {
                 if(e.getButton() == MouseEvent.BUTTON1)
                     clickButton.recolor(new Color(180, 180, 180));
                 mouseOut = false;
+                System.out.println(pc.getWidth());
             }
 
             @Override
@@ -316,7 +317,7 @@ public class ClickerFrame extends JFrame {
         if(!tutorialDone)  //when count appears the tutorial is done, until then you can't make progress
             return;
 
-        /**------  CHESTII INTERESANTE  ---------**/
+        /**------  INTERESTING THINGS  ---------**/
         if(!moreRights.isBought) {// Suspense until 25 clicks, nothing on the screen, then "moreRights" appears
             if (clicks >= 25) {
                 pc.add(moreRights);
@@ -435,7 +436,7 @@ public class ClickerFrame extends JFrame {
 
         clicks = player.clicks;
         clickPower = player.clickPower;
-        moreRights.setPrice(player.pretu);
+        moreRights.setPrice(player.price);
 
         upgradeList = new Item[]{rights, moreRights, scam, hack, bonus, lessRights, question};
 
@@ -480,8 +481,8 @@ public class ClickerFrame extends JFrame {
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent we) {
-                String[] options = { "Da", "Nu" };
-                int promptResult = JOptionPane.showOptionDialog(null, "Vrei sa salvezi?", "Exiting",
+                String[] options = { "Yes", "No" };
+                int promptResult = JOptionPane.showOptionDialog(null, "Do you want to save?", "Exiting",
                         JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
 
                 if(promptResult == -1)

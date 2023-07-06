@@ -34,7 +34,7 @@ public class ClickableSquare extends JPanel {
 
         reshape(x, y, width, height);
 
-        //pune text pe mijloc
+        //Places text in the middle
         text = new JLabel(cuv);
         text.setFont(new Font("Montserrat", Font.PLAIN, 20));
         text.setBounds(0, 0, getWidth(), getHeight());

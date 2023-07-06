@@ -23,7 +23,7 @@ public class Item extends JPanel {
 
         if(name.equals("")) {
             prais = 0;//face pretu invisibil
-            borderColor = Culori.fundal;
+            borderColor = Culori.backround;
         }
 
         border =  new Border();
@@ -49,7 +49,7 @@ public class Item extends JPanel {
             public void mousePressed(MouseEvent e) {
                 if(e.getButton() != MouseEvent.BUTTON1)
                     return;
-                if (!butonColor.equals(Culori.fundal))// da efectu de apasare
+                if (!butonColor.equals(Culori.backround))// da efectu de apasare
                     buton.recolor(butonColor.darker());
             }
 

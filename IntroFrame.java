@@ -8,7 +8,7 @@ public class IntroFrame extends JFrame {
     JButton Continue, newGame;
     JLabel intro;
     JPanel mp, bp;
-    boolean stai = true;
+    boolean wait = true;
 
     public IntroFrame() throws InterruptedException {
         // Initialization
@@ -41,7 +41,7 @@ public class IntroFrame extends JFrame {
         mp.add(intro);
         typing("Loading.", "..", 2);
 
-        while(stai) {System.out.print(' '); System.out.print('\b');}
+        while(wait) {System.out.print(' '); System.out.print('\b');}
         Thread.sleep(1050);
 
         mp.setBounds(0, 0, 585, 100);
@@ -70,8 +70,8 @@ public class IntroFrame extends JFrame {
 
         newGame.addActionListener(e -> {
             if(fila.exists()) {
-                String[] Optiuni = {"Da", "Nu"};
-                int PromptResult = JOptionPane.showOptionDialog(null, "Esti sigur?", " Start a New Save",
+                String[] Optiuni = {"Yes", "No"};
+                int PromptResult = JOptionPane.showOptionDialog(null, "Are you sure?", " Start a New Save",
                         JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, Optiuni, Optiuni[1]);
                 if (PromptResult != 0) {
                     return;
@@ -99,7 +99,7 @@ public class IntroFrame extends JFrame {
                     intro.setText(message.substring(0, index + 1));
                     index++;
                 } else {
-                    stai = false;
+                    wait = false;
                     ((Timer) e.getSource()).stop();
                 }
             }
