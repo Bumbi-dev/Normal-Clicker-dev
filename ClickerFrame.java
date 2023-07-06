@@ -16,7 +16,7 @@ public class ClickerFrame extends JFrame {
     ClickableSquare clickButton;
     Border border;
     Item rights, moreRights, bonus, question, lessRights, hack, scam;
-    Item[] upgradeuriList;
+    Item[] upgradeList;
 
     boolean tutorialDone = false, negativeUnlocked;
     int cpsVal = 5, ct = 0;
@@ -43,29 +43,29 @@ public class ClickerFrame extends JFrame {
         count = new Counter(clicks); count.setBounds(squareX , 115, width, 50);
         count.setVisible(false);
 
-        //upgrade-uri
-        rights = new Item(Culori.available, 0, "Rights");//+ 0.1 clickPower
+        //upgrades
+        rights = new Item(Culori.available, 0, "Rights");//+ 0.1 CP (clickPower)
         rights.setBounds(431, 37, 125, 101);
 
-        moreRights = new Item(Culori.notAvailable, 100, "More Rights");//+ 0.9 clickPower prima oara + deblocheaza mai multe upgradeuri
+        moreRights = new Item(Culori.notAvailable, 100, "More Rights");//first time +0.9 CP and unlocks 3 upgrades
         moreRights.setBounds(225, 5, 150, 110);
 
         bonus = new Item(Culori.bonus, 0, "bonus"); //free clicks
         bonus.setBounds(450, 250, 50, 78);
 
-        scam = new Item(Culori.notAvailable, 750, "Scam");//scumpeste tot + 10 clickPower
+        scam = new Item(Culori.notAvailable, 750, "Scam");//make everything more expensive + 10 CP
         scam.setBounds(35, 190, 130, 110);
 
-        hack = new Item(Culori.notAvailable, 1500, "Hack");//clickuri pe secunda - 5 dupa cate 10
+        hack = new Item(Culori.notAvailable, 1500, "Hack");//clicks per second - 5 first time, then 10
         hack.setBounds(35, 70, 130, 110);
 
-        lessRights = new Item(Culori.notAvailable, 7000, "Less Rights");//dispare tot inafara de question
+        lessRights = new Item(Culori.notAvailable, 7000, "Less Rights");//makes everything disappear except question
         lessRights.setBounds(425, 70, 130, 110);
 
         question = new Item(Culori.fundal, 0, "");
-        question.setBounds(440, 190, 100, 150); //pana ti permiti ramane transparent
+        question.setBounds(440, 190, 100, 150); //until you afford it it is transparent
 
-        //adaugare componente
+        //Adding components
         pc = new JPanel();
         pc.setLayout(null);
         pc.add(clickButton);
@@ -74,7 +74,7 @@ public class ClickerFrame extends JFrame {
         loadProgress();
         add(pc);
 
-        //COMENZI PENTRU ADMINI
+        //ADMIN COMMANDS
         pc.setFocusable(true);
         KeyListener hecu = new KeyAdapter() {
             @Override
@@ -88,7 +88,8 @@ public class ClickerFrame extends JFrame {
                     Player player = new Player();
                     player.save();
                     dispose();
-                    ClickerFrame cf = new ClickerFrame();
+
+                    new ClickerFrame();
                 }
 
                 updateProgress();
@@ -97,7 +98,7 @@ public class ClickerFrame extends JFrame {
         pc.requestFocusInWindow();
         pc.addKeyListener(hecu);
 
-        /**-_-_-_-_-_-_- FUNCTIONALITATE -_-_-_-_-_-_-_-*/
+        /**-_-_-_-_-_-_- FUNCTIONALITY -_-_-_-_-_-_-_-*/
 
         rights.buton.addMouseListener(new MouseAdapter(){
             boolean x;// for better looking code
@@ -252,7 +253,7 @@ public class ClickerFrame extends JFrame {
             
         });
 
-        //butonu
+        //the button
         clickButton.addMouseListener(new MouseAdapter() {
             boolean mouseOut;
 
@@ -269,9 +270,9 @@ public class ClickerFrame extends JFrame {
                     return;
 
                 clickButton.recolor(new Color(220, 220, 220));
-                if (mouseOut) {//nu se pune click daca ii mouse ul inafara
+                if (mouseOut) {//doesn't add clicks if the cursor is outside
                     clicks -= clickPower;
-                    if(negativeUnlocked)//daca ii upgradeu deblocat acuma scade cand ii mouse in afara
+                    if(negativeUnlocked)//if the negativeUnlocked is true it takes clicks
                         clicks -= clickPower;
                 }
                 clicks += clickPower; //clickpower += clickpower * (rebirth + 1)
@@ -284,20 +285,24 @@ public class ClickerFrame extends JFrame {
         });
     }
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args){
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
         } catch (Exception ex) {
             System.err.println("Failed to initialize");
         }
 
-        new IntroFrame();
+        Player player = new Player();
+        player.loadProgress();
+
+        ClickerFrame cf = new ClickerFrame();
+        cf.setVisible(true);
     }
 
 
     void updateProgress() {
-        //tutorialu
-        count.update(clicks);//pana la primele 10 clickuri apare doar butonu cu click
+        //tutorial
+        count.update(clicks);//until the first 10 clicks only the button is visible
         if(!rights.isBought) {
             if (clicks < 10)
                 return;
@@ -308,11 +313,11 @@ public class ClickerFrame extends JFrame {
             pc.add(count);
             tutorialDone = true;
         }
-        if(!tutorialDone)  //cand se adauga count ii gata tutorialu, pana atunci nu poti face progres
+        if(!tutorialDone)  //when count appears the tutorial is done, until then you can't make progress
             return;
 
         /**------  CHESTII INTERESANTE  ---------**/
-        if(!moreRights.isBought) {//suspans pana la 25 de clickuri nu e nimic pe ecran dupa apare moreRights
+        if(!moreRights.isBought) {// Suspense until 25 clicks, nothing on the screen, then "moreRights" appears
             if (clicks >= 25) {
                 pc.add(moreRights);
             }
@@ -332,12 +337,12 @@ public class ClickerFrame extends JFrame {
             return;
         } else pc.add(moreRights);
 
-        if(clicks < 10 && !(lessRights.isBought || hack.isBought || clickPower >= 2)) {//dupa inca 10 clickuri apar celelalte butoane
+        if(clicks < 10 && !(lessRights.isBought || hack.isBought || clickPower >= 2)) {//after another 10 clicks the other buttons appear
             bonus.setVisible(false);
             bonus.setBounds(100, 300, 50, 78);
             return;
         }
-        //de aici apar butoanele importante
+        // Important buttons
         pc.add(lessRights);
         pc.add(question);
         pc.add(hack);
@@ -359,22 +364,23 @@ public class ClickerFrame extends JFrame {
         question.add(question.buton);
         question.add(question.border);
 
-        clicks = Math.min(255, clicks);//marginea se inegreste incet incet, cand ii neagra se poate debloca
+        clicks = Math.min(255, clicks);// The outline slowly darkens until it is pitch black
         int x =(int) (255 - clicks);
 
         question.border.recolor(new Color(x, x, x));
 
-        if(question.isBought)
+        if(question.isBought) {
+            expansion();
             question.recolor(Culori.question);
-
+        }
         count.setVisible(false);
     }
-    void updateVisibility() {//face verde butoanele care pot fi cumparate, sau rosi daca nu pot
+    void updateVisibility() {//If the button is affordable it makes them green, if not red
         if(clicks >= lessRights.price)
             lessRights.recolor(Culori.available);
         else lessRights.recolor(Culori.notAvailable);
 
-        for(Item item: upgradeuriList) {
+        for(Item item: upgradeList) {
             if(item.equals(bonus) || item.equals(question))
                 return;
             if (clicks >= item.price)
@@ -384,7 +390,6 @@ public class ClickerFrame extends JFrame {
     }
     void expansion() {
         setResizable(true);
-        //adauga butoane noi
     }
 
     void cps() {
@@ -402,7 +407,7 @@ public class ClickerFrame extends JFrame {
         });
         cpsThread.start();
     }
-    void checkAuto() {//verifica daca ai autoclicker in mod pasnic
+    void checkAuto() {//peacefully check if you are using an autoclicker
 
         if(ct == 0)
             startTime = Instant.now();
@@ -424,7 +429,7 @@ public class ClickerFrame extends JFrame {
         }
     }
 
-    void loadProgress() {//ia progresu din fila
+    void loadProgress() {//get the progress from file
         Player player = new Player();
         player.loadProgress();
 
@@ -432,9 +437,9 @@ public class ClickerFrame extends JFrame {
         clickPower = player.clickPower;
         moreRights.setPrice(player.pretu);
 
-        upgradeuriList = new Item[]{rights, moreRights, scam, hack, bonus, lessRights, question};
+        upgradeList = new Item[]{rights, moreRights, scam, hack, bonus, lessRights, question};
 
-        for (Item item : upgradeuriList) {
+        for (Item item : upgradeList) {
             if (player.upgradeuri.contains(item.name)) {
                 item.isBought = true;
                 if(!item.equals(moreRights))
@@ -471,7 +476,7 @@ public class ClickerFrame extends JFrame {
 
         updateProgress();
     }
-    void exiting() {//salveaza la iesire
+    void exiting() {//saving in file when exit
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent we) {
@@ -484,7 +489,7 @@ public class ClickerFrame extends JFrame {
 
                 if (promptResult == 0) {
                     StringBuilder upgradeuri = new StringBuilder();
-                    for (Item item : upgradeuriList)
+                    for (Item item : upgradeList)
                         if (item.isBought) {
                             upgradeuri.append(item.name);
                             if(item.equals(question))
