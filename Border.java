@@ -4,6 +4,10 @@ import java.awt.*;
 public class Border extends JPanel {
     Color color = Culori.border;
 
+    MyConstants m = new MyConstants();
+
+    int x, y, width, height;
+
     public Border() {
         setLayout(null);
         setVisible(true);
@@ -29,9 +33,24 @@ public class Border extends JPanel {
     }
 
     @Override
+    public void setBounds (int x, int y, int width, int height) {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+
+        reshape(x, y, width, height);
+        repaint();
+    }
+
+    @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.setColor(color);
         g.fillRect(0, 0, getWidth(), getHeight());
+    }
+
+    public void update(int x1, int y1) {
+        super.setBounds(m.panelVariableX + x - x1, m.panelVariableY + y - y1, width, height);
     }
 }

@@ -5,12 +5,11 @@ import java.awt.event.ActionListener;
 import java.awt.RenderingHints;
 
 public class Credits extends JPanel implements ActionListener {
-
+    JFrame window;
     Timer timer = new Timer(20, this);
 
     String text;
     int textY = 400;
-    JFrame window;
 
     public Credits(int ending) {
 

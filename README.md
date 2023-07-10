@@ -1,1 +1,1 @@
-added final credits
+When the window is resized the buttons remain in place

@@ -1,10 +1,11 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.Objects;
 
 public class ClickableSquare extends JPanel {
-    JLabel text;
-
     Color color;
+
+    MyConstants m = new MyConstants();
 
     String cuv;
     int x, y, width, height;
@@ -33,25 +34,39 @@ public class ClickableSquare extends JPanel {
         this.height = height;
 
         reshape(x, y, width, height);
-
-        //Places text in the middle
-        text = new JLabel(cuv);
-        text.setFont(new Font("Montserrat", Font.PLAIN, 20));
-        text.setBounds(0, 0, getWidth(), getHeight());
-        text.setHorizontalAlignment(SwingConstants.CENTER);
-        text.setVerticalAlignment(SwingConstants.CENTER);
-        add(text);
+        repaint();
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.setColor(color);
-        g.fillRect(0, 0, getWidth(), getHeight());
+        Graphics2D g2d = (Graphics2D) g;
+
+        g2d.setColor(color);
+        g2d.fillRect(0, 0, getWidth(), getHeight());
+
+        if (cuv == null || cuv.isEmpty())
+            return;
+
+        g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+        g2d.setFont(new Font("Montserrat", Font.PLAIN, 20));
+
+        FontMetrics fm = g2d.getFontMetrics();
+        int textWidth = fm.stringWidth(cuv);
+        int textHeight = fm.getHeight();
+        int x = (getWidth() - textWidth) / 2;
+        int y = (getHeight() - textHeight) / 2 + fm.getAscent();
+
+        g2d.setColor(Color.BLACK);
+        g2d.drawString(cuv, x, y);
     }
 
     public void setText(String x) {
-        text.setText(x);
+        cuv = x;
         repaint();
+    }
+
+    public void update(int x1, int y1) {
+        super.setBounds(m.panelVariableX + x - x1, m.panelVariableY + y - y1, width, height);
     }
 }

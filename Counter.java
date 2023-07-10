@@ -2,7 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Counter extends JLabel {
-
+    MyConstants m = new MyConstants();
+    int x, y, width, height;
 
     public Counter(double clicks) {
         setFont(new Font("Montserrat", Font.PLAIN, 20));
@@ -40,5 +41,20 @@ public class Counter extends JLabel {
         setText("Count = " + customClicks);
 
         setVisible(!customClicks.equals("0"));//if value = 0 doesnt show
+    }
+
+    @Override
+    public void setBounds (int x, int y, int width, int height) {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+
+        reshape(x, y, width, height);
+        repaint();
+    }
+
+    public void update(int x1, int x2) {
+        super.setBounds(m.panelVariableX + x - x1, m.panelVariableY + y - x2, width, height);
     }
 }

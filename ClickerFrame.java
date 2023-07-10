@@ -25,7 +25,6 @@ public class ClickerFrame extends JFrame {
     public ClickerFrame() {
         // Initialize
         super("Normal Clicker");
-        setVisible(true);
         setSize(600, 400);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -45,7 +44,7 @@ public class ClickerFrame extends JFrame {
 
         //upgrades
         rights = new Item(Culori.available, 0, "Rights");//+ 0.1 CP (clickPower)
-        rights.setBounds(431, 37, 125, 101);
+        rights.setBounds(430, 35, 124, 102);
 
         moreRights = new Item(Culori.notAvailable, 100, "More Rights");//first time +0.9 CP and unlocks 3 upgrades
         moreRights.setBounds(225, 5, 150, 110);
@@ -74,9 +73,12 @@ public class ClickerFrame extends JFrame {
         loadProgress();
         add(pc);
 
+        updateComponents();
+
         //ADMIN COMMANDS
         pc.setFocusable(true);
         KeyListener hecu = new KeyAdapter() {
+            int x;
             @Override
             public void keyPressed(KeyEvent e) {
                 if(e.getKeyCode() == KeyEvent.VK_K)
@@ -132,6 +134,7 @@ public class ClickerFrame extends JFrame {
                 }
 
                 bonus.setBounds(rand.nextInt(20, 530), 300, 50, 78);
+                bonus.update(getX(),getY());
                 updateProgress();
             }
             
@@ -262,7 +265,6 @@ public class ClickerFrame extends JFrame {
                 if(e.getButton() == MouseEvent.BUTTON1)
                     clickButton.recolor(new Color(180, 180, 180));
                 mouseOut = false;
-                System.out.println(pc.getWidth());
             }
 
             @Override
@@ -284,6 +286,23 @@ public class ClickerFrame extends JFrame {
             }
             @Override public void mouseExited(MouseEvent e) {mouseOut = true;}
         });
+
+        addComponentListener(new ComponentAdapter() {// 2 second delay for updating components after the last window resize event
+            private Timer resizeTimer;
+
+            @Override
+            public void componentResized(ComponentEvent e) {
+                if (resizeTimer != null && resizeTimer.isRunning()) {
+                    resizeTimer.restart(); // Restart the timer if it's already running
+                } else {
+                    resizeTimer = new Timer(1000, actionEvent -> updateComponents());
+                    resizeTimer.setRepeats(false); // Only execute once
+                    resizeTimer.start();
+                }
+                updateComponents();//scoate dupa testing
+            }
+        });
+
     }
 
     public static void main(String[] args){
@@ -389,13 +408,29 @@ public class ClickerFrame extends JFrame {
             else item.recolor(Culori.notAvailable);
         }
     }
+    void updateComponents() {
+        int x = getX(); x -= x % 4;//for alignment
+        int y = getY(); y -= y % 4;
+
+        for(Item item : upgradeList)
+            if(item.isVisible() && pc.isAncestorOf(item))
+                item.update(x, y);
+
+        clickButton.update(x, y);
+        border.update(x, y);
+        count.update(x, y);
+    }
     void expansion() {
         setResizable(true);
+        int x;
     }
 
     void cps() {
         Thread cpsThread = new Thread(() -> {
             while (cpsVal > 0) {
+                if(!isFocused())
+                    return;
+
                 clicks += cpsVal;
                 count.update(clicks);
                 updateProgress();

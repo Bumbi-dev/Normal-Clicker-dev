@@ -8,9 +8,10 @@ public class IntroFrame extends JFrame {
     JButton Continue, newGame;
     JLabel intro;
     JPanel mp, bp;
+
     boolean wait = true;
 
-    public IntroFrame() throws InterruptedException {
+    public IntroFrame(){
         // Initialization
         super("Intro");
         setVisible(true);
@@ -42,7 +43,9 @@ public class IntroFrame extends JFrame {
         typing("Loading.", "..", 2);
 
         while(wait) {System.out.print(' '); System.out.print('\b');}
-        Thread.sleep(1050);
+
+        try {Thread.sleep(1050);}
+        catch (InterruptedException ignored){}
 
         mp.setBounds(0, 0, 585, 100);
         Continue.setBounds(100, 180, 150, 80);
