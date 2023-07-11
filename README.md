@@ -1,1 +1,1 @@
-When the window is resized the buttons remain in place
+When the window is resized the buttons remain in place + some translation
