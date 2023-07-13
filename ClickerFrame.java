@@ -12,6 +12,7 @@ public class ClickerFrame extends JFrame {
     Random rand = new Random();
     Instant startTime;
 
+    Progresu ps;
     Counter count;
     ClickableSquare clickButton;
     Border border;
@@ -70,9 +71,9 @@ public class ClickerFrame extends JFrame {
         pc.add(clickButton);
         pc.add(border);
 
+        ps = new Progresu(this);
         loadProgress();
         add(pc);
-
         updateComponents();
 
         //ADMIN COMMANDS
@@ -91,7 +92,8 @@ public class ClickerFrame extends JFrame {
                     player.save();
                     dispose();
 
-                    new ClickerFrame();
+                    ClickerFrame cf = new ClickerFrame();
+                    cf.setVisible(true);
                 }
 
                 updateProgress();
@@ -115,6 +117,7 @@ public class ClickerFrame extends JFrame {
                 clicks = 0;
                 clickPower = 0.1f;
 
+
                 updateProgress();
             }
         });
@@ -124,7 +127,6 @@ public class ClickerFrame extends JFrame {
             public void mouseReleased(MouseEvent e) {
                 if(e.getButton() != MouseEvent.BUTTON1)
                     return;
-
                 if(!moreRights.isBought) {
                     clicks += 20;
                     bonus.setVisible(false);
@@ -281,7 +283,6 @@ public class ClickerFrame extends JFrame {
                 clicks += clickPower; //clickpower += clickpower * (rebirth + 1)
 
                 updateProgress();
-
                 checkAuto();
             }
             @Override public void mouseExited(MouseEvent e) {mouseOut = true;}
@@ -289,20 +290,17 @@ public class ClickerFrame extends JFrame {
 
         addComponentListener(new ComponentAdapter() {// 2 second delay for updating components after the last window resize event
             private Timer resizeTimer;
-
             @Override
             public void componentResized(ComponentEvent e) {
                 if (resizeTimer != null && resizeTimer.isRunning()) {
                     resizeTimer.restart(); // Restart the timer if it's already running
                 } else {
-                    resizeTimer = new Timer(1000, actionEvent -> updateComponents());
+                    resizeTimer = new Timer(500, actionEvent -> updateComponents());
                     resizeTimer.setRepeats(false); // Only execute once
                     resizeTimer.start();
                 }
-                updateComponents();//scoate dupa testing
             }
         });
-
     }
 
     public static void main(String[] args){
@@ -319,95 +317,10 @@ public class ClickerFrame extends JFrame {
         cf.setVisible(true);
     }
 
-
     void updateProgress() {
-        //tutorial
-        count.update(clicks);//until the first 10 clicks only the button is visible
-        if(!rights.isBought) {
-            if (clicks < 10)
-                return;
-
-            pc.add(rights);
-            pc.repaint();
-        } else {
-            pc.add(count);
-            tutorialDone = true;
-        }
-        if(!tutorialDone)  //when count appears the tutorial is done, until then you can't make progress
-            return;
-
-        /**------  INTERESTING THINGS  ---------**/
-        if(!moreRights.isBought) {// Suspense until 25 clicks, nothing on the screen, then "moreRights" appears
-            if (clicks >= 25) {
-                pc.add(moreRights);
-            }
-            if (clicks > 100) {
-                clicks = 100;
-                count.update(clicks);
-                moreRights.recolor(Culori.available);
-            }
-            if(clicks >= moreRights.price) {
-                moreRights.recolor(Culori.available);
-            } else moreRights.recolor(Culori.notAvailable);
-
-            if((int)clicks == 50) {
-                pc.add(bonus);
-            }
-            pc.repaint();
-            return;
-        } else pc.add(moreRights);
-
-        if(clicks < 10 && !(lessRights.isBought || hack.isBought || clickPower >= 2)) {//after another 10 clicks the other buttons appear
-            bonus.setVisible(false);
-            bonus.setBounds(100, 300, 50, 78);
-            return;
-        }
-        // Important buttons
-        pc.add(lessRights);
-        pc.add(question);
-        pc.add(hack);
-        pc.add(scam);
-        pc.repaint();
-
-        if(clicks >= 25_000 && !bonus.isBought)
-            bonus.setVisible(true);
-        if(clicks >= 50_000) {
-            bonus.setVisible(false);
-            bonus.isBought = true;
-        }
-
-        if(!question.desc.getText().equals("???") && clickPower > 1) {
-            updateVisibility();
-            return;
-        }
-
-        question.add(question.buton);
-        question.add(question.border);
-
-        clicks = Math.min(255, clicks);// The outline slowly darkens until it is pitch black
-        int x =(int) (255 - clicks);
-
-        question.border.recolor(new Color(x, x, x));
-
-        if(question.isBought) {
-            expansion();
-            question.recolor(Culori.question);
-        }
-        count.setVisible(false);
+        ps.updateProgress1();
     }
-    void updateVisibility() {//If the button is affordable it makes them green, if not red
-        if(clicks >= lessRights.price)
-            lessRights.recolor(Culori.available);
-        else lessRights.recolor(Culori.notAvailable);
 
-        for(Item item: upgradeList) {
-            if(item.equals(bonus) || item.equals(question))
-                return;
-            if (clicks >= item.price)
-                item.recolor(Culori.available);
-            else item.recolor(Culori.notAvailable);
-        }
-    }
     void updateComponents() {
         int x = getX(); x -= x % 4;//for alignment
         int y = getY(); y -= y % 4;
@@ -419,10 +332,6 @@ public class ClickerFrame extends JFrame {
         clickButton.update(x, y);
         border.update(x, y);
         count.update(x, y);
-    }
-    void expansion() {
-        setResizable(true);
-        int x;
     }
 
     void cps() {

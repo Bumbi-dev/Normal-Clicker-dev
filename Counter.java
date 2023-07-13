@@ -54,7 +54,7 @@ public class Counter extends JLabel {
         repaint();
     }
 
-    public void update(int x1, int x2) {
-        super.setBounds(m.panelVariableX + x - x1, m.panelVariableY + y - x2, width, height);
+    public void update(int x1, int y1) {
+        super.setBounds(m.panelVariableX + x - x1, m.panelVariableY + y - y1, width, height);
     }
 }
