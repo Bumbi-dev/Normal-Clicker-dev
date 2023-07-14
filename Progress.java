@@ -1,7 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class Progresu {
+public class Progress {
     ClickerFrame cf;
 
     JPanel pc;
@@ -13,11 +13,11 @@ public class Progresu {
     boolean tutorialDone = false, negativeUnlocked;
     double clicks, clickPower;
 
-    public Progresu (ClickerFrame cf) {
+    public Progress (ClickerFrame cf) {
         this.cf = cf;
     }
 
-    void updateProgress1() {
+    void updateProgress() {
         getVariables();
         count.update(clicks);
         //tutorial
@@ -95,19 +95,16 @@ public class Progresu {
     }
 
     void updateVisibility() {//If the button is affordable it makes them green, if not red
-        if(clicks >= lessRights.price)
-            lessRights.recolor(Culori.available);
-        else lessRights.recolor(Culori.notAvailable);
-
         for(Item item: upgradeList) {
-            if(item.equals(bonus) || item.equals(question)) {
-                setVariables(); return;
+            if(item.equals(bonus) || item.equals(question) || item.equals(rights)) {
+                continue;
             }
+
             if (clicks >= item.price)
                 item.recolor(Culori.available);
             else item.recolor(Culori.notAvailable);
         }
-         setVariables(); return;
+        setVariables();
     }
 
     void expansion() {

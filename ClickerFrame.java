@@ -12,7 +12,7 @@ public class ClickerFrame extends JFrame {
     Random rand = new Random();
     Instant startTime;
 
-    Progresu ps;
+    Progress ps;
     Counter count;
     ClickableSquare clickButton;
     Border border;
@@ -28,6 +28,7 @@ public class ClickerFrame extends JFrame {
         super("Normal Clicker");
         setSize(600, 400);
         setLocationRelativeTo(null);
+        setResizable(false);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         exiting();
 
@@ -71,7 +72,7 @@ public class ClickerFrame extends JFrame {
         pc.add(clickButton);
         pc.add(border);
 
-        ps = new Progresu(this);
+        ps = new Progress(this);
         loadProgress();
         add(pc);
         updateComponents();
@@ -136,7 +137,7 @@ public class ClickerFrame extends JFrame {
                 }
 
                 bonus.setBounds(rand.nextInt(20, 530), 300, 50, 78);
-                bonus.update(getX(),getY());
+                updateComponents();
                 updateProgress();
             }
             
@@ -318,7 +319,7 @@ public class ClickerFrame extends JFrame {
     }
 
     void updateProgress() {
-        ps.updateProgress1();
+        ps.updateProgress();
     }
 
     void updateComponents() {
@@ -332,6 +333,11 @@ public class ClickerFrame extends JFrame {
         clickButton.update(x, y);
         border.update(x, y);
         count.update(x, y);
+
+        if(question.isBought) {
+            question.setVisible(false);
+            count.setVisible(true);
+        }
     }
 
     void cps() {
@@ -353,10 +359,8 @@ public class ClickerFrame extends JFrame {
         cpsThread.start();
     }
     void checkAuto() {//peacefully check if you are using an autoclicker
-
         if(ct == 0)
             startTime = Instant.now();
-
         ct++;
 
         if(ct == 15) {
