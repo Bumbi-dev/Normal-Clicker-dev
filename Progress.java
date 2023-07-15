@@ -3,7 +3,6 @@ import java.awt.*;
 
 public class Progress {
     ClickerFrame cf;
-
     JPanel pc;
 
     Counter count;
@@ -25,6 +24,7 @@ public class Progress {
             if (clicks < 10) {
                 setVariables(); return;
             }
+            System.out.println("a");
             pc.add(rights);
             pc.repaint();
         } else {
@@ -88,11 +88,13 @@ public class Progress {
         question.border.recolor(new Color(x, x, x));
 
         if(question.isBought) {
-            expansion();
+            cf.setResizable(true);
+            //pc.add button, when that button is bought unlock the counter, set click to 0, set clickpower to 0
             question.recolor(Culori.question);
         }
         count.setVisible(false);
     }
+
 
     void updateVisibility() {//If the button is affordable it makes them green, if not red
         for(Item item: upgradeList) {
@@ -106,11 +108,55 @@ public class Progress {
         }
         setVariables();
     }
+    void loadProgress() {//get the progress from file
+        getVariables();
+        Player player = new Player();
+        player.loadProgress();
 
-    void expansion() {
-        cf.setResizable(true);
-        //pc.add button, when that button is bought unlock the counter, set click to 0, set clickpower to 0
-        //pc.add
+        clicks = player.clicks;
+        clickPower = player.clickPower;
+        moreRights.setPrice(player.price);
+
+        upgradeList = new Item[]{rights, moreRights, scam, hack, bonus, lessRights, question};
+        cf.upgradeList = upgradeList;
+
+        for (Item item : upgradeList) {
+            if (player.upgradeuri.contains(item.name)) {
+                item.isBought = true;
+                if(!item.equals(moreRights))
+                    item.setVisible(false);
+            }
+        }
+        question.isBought = player.upgradeuri.contains("???");
+
+        if(scam.isBought) {
+            lessRights.setPrice(lessRights.price * 10);
+            hack.setPrice(hack.price * 10);
+
+            question.addText("?");
+        }
+        if(hack.isBought) {
+            question.addText("?");
+            hack.setVisible(true);
+            cf.cps();
+            hack.setPrice(1000);
+        }
+        if(lessRights.isBought) {
+            cf.cpsVal = 0;
+
+            moreRights.setVisible(false);
+            hack.setVisible(false);
+            scam.setVisible(false);
+
+            question.add(question.buton);
+            question.add(question.border);
+            question.desc.setText("???");
+        }
+
+        question.setVisible(true);
+
+        setVariables();
+        updateProgress();
     }
 
     void getVariables() {
@@ -130,7 +176,6 @@ public class Progress {
         clicks = cf.clicks;
         clickPower = cf.clickPower;
     }
-
     void setVariables() {
         cf.pc = pc;
 

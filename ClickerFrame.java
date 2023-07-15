@@ -73,7 +73,7 @@ public class ClickerFrame extends JFrame {
         pc.add(border);
 
         ps = new Progress(this);
-        loadProgress();
+        ps.loadProgress();
         add(pc);
         updateComponents();
 
@@ -289,14 +289,14 @@ public class ClickerFrame extends JFrame {
             @Override public void mouseExited(MouseEvent e) {mouseOut = true;}
         });
 
-        addComponentListener(new ComponentAdapter() {// 2 second delay for updating components after the last window resize event
+        addComponentListener(new ComponentAdapter() {// delay for updating components after the last window resize event
             private Timer resizeTimer;
             @Override
             public void componentResized(ComponentEvent e) {
                 if (resizeTimer != null && resizeTimer.isRunning()) {
                     resizeTimer.restart(); // Restart the timer if it's already running
                 } else {
-                    resizeTimer = new Timer(500, actionEvent -> updateComponents());
+                    resizeTimer = new Timer(300, actionEvent -> updateComponents());
                     resizeTimer.setRepeats(false); // Only execute once
                     resizeTimer.start();
                 }
@@ -377,53 +377,6 @@ public class ClickerFrame extends JFrame {
         }
     }
 
-    void loadProgress() {//get the progress from file
-        Player player = new Player();
-        player.loadProgress();
-
-        clicks = player.clicks;
-        clickPower = player.clickPower;
-        moreRights.setPrice(player.price);
-
-        upgradeList = new Item[]{rights, moreRights, scam, hack, bonus, lessRights, question};
-
-        for (Item item : upgradeList) {
-            if (player.upgradeuri.contains(item.name)) {
-                item.isBought = true;
-                if(!item.equals(moreRights))
-                    item.setVisible(false);
-            }
-        }
-        question.isBought = player.upgradeuri.contains("???");
-
-        if(scam.isBought) {
-            lessRights.setPrice(lessRights.price * 10);
-            hack.setPrice(hack.price * 10);
-
-            question.addText("?");
-        }
-        if(hack.isBought) {
-            question.addText("?");
-            hack.setVisible(true);
-            cps();
-            hack.setPrice(1000);
-        }
-        if(lessRights.isBought) {
-            cpsVal = 0;
-
-            moreRights.setVisible(false);
-            hack.setVisible(false);
-            scam.setVisible(false);
-
-            question.add(question.buton);
-            question.add(question.border);
-            question.desc.setText("???");
-        }
-
-        question.setVisible(true);
-
-        updateProgress();
-    }
     void exiting() {//saving in file when exit
         addWindowListener(new WindowAdapter() {
             @Override
