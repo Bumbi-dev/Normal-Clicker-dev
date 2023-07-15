@@ -109,7 +109,7 @@ public class Progress {
 
     void expansion() {
         cf.setResizable(true);
-        //pc.add
+        //pc.add button, when that button is bought unlock the counter, set click to 0, set clickpower to 0
         //pc.add
     }
 

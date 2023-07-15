@@ -336,7 +336,6 @@ public class ClickerFrame extends JFrame {
 
         if(question.isBought) {
             question.setVisible(false);
-            count.setVisible(true);
         }
     }
 
