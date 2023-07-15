@@ -26,10 +26,11 @@ public class Credits extends JPanel implements ActionListener {
 
 
         text =  "CONGRATULATIONS!\n\n" +
-                "You finished the first ENDING\n\n\n" +
-                "\"A Normal Clicker\"\n" +
-                "made by Manu\n\n\n" +
-                "Tested by:\n" +
+                "You finished the first ENDING\n\n\n" +//You finished ENDING ending / 10
+                "\"A Normal Clicker\"\n\n\n" +
+                "DEVELOPER:               \n" +
+                "Manu\n\n\n" +
+                "TESTER:                      \n" +
                 "Dani\n\n\n\n\n" +
                 "Thank you for playing!";
 

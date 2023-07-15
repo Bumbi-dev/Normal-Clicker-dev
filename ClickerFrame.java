@@ -252,7 +252,6 @@ public class ClickerFrame extends JFrame {
 
                 if(question.butonColor.equals(Culori.question)) {//first real ending
                     dispose();
-
                     new Credits(1);
                 }
             }
