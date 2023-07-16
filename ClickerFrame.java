@@ -16,7 +16,7 @@ public class ClickerFrame extends JFrame {
     Counter count;
     ClickableSquare clickButton;
     Border border;
-    Item rights, moreRights, bonus, question, lessRights, hack, scam;
+    Item rights, moreRights, bonus, question, lessRights, hack, scam, recovery;
     Item[] upgradeList;
 
     boolean tutorialDone = false, negativeUnlocked;
@@ -32,7 +32,8 @@ public class ClickerFrame extends JFrame {
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         exiting();
 
-        //Components
+        /**          Components           */
+        //button
         int width = 202;
         int squareX = (getWidth() - width) / 2;
 
@@ -44,7 +45,7 @@ public class ClickerFrame extends JFrame {
         count = new Counter(clicks); count.setBounds(squareX , 115, width, 50);
         count.setVisible(false);
 
-        //upgrades
+        //Upgrades
         rights = new Item(Culori.available, 0, "Rights");//+ 0.1 CP (clickPower)
         rights.setBounds(430, 35, 124, 102);
 
@@ -57,7 +58,7 @@ public class ClickerFrame extends JFrame {
         scam = new Item(Culori.notAvailable, 750, "Scam");//make everything more expensive + 10 CP
         scam.setBounds(35, 190, 130, 110);
 
-        hack = new Item(Culori.notAvailable, 1500, "Hack");//clicks per second - 5 first time, then 10
+        hack = new Item(Culori.notAvailable, 1500, "Hack");//clicks per second +5 first time, then +10
         hack.setBounds(35, 70, 130, 110);
 
         lessRights = new Item(Culori.notAvailable, 7000, "Less Rights");//makes everything disappear except question
@@ -65,6 +66,9 @@ public class ClickerFrame extends JFrame {
 
         question = new Item(Culori.backround, 0, "");
         question.setBounds(440, 190, 100, 150); //until you afford it it is transparent
+
+        recovery = new Item(Culori.available, 0, "RECOVERY");
+        recovery.setBounds(-460, -215, 130, 110);
 
         //Adding components
         pc = new JPanel();
@@ -96,7 +100,6 @@ public class ClickerFrame extends JFrame {
                     ClickerFrame cf = new ClickerFrame();
                     cf.setVisible(true);
                 }
-
                 updateProgress();
             }
         };
@@ -105,7 +108,7 @@ public class ClickerFrame extends JFrame {
 
         /**-_-_-_-_-_-_- FUNCTIONALITY -_-_-_-_-_-_-_-*/
 
-        rights.buton.addMouseListener(new MouseAdapter(){
+        rights.button.addMouseListener(new MouseAdapter(){
             boolean x;// for better looking code
             @Override
             public void mouseReleased(MouseEvent e) {
@@ -118,11 +121,10 @@ public class ClickerFrame extends JFrame {
                 clicks = 0;
                 clickPower = 0.1f;
 
-
                 updateProgress();
             }
         });
-        bonus.buton.addMouseListener(new MouseAdapter() {
+        bonus.button.addMouseListener(new MouseAdapter() {
             boolean x;
             @Override
             public void mouseReleased(MouseEvent e) {
@@ -142,12 +144,17 @@ public class ClickerFrame extends JFrame {
             }
             
         });
-        moreRights.buton.addMouseListener(new MouseAdapter() {
+        moreRights.button.addMouseListener(new MouseAdapter() {
             boolean x;
             @Override
             public void mouseReleased(MouseEvent e) {
                 if(e.getButton() != MouseEvent.BUTTON1 || clicks < moreRights.price)
                     return;
+
+                if(ps.noStress) {
+                    moreRights.setVisible(false);
+                    moreRights.setDesc("More Rights");
+                }
 
                 if(!moreRights.isBought) {
                     clicks = 0;
@@ -170,7 +177,7 @@ public class ClickerFrame extends JFrame {
             
         });
 
-        lessRights.buton.addMouseListener(new MouseAdapter() {
+        lessRights.button.addMouseListener(new MouseAdapter() {
             boolean x;
             @Override
             public void mouseReleased(MouseEvent e) {
@@ -194,7 +201,7 @@ public class ClickerFrame extends JFrame {
             }
             
         });
-        hack.buton.addMouseListener(new MouseAdapter() {
+        hack.button.addMouseListener(new MouseAdapter() {
             boolean x;
             @Override
             public void mouseReleased(MouseEvent e) {
@@ -216,7 +223,7 @@ public class ClickerFrame extends JFrame {
             }
             
         });
-        scam.buton.addMouseListener(new MouseAdapter() {
+        scam.button.addMouseListener(new MouseAdapter() {
             boolean x;
             @Override
             public void mouseReleased(MouseEvent e) {
@@ -241,13 +248,15 @@ public class ClickerFrame extends JFrame {
             
         });
 
-        question.buton.addMouseListener(new MouseAdapter() {//ending
+        question.button.addMouseListener(new MouseAdapter() {//ending
             boolean x;
             @Override
             public void mouseReleased(MouseEvent e) {
 
                 if(question.border.color.equals(Color.black)) {
                     question.isBought = true;
+                    clicks = 0;
+                    clickPower = 1;
                 }
 
                 if(question.butonColor.equals(Culori.question)) {//first real ending
@@ -256,6 +265,17 @@ public class ClickerFrame extends JFrame {
                 }
             }
             
+        });
+
+        recovery.button.addMouseListener(new MouseAdapter() {
+            boolean x;
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                super.mouseReleased(e);
+                recovery.isBought = true;
+                recovery.setVisible(false);
+                ps.noStress();
+            }
         });
 
         //the button
@@ -301,6 +321,7 @@ public class ClickerFrame extends JFrame {
                 }
             }
         });
+
     }
 
     public static void main(String[] args){
@@ -392,8 +413,6 @@ public class ClickerFrame extends JFrame {
                     for (Item item : upgradeList)
                         if (item.isBought) {
                             upgradeuri.append(item.name);
-                            if(item.equals(question))
-                                upgradeuri.append("???");
                         }
 
                     Player player = new Player(clicks, clickPower, moreRights.price, upgradeuri.toString());

@@ -10,7 +10,7 @@ public class Item extends JPanel {
     Color borderColor = Culori.border;
 
     Border border;
-    ClickableSquare buton;
+    ClickableSquare button;
     MyConstants m = new MyConstants();
 
     String name = "";
@@ -32,43 +32,44 @@ public class Item extends JPanel {
         border =  new Border();
 
         if(prais != 0)
-            buton = new ClickableSquare(String.valueOf(prais), color);
+            button = new ClickableSquare(String.valueOf(prais), color);
         else
-            buton = new ClickableSquare(color);
+            button = new ClickableSquare(color);
 
         desc = new JLabel(name); desc.setFont(new Font("Montserrat", Font.PLAIN, 20));
         desc.setHorizontalAlignment(SwingConstants.CENTER);
 
         if(!name.equals("")) {
-            add(buton);
+            add(button);
             add(border);
         }
         if(!name.equals("bonus"))
             add(desc);
 
         /**** Functionalitate ****/
-        buton.addMouseListener(new MouseAdapter() {
+        button.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
                 if(e.getButton() != MouseEvent.BUTTON1)
                     return;
                 if (!butonColor.equals(Culori.backround))// pushing effect
-                    buton.recolor(butonColor.darker());
+                    button.recolor(butonColor.darker());
             }
 
             @Override
-            public void mouseReleased(MouseEvent e) {buton.recolor(butonColor);}
+            public void mouseReleased(MouseEvent e) {
+                button.recolor(butonColor);}
         });
     }
 
     public void recolor(Color color) {
         this.butonColor = color;
-        buton.recolor(color);
+        button.recolor(color);
         repaint();
     }
 
     public void setPrice(int price) {
-        buton.setText(String.valueOf(price));
+        button.setText(String.valueOf(price));
         this.price = price;
     }
 
@@ -87,6 +88,12 @@ public class Item extends JPanel {
         repaint();
     }
 
+    public void setDesc(String text) {
+        desc.setText(text);
+        add(desc);
+        repaint();
+    }
+
     @Override
     public void setBounds(int x, int y, int width, int height) {
         this.x = x - x % 4 + 3;//Algorithm for matching outline
@@ -97,14 +104,14 @@ public class Item extends JPanel {
         reshape(this.x, this.y , this.width, this.height);
 
         border.setBounds(0, 30, width, height - 30); //2 pixels width
-        buton.setBounds(2, 32, width - 5, height - 35);
+        button.setBounds(2, 32, width - 5, height - 35);
         desc.setBounds(0, 0, width, 30);
 
         if(name.equals("bonus")) {
             remove(desc);
             desc.setVisible(false);
             border.setBounds(0, 0, width, height - 29);
-            buton.setBounds(2, 3, width - 5, height - 34);
+            button.setBounds(2, 3, width - 5, height - 34);
         }
     }
 
