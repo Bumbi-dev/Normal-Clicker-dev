@@ -8,7 +8,7 @@ public class Credits extends JPanel implements ActionListener {
     JFrame window;
     Timer timer = new Timer(20, this);
 
-    String text;
+    String text = "";
     int textY = 400;
 
     public Credits(int ending) {
@@ -24,10 +24,13 @@ public class Credits extends JPanel implements ActionListener {
         window.setLocationRelativeTo(null);
         window.setVisible(true);
 
+        switch (ending) {
+            case 1 -> text = "You finished the Normal ENDING";
+            case 2 -> text = "F\n\nYou finished the Bad ENDING";
+            case 3 -> text = "CONGRATULATIONS!\n\nYou finished the Good ENDING";
+        }
 
-        text =  "CONGRATULATIONS!\n\n" +
-                "You finished the first ENDING\n\n\n" +//You finished ENDING ending / 10
-                "\"A Normal Clicker\"\n\n\n" +
+        text += "\n\n\n\"A Normal Clicker\"\n\n\n" +
                 "DEVELOPER:               \n" +
                 "Manu\n\n\n" +
                 "TESTER:                      \n" +

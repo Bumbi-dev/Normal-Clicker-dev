@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.io.PrintStream;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Progress {
@@ -7,10 +8,11 @@ public class Progress {
     JPanel pc;
 
     Counter count;
-    Item rights, moreRights, bonus, question, lessRights, hack, scam, recovery;
+    Item rights, moreRights, bonus, question, lessRights, hack, scam, recovery, buyOrDie;
     Item[] upgradeList;
 
     boolean tutorialDone = false, negativeUnlocked, noStress = false;
+    int x;
     double clicks, clickPower;
 
     public Progress (ClickerFrame cf) {
@@ -84,18 +86,17 @@ public class Progress {
             return;
         }
 
-        question.add(question.button);
-        question.add(question.border);
+        if(!recovery.isBought)
+            count.setVisible(false);
 
-        count.setVisible(false);
+        if(!question.isBought) {
+            clicks = Math.min(255, clicks);// The outline slowly darkens until it is pitch black
+            int x = (int) (255 - clicks);
 
-        if (!question.isBought) {
-        clicks = Math.min(255, clicks);// The outline slowly darkens until it is pitch black
-        int x = (int) (255 - clicks);
-
-        question.border.recolor(new Color(x, x, x));
-
-        return;
+            question.add(question.button);
+            question.add(question.border);
+            question.border.recolor(new Color(x, x, x));
+            return;
         }
 
         cf.setResizable(true);
@@ -103,47 +104,52 @@ public class Progress {
         pc.add(recovery);
 
         if(noStress) {
+            if(x > 5)
+                if (clicks + 9 >= buyOrDie.price)
+                    buyOrDie.setPrice(++buyOrDie.price);
 
             updateVisibility();
-            return;
+            setVariables(); return;
         }
-
 
     }
 
-    void noStress() {
-        moreRights.setVisible(true);
-        moreRights.setPrice(100);
-        moreRights.recolor(Culori.notAvailable);
+    void noStress() {// "minigame" - if you don't buy the item before the timer runs out you "die" / get bad ending, the price increases as you approach it and when there are 5 seconds left the clicks are reset to 100, but the price stays the same
+        buyOrDie.setVisible(true);
+        buyOrDie.setPrice(100);
+        buyOrDie.recolor(Culori.notAvailable);
         AtomicInteger x = new AtomicInteger(100);
 
         Thread cpsThread = new Thread(() -> {
             noStress = true;
-            while(x.get() > 0) {
+            cf.updateComponents();
+            while(x.get() > 0 && noStress) {
                 getVariables();
-                moreRights.setDesc("Buy or Die: " + x.decrementAndGet() + "s");
-                cf.updateComponents();
+                buyOrDie.setDesc("Buy or Die: " + x.decrementAndGet() + "s");//displays the time left
 
                 pc.repaint();
-                setVariables();
 
-                if(x.get() < 95 && !cf.isVisible())
+                if(x.get() < 95 && !cf.isVisible())//if the windows is closed the thread is stopped
                     break;
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+                this.x = x.get();
+
+                if(this.x == 5) {
+                    clicks = 100;
+                    count.update(clicks);
+                    updateVisibility();
+                }
             }
-            if(cf.isVisible()) {
+            if(cf.isVisible() && noStress) {
                 cf.dispose();
-                new Credits(2);//bad ending
+                new Credits(2);//Bad ENDING
             }
-            noStress = false;
         });
 
-
-        pc.repaint();
         cpsThread.start();
     }
 
@@ -167,16 +173,16 @@ public class Progress {
         clickPower = player.clickPower;
         moreRights.setPrice(player.price);
 
-        upgradeList = new Item[]{rights, moreRights, scam, hack, bonus, lessRights, question, recovery};
+        upgradeList = new Item[]{rights, moreRights, scam, hack, bonus, lessRights, question, recovery, buyOrDie};
         cf.upgradeList = upgradeList;
 
-        for (Item item : upgradeList) {
+        for (Item item : upgradeList)
             if (player.upgradeuri.contains(item.name)) {
                 item.isBought = true;
                 if(!item.equals(moreRights))
                     item.setVisible(false);
             }
-        }
+
         question.isBought = player.upgradeuri.contains("???");
 
         if(scam.isBought) {
@@ -198,13 +204,16 @@ public class Progress {
             hack.setVisible(false);
             scam.setVisible(false);
 
-            question.add(question.button);
-            question.add(question.border);
-            question.desc.setText("???");
-        }
-        if(recovery.isBought)
-            noStress();
+            question.setText("???");
 
+            if(!question.isBought) {
+                question.add(question.button);
+                question.add(question.border);
+            }
+        }
+        if(recovery.isBought) {
+            noStress();
+        }
         question.setVisible(true);
 
         setVariables();
@@ -222,6 +231,7 @@ public class Progress {
         hack = cf.hack;
         scam = cf.scam;
         recovery = cf.recovery;
+        buyOrDie = cf.buyOrDie;
         upgradeList = cf.upgradeList;
 
         tutorialDone = cf.tutorialDone;
@@ -240,7 +250,9 @@ public class Progress {
         cf.lessRights = lessRights;
         cf.hack = hack;
         cf.scam = scam;
-        recovery = cf.recovery;
+        cf.recovery = recovery;
+        cf.buyOrDie = buyOrDie;
+
         cf.upgradeList = upgradeList;
 
         cf.tutorialDone = tutorialDone;

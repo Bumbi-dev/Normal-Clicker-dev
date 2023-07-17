@@ -16,7 +16,8 @@ public class ClickerFrame extends JFrame {
     Counter count;
     ClickableSquare clickButton;
     Border border;
-    Item rights, moreRights, bonus, question, lessRights, hack, scam, recovery;
+    Item rights, moreRights, bonus, question, lessRights, hack, scam, recovery, buyOrDie;
+    //when adding a new item, add them in the set/getVariables in Progress class and in the upgradelist
     Item[] upgradeList;
 
     boolean tutorialDone = false, negativeUnlocked;
@@ -70,6 +71,9 @@ public class ClickerFrame extends JFrame {
         recovery = new Item(Culori.available, 0, "RECOVERY");
         recovery.setBounds(-460, -215, 130, 110);
 
+        buyOrDie = new Item(Culori.notAvailable, 100, "Buy or Die");
+        buyOrDie.setBounds(225, 5, 150, 110);
+
         //Adding components
         pc = new JPanel();
         pc.setLayout(null);
@@ -112,7 +116,7 @@ public class ClickerFrame extends JFrame {
             boolean x;// for better looking code
             @Override
             public void mouseReleased(MouseEvent e) {
-                if(e.getButton() != MouseEvent.BUTTON1)
+                if(e.getButton() != MouseEvent.BUTTON1)//can only be clicked with left click
                     return;
 
                 rights.isBought = true;
@@ -150,11 +154,6 @@ public class ClickerFrame extends JFrame {
             public void mouseReleased(MouseEvent e) {
                 if(e.getButton() != MouseEvent.BUTTON1 || clicks < moreRights.price)
                     return;
-
-                if(ps.noStress) {
-                    moreRights.setVisible(false);
-                    moreRights.setDesc("More Rights");
-                }
 
                 if(!moreRights.isBought) {
                     clicks = 0;
@@ -194,6 +193,7 @@ public class ClickerFrame extends JFrame {
                 moreRights.setVisible(false);
                 hack.setVisible(false);
                 scam.setVisible(false);
+                bonus.setVisible(false);
 
                 question.setText("???");
 
@@ -252,6 +252,8 @@ public class ClickerFrame extends JFrame {
             boolean x;
             @Override
             public void mouseReleased(MouseEvent e) {
+                if(e.getButton() != MouseEvent.BUTTON1)
+                    return;
 
                 if(question.border.color.equals(Color.black)) {
                     question.isBought = true;
@@ -259,9 +261,9 @@ public class ClickerFrame extends JFrame {
                     clickPower = 1;
                 }
 
-                if(question.butonColor.equals(Culori.question)) {//first real ending
+                if(question.butonColor.equals(Culori.question)) {
                     dispose();
-                    new Credits(1);
+                    new Credits(1);//Normal ENDING
                 }
             }
             
@@ -271,10 +273,33 @@ public class ClickerFrame extends JFrame {
             boolean x;
             @Override
             public void mouseReleased(MouseEvent e) {
-                super.mouseReleased(e);
+                if(e.getButton() != MouseEvent.BUTTON1)
+                    return;
+
                 recovery.isBought = true;
                 recovery.setVisible(false);
+                pc.add(buyOrDie);
+
+                clicks = 0;
+                clickPower = 1;
+
+                count.setVisible(true);
+                count.update(clicks);
                 ps.noStress();
+            }
+        });
+        buyOrDie.button.addMouseListener(new MouseAdapter() {
+            boolean x;
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                if(e.getButton() != MouseEvent.BUTTON1 || clicks < buyOrDie.price)
+                    return;
+
+                new Credits(3);//Good Ending
+                ps.noStress = false;
+                buyOrDie.setVisible(false);
+
+                updateProgress();
             }
         });
 
@@ -411,11 +436,12 @@ public class ClickerFrame extends JFrame {
                 if (promptResult == 0) {
                     StringBuilder upgradeuri = new StringBuilder();
                     for (Item item : upgradeList)
-                        if (item.isBought) {
+                        if (item.isBought)
                             upgradeuri.append(item.name);
-                        }
 
                     Player player = new Player(clicks, clickPower, moreRights.price, upgradeuri.toString());
+                    if(ps.noStress)//resets everything if you try to save when you're in the minigame
+                        player = new Player();
                     player.save();
                 }
                 dispose();

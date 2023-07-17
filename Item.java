@@ -18,21 +18,20 @@ public class Item extends JPanel {
     int price;
     int x, y, width, height;
 
-    public Item(Color color, int prais, String name) {
+    public Item(Color color, int price, String name) {
         setLayout(null);
         this.butonColor = color;
         this.name = name;
-        this.price = prais;
-
+        this.price = price;
         if(name.equals("")) {
-            prais = 0;//makes price invisible
+            price = 0;//makes price invisible
             borderColor = Culori.backround;
         }
 
         border =  new Border();
 
-        if(prais != 0)
-            button = new ClickableSquare(String.valueOf(prais), color);
+        if(price != 0)
+            button = new ClickableSquare(String.valueOf(price), color);
         else
             button = new ClickableSquare(color);
 
@@ -71,6 +70,7 @@ public class Item extends JPanel {
     public void setPrice(int price) {
         button.setText(String.valueOf(price));
         this.price = price;
+        repaint();
     }
 
     public void addText(String text) {
