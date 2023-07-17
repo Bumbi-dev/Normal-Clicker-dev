@@ -237,9 +237,9 @@ public class ClickerFrame extends JFrame {
                 clickPower += 10;
 
                 lessRights.setPrice(lessRights.price * 10);
+                moreRights.setPrice((int) (moreRights.price * 1.15));
                 if(hack.price > 1001)
                     hack.setPrice(hack.price * 10);
-                moreRights.setPrice((int) (moreRights.price * 1.15));
 
                 question.addText("?");
 
