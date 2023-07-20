@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.io.PrintStream;
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Progress {
@@ -73,12 +74,10 @@ public class Progress {
         pc.add(scam);
         pc.repaint();
 
-        if (clicks >= 25_000 && !bonus.isBought)
+        if (clicks >= 25_000 && !lessRights.isBought)
             bonus.setVisible(true);
-        if (clicks >= 50_000) {
+        if (clicks >= 50_000)
             bonus.setVisible(false);
-            bonus.isBought = true;
-        }
 
         if (!question.desc.getText().equals("???") && clickPower > 1) {
             updateVisibility();
@@ -112,6 +111,14 @@ public class Progress {
             setVariables(); return;
         }
 
+        if(!buyOrDie.isBought) {
+            setVariables();
+            return;
+        }
+
+        moreRights.setVisible(true);
+        cf.updateComponents();
+        updateVisibility();
     }
 
     void noStress() {// "minigame" - if you don't buy the item before the timer runs out you "die" / get bad ending, the price increases as you approach it and when there are 5 seconds left the clicks are reset to 100, but the price stays the same
@@ -166,6 +173,8 @@ public class Progress {
     }
     void loadProgress() {//get the progress from file
         getVariables();
+        getObjects();
+
         Player player = new Player();
         player.loadProgress();
 
@@ -221,8 +230,22 @@ public class Progress {
     }
 
     void getVariables() {
-        pc = cf.pc;
+        tutorialDone = cf.tutorialDone;
+        negativeUnlocked = cf.negativeUnlocked;
+        clicks = cf.clicks;
+        clickPower = cf.clickPower;
+    }
+    void setVariables() {
+        cf.tutorialDone = tutorialDone;
+        cf.negativeUnlocked = negativeUnlocked;
+        cf.clicks = clicks;
+        cf.clickPower = clickPower;
+    }
+
+    private void getObjects() {
         count = cf.count;
+        pc = cf.pc;
+
         rights = cf.rights;
         moreRights = cf.moreRights;
         bonus = cf.bonus;
@@ -232,32 +255,5 @@ public class Progress {
         scam = cf.scam;
         recovery = cf.recovery;
         buyOrDie = cf.buyOrDie;
-        upgradeList = cf.upgradeList;
-
-        tutorialDone = cf.tutorialDone;
-        negativeUnlocked = cf.negativeUnlocked;
-        clicks = cf.clicks;
-        clickPower = cf.clickPower;
-    }
-    void setVariables() {
-        cf.pc = pc;
-
-        cf.count = count;
-        cf.rights = rights;
-        cf.moreRights = moreRights;
-        cf.bonus = bonus;
-        cf.question = question;
-        cf.lessRights = lessRights;
-        cf.hack = hack;
-        cf.scam = scam;
-        cf.recovery = recovery;
-        cf.buyOrDie = buyOrDie;
-
-        cf.upgradeList = upgradeList;
-
-        cf.tutorialDone = tutorialDone;
-        cf.negativeUnlocked = negativeUnlocked;
-        cf.clicks = clicks;
-        cf.clickPower = clickPower;
     }
 }
