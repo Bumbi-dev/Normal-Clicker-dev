@@ -1,7 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class Border extends JPanel {
+public class Border extends JPanel {//Border for buttons
     Color color = Culori.border;
 
     MyConstants m = new MyConstants();
@@ -19,7 +19,7 @@ public class Border extends JPanel {
 
         this.color = color;
 
-        int x = cs.x - 1;
+        int x = cs.x - 1; //1 pixel thicker than the button
         int y = cs.y - 1;
         int width = cs.width + 2;
         int height = cs.height + 2;
@@ -34,7 +34,7 @@ public class Border extends JPanel {
 
     @Override
     public void setBounds (int x, int y, int width, int height) {
-        this.x = x;
+        this.x = x; //stores the variables
         this.y = y;
         this.width = width;
         this.height = height;
@@ -50,7 +50,7 @@ public class Border extends JPanel {
         g.fillRect(0, 0, getWidth(), getHeight());
     }
 
-    public void update(int x1, int y1) {
+    public void update(int x1, int y1) { //aligns the component
         super.setBounds(m.panelVariableX + x - x1, m.panelVariableY + y - y1, width, height);
     }
 }

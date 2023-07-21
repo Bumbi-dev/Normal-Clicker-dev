@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
 
-public class ClickableSquare extends JPanel {
+public class ClickableSquare extends JPanel {//The clickable part of a button
     Color color;
 
     MyConstants m = new MyConstants();
@@ -17,7 +17,7 @@ public class ClickableSquare extends JPanel {
     public ClickableSquare(String cuv, Color color) {
         setLayout(null);
 
-        this.cuv = cuv;
+        this.cuv = cuv;//storing variables
         this.color = color;
     }
 
@@ -48,10 +48,11 @@ public class ClickableSquare extends JPanel {
         if (cuv == null || cuv.isEmpty())
             return;
 
+        //antialiasing for the text
         g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         g2d.setFont(new Font("Montserrat", Font.PLAIN, 20));
 
-        FontMetrics fm = g2d.getFontMetrics();
+        FontMetrics fm = g2d.getFontMetrics();//Aligns text in the middle
         int textWidth = fm.stringWidth(cuv);
         int textHeight = fm.getHeight();
         int x = (getWidth() - textWidth) / 2;

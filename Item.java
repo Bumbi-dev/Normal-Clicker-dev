@@ -23,14 +23,14 @@ public class Item extends JPanel {
         this.butonColor = color;
         this.name = name;
         this.price = price;
-        if(name.equals("")) {
-            price = 0;//makes price invisible
+        if(name.equals("")) {//makes price invisible
+            price = 0;
             borderColor = Culori.backround;
         }
 
         border =  new Border();
 
-        if(price != 0)
+        if(price != 0)//if the item is free the price is not shown
             button = new ClickableSquare(String.valueOf(price), color);
         else
             button = new ClickableSquare(color);
@@ -42,16 +42,16 @@ public class Item extends JPanel {
             add(button);
             add(border);
         }
-        if(!name.equals("bonus"))
+        if(!name.equals("bonus"))//bonus item doesn't need text displayed
             add(desc);
 
         /**** Functionalitate ****/
-        button.addMouseListener(new MouseAdapter() {
+        button.addMouseListener(new MouseAdapter() {//Darkens the button when pressed
             @Override
             public void mousePressed(MouseEvent e) {
                 if(e.getButton() != MouseEvent.BUTTON1)
                     return;
-                if (!butonColor.equals(Culori.backround))// pushing effect
+                if (!butonColor.equals(Culori.backround))
                     button.recolor(butonColor.darker());
             }
 
@@ -73,7 +73,7 @@ public class Item extends JPanel {
         repaint();
     }
 
-    public void addText(String text) {
+    public void addText(String text) {//Adds String at the end of the name
         text = desc.getText() + text;
         desc.setText(text);
         add(desc);

@@ -4,7 +4,7 @@ import java.text.DecimalFormatSymbols;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-public class Player {
+public class Player {//Gets, sets the variables / progress of the player
 
     File fila = new File("Date Player.txt");
 
@@ -49,7 +49,7 @@ public class Player {
 
             temp.delete();
 
-            DecimalFormatSymbols symbols = new DecimalFormatSymbols();//reads doubles and aproximates them
+            DecimalFormatSymbols symbols = new DecimalFormatSymbols();//reads doubles and approximates them
             symbols.setDecimalSeparator('.');
             DecimalFormat decimalFormat = new DecimalFormat("#0.0", symbols);
 

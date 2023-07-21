@@ -11,7 +11,7 @@ public class Credits extends JPanel implements ActionListener {
     String text = "";
     int textY = 400;
 
-    public Credits(int ending) {
+    public Credits(int ending) {//Displays the Credits scene
 
         System.setProperty("sun.java2d.opengl", "true");
         SwingUtilities.invokeLater(() -> {
@@ -24,10 +24,11 @@ public class Credits extends JPanel implements ActionListener {
         window.setLocationRelativeTo(null);
         window.setVisible(true);
 
-        switch (ending) {
+        switch (ending) {//unique message
             case 1 -> text = "You finished the Normal ENDING";
             case 2 -> text = "F\n\nYou finished the Bad ENDING";
-            case 3 -> text = "CONGRATULATIONS!\n\nYou finished the Good ENDING";
+
+            default -> text = "You finished ENDING " + ending;
         }
 
         text += "\n\n\n\"A Normal Clicker\"\n\n\n" +

@@ -28,6 +28,7 @@ public class ClickerFrame extends JFrame {
         // Initialize
         super("Normal Clicker");
         setSize(600, 400);
+        setVisible(true);
         setLocationRelativeTo(null);
         setResizable(false);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -50,28 +51,28 @@ public class ClickerFrame extends JFrame {
         rights = new Item(Culori.available, 0, "Rights");//+ 0.1 CP (clickPower)
         rights.setBounds(430, 35, 124, 102);
 
-        moreRights = new Item(Culori.notAvailable, 100, "More Rights");//first time +0.9 CP and unlocks 3 upgrades
+        moreRights = new Item(Culori.notAvailable, 100, "More Rights");//+ 1 CP, gradually getting pricier
         moreRights.setBounds(225, 5, 150, 110);
 
         bonus = new Item(Culori.bonus, 0, "bonus"); //free clicks
         bonus.setBounds(450, 250, 50, 78);
 
-        scam = new Item(Culori.notAvailable, 750, "Scam");//make everything more expensive + 10 CP
+        scam = new Item(Culori.notAvailable, 750, "Scam");//make everything more expensive, + 10 CP
         scam.setBounds(35, 190, 130, 110);
 
         hack = new Item(Culori.notAvailable, 1500, "Hack");//clicks per second +5 first time, then +10
         hack.setBounds(35, 70, 130, 110);
 
-        lessRights = new Item(Culori.notAvailable, 7000, "Less Rights");//makes everything disappear except question
+        lessRights = new Item(Culori.notAvailable, 7000, "Less Rights");//makes all the items disappear except question
         lessRights.setBounds(425, 70, 130, 110);
 
-        question = new Item(Culori.backround, 0, "");
-        question.setBounds(440, 190, 100, 150); //until you afford it it is transparent
+        question = new Item(Culori.backround, 0, "");//until you afford it it is transparent
+        question.setBounds(440, 190, 100, 150);
 
-        recovery = new Item(Culori.available, 0, "RECOVERY");
+        recovery = new Item(Culori.available, 0, "RECOVERY");//gets into the minigame
         recovery.setBounds(-460, -215, 130, 110);
 
-        buyOrDie = new Item(Culori.notAvailable, 100, "Buy or Die");
+        buyOrDie = new Item(Culori.notAvailable, 100, "Buy or Die");//wins the minigame
         buyOrDie.setBounds(225, 5, 150, 110);
 
         //Adding components
@@ -128,12 +129,13 @@ public class ClickerFrame extends JFrame {
                 updateProgress();
             }
         });
-        bonus.button.addMouseListener(new MouseAdapter() {
+        bonus.button.addMouseListener(new MouseAdapter() {//first time gives 20 clicks, then CP * 20 clicks
             boolean x;
             @Override
             public void mouseReleased(MouseEvent e) {
                 if(e.getButton() != MouseEvent.BUTTON1)
                     return;
+
                 if(!moreRights.isBought) {
                     clicks += 20;
                     bonus.setVisible(false);
@@ -148,7 +150,7 @@ public class ClickerFrame extends JFrame {
             }
             
         });
-        moreRights.button.addMouseListener(new MouseAdapter() {
+        moreRights.button.addMouseListener(new MouseAdapter() {//after scam is bought give +2 CP
             boolean x;
             @Override
             public void mouseReleased(MouseEvent e) {
@@ -185,7 +187,7 @@ public class ClickerFrame extends JFrame {
 
                 lessRights.isBought = true;
 
-                clicks = 15;
+                clicks = 15;//the question border matches with the background
                 clickPower = 0.5;
                 cpsVal = 0;
 
@@ -294,6 +296,7 @@ public class ClickerFrame extends JFrame {
             public void mouseReleased(MouseEvent e) {
                 if(e.getButton() != MouseEvent.BUTTON1 || clicks < buyOrDie.price)
                     return;
+
                 buyOrDie.isBought = true;
                 ps.noStress = false;
                 buyOrDie.setVisible(false);
@@ -334,7 +337,7 @@ public class ClickerFrame extends JFrame {
             @Override public void mouseExited(MouseEvent e) {mouseOut = true;}
         });
 
-        addComponentListener(new ComponentAdapter() {// delay for updating components after the last window resize event
+        addComponentListener(new ComponentAdapter() {//When the windows is resized, components are aligned
             private Timer resizeTimer;
             @Override
             public void componentResized(ComponentEvent e) {
@@ -360,7 +363,7 @@ public class ClickerFrame extends JFrame {
         Player player = new Player();
         player.loadProgress();
 
-        ClickerFrame cf = new ClickerFrame();
+        IntroFrame cf = new IntroFrame();
         cf.setVisible(true);
     }
 
@@ -380,12 +383,12 @@ public class ClickerFrame extends JFrame {
         border.update(x, y);
         count.update(x, y);
 
-        if(question.isBought) {
+        if(question.isBought)
             question.setVisible(false);
-        }
+
     }
 
-    void cps() {
+    void cps() {//free clicks every second
         Thread cpsThread = new Thread(() -> {
             while (cpsVal > 0) {
                 if(!isFocused())
@@ -403,12 +406,12 @@ public class ClickerFrame extends JFrame {
         });
         cpsThread.start();
     }
-    void checkAuto() {//peacefully check if you are using an autoclicker
+    void checkAuto() {//peacefully checks if you are using an autoclicker (restarts system)
         if(ct == 0)
             startTime = Instant.now();
         ct++;
 
-        if(ct == 15) {
+        if(ct == 15) {//if your clicks per second exceed 15
             Duration duration = Duration.between(startTime, Instant.now());
             if (duration.toMillis() <= 1000)
                 try {
@@ -423,7 +426,7 @@ public class ClickerFrame extends JFrame {
         }
     }
 
-    void exiting() {//saving in file when exit
+    void exiting() {//Choosing to save or not when closing
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent we) {

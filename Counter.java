@@ -1,7 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class Counter extends JLabel {
+public class Counter extends JLabel {//Displays the number of clicks you have
     MyConstants m = new MyConstants();
     int x, y, width, height;
 
@@ -14,13 +14,13 @@ public class Counter extends JLabel {
     }
 
     public void update(double clicks) {
-        if((clicks <= 0 && clicks > -0.099) || (clicks >= 0 && clicks < 0.099))//it appears some 23e132.2 number if not
+        if((clicks <= 0 && clicks > -0.099) || (clicks >= 0 && clicks < 0.099))//solved some bugs with decimal numbers
             clicks = 0;
 
         String copy = Integer.toString((int) clicks);
         String customClicks = copy.substring(0, 1);
 
-        for (int i = 1; i < copy.length(); i++) {
+        for (int i = 1; i < copy.length(); i++) {//puts dot for each 3 digits i.e. 1.000 or 4.420.512
             if ((copy.length() - i) % 3 == 0)
                 customClicks += ".";
             customClicks += copy.substring(i, i + 1);
@@ -45,7 +45,7 @@ public class Counter extends JLabel {
 
     @Override
     public void setBounds (int x, int y, int width, int height) {
-        this.x = x;
+        this.x = x;//stores variables
         this.y = y;
         this.width = width;
         this.height = height;

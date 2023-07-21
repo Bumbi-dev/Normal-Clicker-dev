@@ -116,7 +116,7 @@ public class Progress {
             return;
         }
 
-        moreRights.setVisible(true);
+        moreRights.setVisible(true);//recovered moreRights
         cf.updateComponents();
         updateVisibility();
     }
@@ -220,9 +220,9 @@ public class Progress {
                 question.add(question.border);
             }
         }
-        if(recovery.isBought) {
+        if(recovery.isBought || !buyOrDie.isBought)
             noStress();
-        }
+
         question.setVisible(true);
 
         setVariables();

@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 
-public class IntroFrame extends JFrame {
+public class IntroFrame extends JFrame { //Intro scene, where you choose to continue, or start a new save
     // Interface
     JButton Continue, newGame;
     JLabel intro;
@@ -36,7 +36,7 @@ public class IntroFrame extends JFrame {
         bp.setLayout(null);
 
 
-        // Introducerea
+        // The Introduction
 
         add(mp);
         mp.add(intro);
@@ -73,9 +73,9 @@ public class IntroFrame extends JFrame {
 
         newGame.addActionListener(e -> {
             if(fila.exists()) {
-                String[] Optiuni = {"Yes", "No"};
+                String[] Options = {"Yes", "No"};
                 int PromptResult = JOptionPane.showOptionDialog(null, "Are you sure?", " Start a New Save",
-                        JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, Optiuni, Optiuni[1]);
+                        JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, Options, Options[1]);
                 if (PromptResult != 0) {
                     return;
                 }
@@ -110,7 +110,7 @@ public class IntroFrame extends JFrame {
         timer.start();
     }
 
-    public void typing(String first, String cuv, int times) {//secventa de inceput
+    public void typing(String first, String cuv, int times) {//Intro sequence with a typewriter effect
         intro.setText(first);
         Timer timer = new Timer(525, new ActionListener() {
             int count = 0;
