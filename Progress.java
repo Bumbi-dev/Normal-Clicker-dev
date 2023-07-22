@@ -39,7 +39,7 @@ public class Progress {
             setVariables();
             return;
         }
-        /**------  INTERESTING THINGS  ---------**/
+        /**------  STARTING  ---------**/
         if (!moreRights.isBought) {// Suspense until 25 clicks, nothing on the screen, then "moreRights" appears
             if (clicks >= 25) {
                 pc.add(moreRights);
@@ -67,7 +67,7 @@ public class Progress {
             setVariables();
             return;
         }
-        // Important buttons
+        // FIRST PHASE
         pc.add(lessRights);
         pc.add(question);
         pc.add(hack);
@@ -102,6 +102,7 @@ public class Progress {
         question.recolor(Culori.question);
         pc.add(recovery);
 
+        //MINIGAME PHASE
         if(noStress) {
             if(x > 5)
                 if (clicks + 9 >= buyOrDie.price)
@@ -133,7 +134,6 @@ public class Progress {
             while(x.get() > 0 && noStress) {
                 getVariables();
                 buyOrDie.setDesc("Buy or Die: " + x.decrementAndGet() + "s");//displays the time left
-
                 pc.repaint();
 
                 if(x.get() < 95 && !cf.isVisible())//if the windows is closed the thread is stopped
@@ -220,7 +220,7 @@ public class Progress {
                 question.add(question.border);
             }
         }
-        if(recovery.isBought || !buyOrDie.isBought)
+        if(recovery.isBought && !buyOrDie.isBought)
             noStress();
 
         question.setVisible(true);

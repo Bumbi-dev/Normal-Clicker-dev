@@ -355,9 +355,11 @@ public class ClickerFrame extends JFrame {
                 if (resizeTimer != null && resizeTimer.isRunning()) {
                     resizeTimer.restart(); // Restart the timer if it's already running
                 } else {
-                    resizeTimer = new Timer(300, actionEvent -> updateComponents());
-                    resizeTimer.setRepeats(false); // Only execute once
-                    resizeTimer.start();
+                    if(question.isBought) {
+                        resizeTimer = new Timer(300, actionEvent -> updateComponents());
+                        resizeTimer.setRepeats(false); // Only execute once
+                        resizeTimer.start();
+                    }
                 }
             }
         });
@@ -374,7 +376,7 @@ public class ClickerFrame extends JFrame {
         Player player = new Player();
         player.loadProgress();
 
-        IntroFrame cf = new IntroFrame();
+        ClickerFrame cf = new ClickerFrame();
         cf.setVisible(true);
     }
 
