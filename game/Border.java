@@ -1,8 +1,13 @@
+package game;
+
+import game.variables.Culori;
+import game.variables.MyConstants;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class Border extends JPanel {//Border for buttons
-    Color color = Culori.border;
+    public Color color = Culori.border;
 
     MyConstants m = new MyConstants();
 

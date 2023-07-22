@@ -1,7 +1,11 @@
+package game.gameplay;
+
+import game.*;
+import game.screens.Credits;
+import game.variables.Culori;
+
 import javax.swing.*;
 import java.awt.*;
-import java.io.PrintStream;
-import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Progress {

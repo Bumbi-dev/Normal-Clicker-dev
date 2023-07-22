@@ -1,3 +1,10 @@
+package game.gameplay;
+
+
+import game.*;
+import game.screens.Credits;
+import game.variables.Culori;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;

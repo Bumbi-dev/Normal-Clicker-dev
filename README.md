@@ -1,1 +1,1 @@
-Much more cleaner code in the Progress class.
+Much more cleaner code in the game.gameplay.Progress class.

@@ -1,3 +1,7 @@
+package game.gameplay;
+
+import game.Encoder;
+
 import java.io.*;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;

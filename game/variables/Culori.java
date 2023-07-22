@@ -1,3 +1,5 @@
+package game.variables;
+
 import java.awt.*;
 
 public final class Culori {//Colors

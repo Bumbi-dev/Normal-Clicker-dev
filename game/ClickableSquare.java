@@ -1,6 +1,9 @@
+package game;
+
+import game.variables.MyConstants;
+
 import javax.swing.*;
 import java.awt.*;
-import java.util.Objects;
 
 public class ClickableSquare extends JPanel {//The clickable part of a button
     Color color;

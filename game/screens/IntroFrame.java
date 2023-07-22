@@ -1,3 +1,8 @@
+package game.screens;
+
+import game.gameplay.Player;
+import game.gameplay.ClickerFrame;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;

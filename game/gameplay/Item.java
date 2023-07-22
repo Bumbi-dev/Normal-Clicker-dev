@@ -1,3 +1,10 @@
+package game.gameplay;
+
+import game.Border;
+import game.ClickableSquare;
+import game.variables.Culori;
+import game.variables.MyConstants;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
