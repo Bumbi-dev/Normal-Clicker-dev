@@ -1,6 +1,6 @@
 package game.gameplay;
 
-import game.Encoder;
+import game.usefullclases.Encoder;
 
 import java.io.*;
 import java.text.DecimalFormat;

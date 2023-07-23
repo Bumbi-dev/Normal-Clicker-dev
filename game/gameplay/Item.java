@@ -2,8 +2,8 @@ package game.gameplay;
 
 import game.Border;
 import game.ClickableSquare;
-import game.variables.Culori;
-import game.variables.MyConstants;
+import game.usefullclases.Culori;
+import game.usefullclases.MyConstants;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,4 +1,4 @@
-package game.variables;
+package game.usefullclases;
 
 public final class MyConstants {
     //Screen screen alignment variables

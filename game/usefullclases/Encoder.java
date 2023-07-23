@@ -1,4 +1,4 @@
-package game;
+package game.usefullclases;
 
 import java.io.File;
 import java.io.FileNotFoundException;

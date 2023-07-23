@@ -3,7 +3,7 @@ package game.gameplay;
 
 import game.*;
 import game.screens.Credits;
-import game.variables.Culori;
+import game.usefullclases.Culori;
 
 import javax.swing.*;
 import java.awt.*;

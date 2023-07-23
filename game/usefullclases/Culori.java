@@ -1,4 +1,4 @@
-package game.variables;
+package game.usefullclases;
 
 import java.awt.*;
 
