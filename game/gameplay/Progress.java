@@ -27,7 +27,7 @@ public class Progress {
     void updateProgress() {
         getVariables();
         count.update(clicks);
-        //tutorial
+        //TUTORIAL PHASE
         if (!rights.isBought) {
             if (clicks < 10) {
                 setVariables();
@@ -71,6 +71,7 @@ public class Progress {
             setVariables();
             return;
         }
+
         // FIRST PHASE
         pc.add(lessRights);
         pc.add(question);
@@ -108,7 +109,7 @@ public class Progress {
 
         //MINIGAME PHASE
         if(noStress) {
-            if(x > 5)
+            if(x > 10)
                 if (clicks + 9 >= buyOrDie.price)
                     buyOrDie.setPrice(++buyOrDie.price);
 
@@ -121,7 +122,11 @@ public class Progress {
             return;
         }
 
-        moreRights.setVisible(true);//recovered moreRights
+        //Recovering Phase
+
+
+
+
         cf.updateComponents();
         updateVisibility();
     }
@@ -149,15 +154,18 @@ public class Progress {
                 }
                 this.x = x.get();
 
-                if(this.x == 5) {
-                    clicks = 100;
+                if(this.x == 10) {
+                    clicks = Math.min(clicks, 100);
                     count.update(clicks);
                     updateVisibility();
                 }
             }
             if(cf.isVisible() && noStress) {
                 cf.dispose();
-                new Credits(2);//Bad ENDING
+                if(clicks >= 100)
+                    new Credits(2, "You could try being more patient next time!");//Bad ENDING
+                else
+                    new Credits(2, "Why bother clicking");
             }
         });
 

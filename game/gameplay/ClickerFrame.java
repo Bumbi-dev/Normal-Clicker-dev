@@ -24,7 +24,7 @@ public class ClickerFrame extends JFrame {
     ClickableSquare clickButton;
     Border border;
     Item rights, moreRights, bonus, question, lessRights, hack, scam, recovery, buyOrDie;
-    //when adding a new item, add them in the set/getVariables in Progress class and in the upgradelist
+    //when adding a new item, add them in the set/getVariables, in Progress class and in the upgradelist
     Item[] upgradeList;
 
     boolean tutorialDone = false, negativeUnlocked;

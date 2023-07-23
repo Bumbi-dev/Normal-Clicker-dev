@@ -1,1 +1,1 @@
-Much more cleaner code in the game.gameplay.Progress class.
+Improved Credit scene

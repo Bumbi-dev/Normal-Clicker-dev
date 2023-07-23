@@ -13,12 +13,24 @@ public class Credits extends JPanel implements ActionListener {
     Timer timer = new Timer(20, this);
 
     String text = "";
+    String tip = "";
     int textY = 400;
-
-    public Credits(int ending) {//Displays the Credits scene
+    int ending;
+    public Credits(int ending, String tip) {
+        this.ending = ending;
+        this.tip = tip;
 
         System.setProperty("sun.java2d.opengl", "true");
-        SwingUtilities.invokeLater(() -> {
+        SwingUtilities.invokeLater(this::rollingCredits);
+    }
+    public Credits(int ending) {
+        this.ending = ending;
+
+        System.setProperty("sun.java2d.opengl", "true");
+        SwingUtilities.invokeLater(this::rollingCredits);
+    }
+
+    private void rollingCredits() {//Displays the Credits scene
 
         window = new JFrame("Credits");
         window.add(this);
@@ -29,10 +41,10 @@ public class Credits extends JPanel implements ActionListener {
         window.setVisible(true);
 
         switch (ending) {//unique message
-            case 1 -> text = "You finished the Normal ENDING";
-            case 2 -> text = "F\n\nYou finished the Bad ENDING";
+            case 1 -> text = "Wow\n\n" + "You finished the Normal ENDING";
+            case 2 -> text = "\"F\"\n\n" + tip;
 
-            default -> text = "You finished ENDING " + ending;
+            default -> text = "You finished ENDING: " + ending;
         }
 
         text += "\n\n\n\"A Normal Clicker\"\n\n\n" +
@@ -46,7 +58,6 @@ public class Credits extends JPanel implements ActionListener {
 
         Player player = new Player();
         player.save();
-        });
     }
 
     public void paintComponent(Graphics g) {
