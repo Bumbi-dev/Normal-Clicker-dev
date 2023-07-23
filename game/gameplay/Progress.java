@@ -27,6 +27,31 @@ public class Progress {
     void updateProgress() {
         getVariables();
         count.update(clicks);
+
+        if(!buyOrDie.isBought)
+            firstChapter();
+
+        //SECOND CHAPTER
+        if(!buyOrDie.isBought) {
+            setVariables();
+            return;
+        }
+
+        //Recovering Phase
+        moreRights.setVisible(true);
+
+        if(moreRights.isBought)
+            scam.setVisible(true);
+        if(scam.isBought)
+            hack.setVisible(true);
+        if(hack.isBought)
+            lessRights.setVisible(true);
+
+        cf.updateComponents();
+        updateVisibility();
+    }
+
+    public void firstChapter() {
         //TUTORIAL PHASE
         if (!rights.isBought) {
             if (clicks < 10) {
@@ -72,7 +97,7 @@ public class Progress {
             return;
         }
 
-        // FIRST PHASE
+        // INTENSE GAMEPLAY PHASE
         pc.add(lessRights);
         pc.add(question);
         pc.add(hack);
@@ -114,21 +139,8 @@ public class Progress {
                     buyOrDie.setPrice(++buyOrDie.price);
 
             updateVisibility();
-            setVariables(); return;
-        }
-
-        if(!buyOrDie.isBought) {
             setVariables();
-            return;
         }
-
-        //Recovering Phase
-
-
-
-
-        cf.updateComponents();
-        updateVisibility();
     }
 
     void noStress() {// "minigame" - if you don't buy the item before the timer runs out you "die" / get bad ending, the price increases as you approach it and when there are 5 seconds left the clicks are reset to 100, but the price stays the same

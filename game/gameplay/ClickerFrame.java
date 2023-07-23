@@ -9,6 +9,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Random;
@@ -164,6 +166,13 @@ public class ClickerFrame extends JFrame {
                 if(e.getButton() != MouseEvent.BUTTON1 || clicks < moreRights.price)
                     return;
 
+                if(buyOrDie.isBought) {
+                    clicks -= moreRights.price;
+                    clickPower += 0.1;
+                    moreRights.setPrice((int) (moreRights.price * 1.2));
+                    updateProgress();
+                    return;
+                }
                 if(!moreRights.isBought) {
                     clicks = 0;
                     clickPower += 0.9;
@@ -308,7 +317,13 @@ public class ClickerFrame extends JFrame {
                 ps.noStress = false;
                 buyOrDie.setVisible(false);
 
+                moreRights.isBought = false;
+                scam.isBought = false;
+                hack.isBought = false;
+                lessRights.isBought = false;
+
                 clicks = 0;
+                clickPower = 0.2;
 
                 updateProgress();
             }
@@ -337,6 +352,10 @@ public class ClickerFrame extends JFrame {
                         clicks -= clickPower;
                 }
                 clicks += clickPower; //clickpower += clickpower * (rebirth + 1)
+
+                BigDecimal bd = new BigDecimal(Double.toString(clicks));
+                bd = bd.setScale(1, RoundingMode.HALF_UP);
+                clicks = bd.doubleValue();
 
                 updateProgress();
                 checkAuto();
