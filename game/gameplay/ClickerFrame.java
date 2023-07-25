@@ -29,7 +29,7 @@ public class ClickerFrame extends JFrame {
     //when adding a new item, add them in the set/getVariables, in Progress class and in the upgradelist
     Item[] upgradeList;
 
-    boolean tutorialDone = false, negativeUnlocked;
+    boolean tutorialDone = false, negativeUnlocked, isSecondChapter = false;
     int cpsVal = 5, ct = 0;
     double clicks, clickPower;
 
@@ -166,13 +166,15 @@ public class ClickerFrame extends JFrame {
                 if(e.getButton() != MouseEvent.BUTTON1 || clicks < moreRights.price)
                     return;
 
-                if(buyOrDie.isBought) {
+                if(isSecondChapter) {
+                    scam.setVisible(true);
                     clicks -= moreRights.price;
-                    clickPower += 0.1;
-                    moreRights.setPrice((int) (moreRights.price * 1.2));
+                    clickPower += 0.2;
+                    moreRights.setPrice((int) (moreRights.price * 1.1));
                     updateProgress();
                     return;
                 }
+
                 if(!moreRights.isBought) {
                     clicks = 0;
                     clickPower += 0.9;
@@ -259,6 +261,11 @@ public class ClickerFrame extends JFrame {
                 if(hack.price > 1001)
                     hack.setPrice(hack.price * 10);
 
+                if(isSecondChapter) {
+                    hack.setVisible(true);
+                    return;
+                }
+
                 question.addText("?");
 
                 updateProgress();
@@ -321,6 +328,9 @@ public class ClickerFrame extends JFrame {
                 scam.isBought = false;
                 hack.isBought = false;
                 lessRights.isBought = false;
+
+                moreRights.setPrice(100);
+                moreRights.setVisible(true);
 
                 clicks = 0;
                 clickPower = 0.2;

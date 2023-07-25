@@ -8,7 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class Progress {
+public class Progress  {
     ClickerFrame cf;
     JPanel pc;
 
@@ -16,7 +16,7 @@ public class Progress {
     Item rights, moreRights, bonus, question, lessRights, hack, scam, recovery, buyOrDie;
     Item[] upgradeList;
 
-    boolean tutorialDone = false, negativeUnlocked, noStress = false;
+    boolean tutorialDone = false, negativeUnlocked, noStress = false, isSecondChapter = false;
     int x;
     double clicks, clickPower;
 
@@ -28,25 +28,17 @@ public class Progress {
         getVariables();
         count.update(clicks);
 
-        if(!buyOrDie.isBought)
-            firstChapter();
-
-        //SECOND CHAPTER
         if(!buyOrDie.isBought) {
-            setVariables();
+            firstChapter();
             return;
         }
 
+        /**_____SECOND CHAPTER_______**/
         //Recovering Phase
-        moreRights.setVisible(true);
 
-        if(moreRights.isBought)
-            scam.setVisible(true);
-        if(scam.isBought)
-            hack.setVisible(true);
-        if(hack.isBought)
-            lessRights.setVisible(true);
 
+
+        //slow progress chapter
         cf.updateComponents();
         updateVisibility();
     }
@@ -256,12 +248,14 @@ public class Progress {
     void getVariables() {
         tutorialDone = cf.tutorialDone;
         negativeUnlocked = cf.negativeUnlocked;
+        isSecondChapter = cf.isSecondChapter;
         clicks = cf.clicks;
         clickPower = cf.clickPower;
     }
     void setVariables() {
         cf.tutorialDone = tutorialDone;
         cf.negativeUnlocked = negativeUnlocked;
+        cf.isSecondChapter = isSecondChapter;
         cf.clicks = clicks;
         cf.clickPower = clickPower;
     }
