@@ -167,10 +167,15 @@ public class ClickerFrame extends JFrame {
                     return;
 
                 if(isSecondChapter) {
-                    scam.setVisible(true);
+                    if(moreRights.price <= 101)
+                        scam.setVisible(true);
+
+                    moreRights.setPrice((int) (moreRights.price * 1.1));
+                    moreRights.isBought = true;
+
                     clicks -= moreRights.price;
                     clickPower += 0.2;
-                    moreRights.setPrice((int) (moreRights.price * 1.1));
+
                     updateProgress();
                     return;
                 }
@@ -229,6 +234,13 @@ public class ClickerFrame extends JFrame {
                     return;
 
                 clicks -= hack.price;
+
+                if(isSecondChapter) {
+                    updateProgress();
+                    return;
+                }
+
+
                 hack.setPrice(1000);
 
                 if(hack.isBought) {
@@ -334,6 +346,8 @@ public class ClickerFrame extends JFrame {
 
                 clicks = 0;
                 clickPower = 0.2;
+
+                isSecondChapter = true;
 
                 updateProgress();
             }

@@ -35,8 +35,7 @@ public class Progress  {
 
         /**_____SECOND CHAPTER_______**/
         //Recovering Phase
-
-
+        //when hack is bought add a new button
 
         //slow progress chapter
         cf.updateComponents();
@@ -206,7 +205,22 @@ public class Progress  {
                 item.isBought = true;
                 if(!item.equals(moreRights))
                     item.setVisible(false);
+                System.out.print(item.name + " " + item.isVisible() + " " + item.isBought + '\n');
             }
+
+        if(buyOrDie.isBought)
+            isSecondChapter = true;
+
+        if(isSecondChapter) {
+            moreRights.setVisible(true);
+            if(moreRights.isBought) {
+                scam.setVisible(true);
+            }
+            if(scam.isBought)
+                hack.setVisible(true);
+            if(hack.isBought)
+                lessRights.setVisible(true);
+        }
 
         question.isBought = player.upgradeuri.contains("???");
 
