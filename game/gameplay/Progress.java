@@ -42,7 +42,7 @@ public class Progress  {
         updateVisibility();
     }
 
-    public void firstChapter() {
+    private void firstChapter() {
         //TUTORIAL PHASE
         if (!rights.isBought) {
             if (clicks < 10) {
@@ -51,6 +51,8 @@ public class Progress  {
             }
             pc.add(rights);
             pc.repaint();
+            if(clicks >= 100)
+                new Credits("Such an enthusiast");
         } else {
             pc.add(count);
             tutorialDone = true;
@@ -259,14 +261,14 @@ public class Progress  {
         updateProgress();
     }
 
-    void getVariables() {
+    private void getVariables() {
         tutorialDone = cf.tutorialDone;
         negativeUnlocked = cf.negativeUnlocked;
         isSecondChapter = cf.isSecondChapter;
         clicks = cf.clicks;
         clickPower = cf.clickPower;
     }
-    void setVariables() {
+    private void setVariables() {
         cf.tutorialDone = tutorialDone;
         cf.negativeUnlocked = negativeUnlocked;
         cf.isSecondChapter = isSecondChapter;

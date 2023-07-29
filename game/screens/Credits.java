@@ -30,7 +30,15 @@ public class Credits extends JPanel implements ActionListener {
         SwingUtilities.invokeLater(this::rollingCredits);
     }
 
+    public Credits(String text) {
+        this.text = text;
+
+        System.setProperty("sun.java2d.opengl", "true");
+        SwingUtilities.invokeLater(this::rollingCredits);
+    }
+
     private void rollingCredits() {//Displays the Credits scene
+        String text = "";
 
         window = new JFrame("Credits");
         window.add(this);
@@ -45,6 +53,10 @@ public class Credits extends JPanel implements ActionListener {
             case 2 -> text = "\"F\"\n\n" + tip;
 
             default -> text = "You finished ENDING: " + ending;
+        }
+
+        if(!this.text.equals("")) {
+            text = this.text;
         }
 
         text += "\n\n\n\"A Normal Clicker\"\n\n\n" +
