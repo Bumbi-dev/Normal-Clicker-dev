@@ -1,1 +1,1 @@
-Improved Credit scene
+The best update yet: configured files, easy to set project.

@@ -207,7 +207,6 @@ public class Progress  {
                 item.isBought = true;
                 if(!item.equals(moreRights))
                     item.setVisible(false);
-                System.out.print(item.name + " " + item.isVisible() + " " + item.isBought + '\n');
             }
 
         if(buyOrDie.isBought)

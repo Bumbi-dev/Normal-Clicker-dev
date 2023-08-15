@@ -1,11 +1,12 @@
 package game.screens;
 
-import game.gameplay.Player;
 import game.gameplay.ClickerFrame;
+import game.gameplay.Player;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 
 public class IntroFrame extends JFrame { //Intro scene, where you choose to continue, or start a new save
@@ -63,7 +64,7 @@ public class IntroFrame extends JFrame { //Intro scene, where you choose to cont
         Continue.setText("Continue");
         newGame.setText("New Game");
 
-        File fila = new File("Date Player.txt");
+        File fila = new File("Assets\\Date Player.txt");
 
         Continue.addActionListener(e -> {
             if(!fila.exists())

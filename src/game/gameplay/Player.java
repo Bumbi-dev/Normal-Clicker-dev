@@ -1,8 +1,11 @@
 package game.gameplay;
 
 import game.usefullclases.Encoder;
+import game.usefullclases.Sounds;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.NoSuchElementException;
@@ -10,7 +13,7 @@ import java.util.Scanner;
 
 public class Player {//Gets, sets the variables / progress of the player
 
-    File fila = new File("Date Player.txt");
+    File fila = new File("Assets\\Date Player.txt");
 
     String upgradeuri;
     double clicks, clickPower;
@@ -61,6 +64,8 @@ public class Player {//Gets, sets the variables / progress of the player
             clicks = Double.parseDouble(roundedNumber);
 
             scanner.close();
+
+            Sounds.initialize();//load sounds
         } catch (IOException e) {
             e.printStackTrace();
         }

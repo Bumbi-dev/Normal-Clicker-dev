@@ -4,6 +4,7 @@ package game.gameplay;
 import game.*;
 import game.screens.Credits;
 import game.usefullclases.Culori;
+import game.usefullclases.Sounds;
 
 import javax.swing.*;
 import java.awt.*;
@@ -368,6 +369,8 @@ public class ClickerFrame extends JFrame {
             public void mouseReleased(MouseEvent e) {
                 if(e.getButton() != MouseEvent.BUTTON1)
                     return;
+
+                Sounds.playClick();
 
                 clickButton.recolor(new Color(220, 220, 220));
                 if (mouseOut) {//doesn't add clicks if the cursor is outside
