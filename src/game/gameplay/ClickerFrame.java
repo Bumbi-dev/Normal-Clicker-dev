@@ -370,7 +370,7 @@ public class ClickerFrame extends JFrame {
                 if(e.getButton() != MouseEvent.BUTTON1)
                     return;
 
-                Sounds.playClick();
+                Sounds.playSound(Sounds.click);
 
                 clickButton.recolor(new Color(220, 220, 220));
                 if (mouseOut) {//doesn't add clicks if the cursor is outside
@@ -425,9 +425,6 @@ public class ClickerFrame extends JFrame {
         } catch (Exception ex) {
             System.err.println("Failed to initialize");
         }
-
-        Player player = new Player();
-        player.loadProgress();
 
         ClickerFrame cf = new ClickerFrame();
         cf.setVisible(true);

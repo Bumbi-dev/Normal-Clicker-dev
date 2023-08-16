@@ -5,32 +5,39 @@ import java.io.File;
 import java.io.IOException;
 
 public class Sounds {
-    static Clip clickClip;
-    static File clickFile = new File("Assets\\Click.wav");
-    static AudioInputStream stream;
+    //List of the sounds
+    public static final File click = new File("Assets\\Click.wav");
 
-    public static void initialize() {
+    private static AudioInputStream stream;
+    private static Clip clickClip;
+
+    public static void initialize() {//initializes one sound, in the future it will initialize mroe
         try {
-            stream = AudioSystem.getAudioInputStream(clickFile);
+            stream = AudioSystem.getAudioInputStream(click);
             clickClip = AudioSystem.getClip();
             clickClip.open(stream);
+            clickClip.setFramePosition(990000);
             clickClip.start();
-
-            stream = AudioSystem.getAudioInputStream(clickFile);
-            clickClip = AudioSystem.getClip();
-            clickClip.open(stream);
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException ex) {
             ex.printStackTrace();
         }
     }
 
-    public static void playClick() {
+    public static void playSound(File theSound) {//Plays a sound
         try {
+            if(clickClip.isRunning()) {//if it s running it will play the sound over it
+                try {
+                    stream = AudioSystem.getAudioInputStream(theSound);
+                    clickClip = AudioSystem.getClip();
+                    clickClip.open(stream);
+                } catch (UnsupportedAudioFileException | IOException | LineUnavailableException ex) {
+                    ex.printStackTrace();
+                }
+            }
+
+            clickClip.setFramePosition(0);//start the clip from the beggining and plays it
             clickClip.start();
-            stream = AudioSystem.getAudioInputStream(clickFile);
-            clickClip = AudioSystem.getClip();
-            clickClip.open(stream);
-        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
