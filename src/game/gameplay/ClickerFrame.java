@@ -9,6 +9,7 @@ import game.usefullclases.Sounds;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -43,6 +44,8 @@ public class ClickerFrame extends JFrame {
         setResizable(false);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         exiting();
+        Image icon = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB_PRE);//removes the default icon
+        setIconImage(icon);
 
         /**          Components           */
         //button

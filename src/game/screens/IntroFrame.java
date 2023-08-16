@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 
 public class IntroFrame extends JFrame { //Intro scene, where you choose to continue, or start a new save
@@ -25,6 +26,8 @@ public class IntroFrame extends JFrame { //Intro scene, where you choose to cont
         setSize(600, 400);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        Image icon = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB_PRE);//removes the default icon
+        setIconImage(icon);
 
         intro = new JLabel();
         intro.setFont(new Font("Montserrat", Font.PLAIN, 24));
