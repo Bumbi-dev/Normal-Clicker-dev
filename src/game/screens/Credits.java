@@ -58,7 +58,7 @@ public class Credits extends JPanel implements ActionListener {
             text = this.text;
         }
 
-        text += "\n\n\n\"A Normal Clicker\"\n\n\n" +
+        this.text += "\n\n\n\"A Normal Clicker\"\n\n\n" +
                 "DEVELOPER:               \n" +
                 "Manu\n\n\n" +
                 "TESTER:                      \n" +

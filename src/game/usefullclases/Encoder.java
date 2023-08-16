@@ -39,12 +39,12 @@ public class Encoder {//"Encrypts" / "Decrypts" the save in hex
 
     String fileToString(File fila) throws FileNotFoundException {//returns the contents of a file as a String
         Scanner scanner = new Scanner(fila);
-        String res = "";
+        String result = "";
 
         while(scanner.hasNext()){
-            res += scanner.next();
+            result += scanner.next();
         }
 
-        return res;
+        return result;
     }
 }

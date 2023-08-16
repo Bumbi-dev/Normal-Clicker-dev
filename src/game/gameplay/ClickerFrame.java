@@ -373,7 +373,7 @@ public class ClickerFrame extends JFrame {
                 if(e.getButton() != MouseEvent.BUTTON1)
                     return;
 
-                Sounds.playSound(Sounds.click);
+                Sounds.playSound(Sounds.click);//click sound
 
                 clickButton.recolor(new Color(220, 220, 220));
                 if (mouseOut) {//doesn't add clicks if the cursor is outside
@@ -383,7 +383,7 @@ public class ClickerFrame extends JFrame {
                 }
                 clicks += clickPower; //clickpower += clickpower * (rebirth + 1)
 
-                BigDecimal bd = new BigDecimal(Double.toString(clicks));
+                BigDecimal bd = new BigDecimal(Double.toString(clicks));//Rounds the number
                 bd = bd.setScale(1, RoundingMode.HALF_UP);
                 clicks = bd.doubleValue();
 
@@ -497,8 +497,13 @@ public class ClickerFrame extends JFrame {
             @Override
             public void windowClosing(WindowEvent we) {
                 String[] options = { "Yes", "No" };
-                int promptResult = JOptionPane.showOptionDialog(null, "Do you want to save?", "Exiting",
-                        JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+                int promptResult = JOptionPane.showOptionDialog(null,//dialog box asking if you want to save
+                        "Do you want to save?",
+                        "Exiting",
+                        JOptionPane.DEFAULT_OPTION,
+                        JOptionPane.QUESTION_MESSAGE,
+                        null,
+                        options, 0);//predetermined option
 
                 if(promptResult == -1)
                     return;

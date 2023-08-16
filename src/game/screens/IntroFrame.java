@@ -35,8 +35,8 @@ public class IntroFrame extends JFrame { //Intro scene, where you choose to cont
         newGame = new JButton(); newGame.setFont(new Font("Montserrat", Font.PLAIN, 22));
         Continue = new JButton(); Continue.setFont(new Font("Montserrat", Font.PLAIN, 22));
 
-        Continue.setFocusPainted(false);
-        newGame.setFocusPainted(false);
+        Continue.setFocusPainted(false); Continue.setFocusable(false);//prevent buttons from highlighting
+        newGame.setFocusPainted(false); newGame.setFocusable(false);
 
         mp = new JPanel();
         mp.setLayout(new GridBagLayout());
