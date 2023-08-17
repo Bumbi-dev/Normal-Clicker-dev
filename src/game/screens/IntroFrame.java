@@ -18,7 +18,7 @@ public class IntroFrame extends JFrame { //Intro scene, where you choose to cont
 
     boolean wait = true;
 
-    public IntroFrame(){
+    public IntroFrame() throws InterruptedException {
         // Initialization
         super("Intro");
         setVisible(true);
@@ -50,8 +50,6 @@ public class IntroFrame extends JFrame { //Intro scene, where you choose to cont
         add(mp);
         mp.add(intro);
         typing("Loading.", "..", 2);
-
-        while(wait) {System.out.print(' '); System.out.print('\b');}
 
         try {Thread.sleep(1050);}
         catch (InterruptedException ignored){}
@@ -98,46 +96,44 @@ public class IntroFrame extends JFrame { //Intro scene, where you choose to cont
         });
     }
 
-    public void typing( String message, float speed) {
+    public void typing( String message, float speed) throws InterruptedException {
         int delay = (int) (100 / speed); // Delay between each character in milliseconds
 
-        Timer timer = new Timer(delay, new ActionListener() {
-            int index = 0;
+        int index = 0;
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                mp.setLayout(new FlowLayout());
-                if (index < message.length()) {
-                    intro.setText(message.substring(0, index + 1));
-                    index++;
-                } else {
-                    wait = false;
-                    ((Timer) e.getSource()).stop();
-                }
-            }
-        });
-        timer.start();
+        mp.setLayout(new FlowLayout());
+
+        while (index < message.length()) {
+            intro.setText(message.substring(0, index + 1));
+            index++;
+            Thread.sleep(delay);
+        }
+
     }
 
-    public void typing(String first, String cuv, int times) {//Intro sequence with a typewriter effect
+    public void typing(String first, String cuv, int times) throws InterruptedException {//Intro sequence with a typewriter effect
         intro.setText(first);
-        Timer timer = new Timer(525, new ActionListener() {
-            int count = 0;
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (count == cuv.length()) {
-                    if (times > 0)
-                        typing( first, cuv, times - 1);
-                    else {
-                        intro.setText("");
-                        typing("Welcome to Normal Clicker", 0.75f);
-                    }
-                    ((Timer) e.getSource()).stop();
+        int delay = 525;
+
+        int count = 0;
+
+        while(count <= cuv.length()) {
+            if (count == cuv.length()) {
+                if (times > 0) {
+                    typing(first, cuv, times - 1);
+                    Thread.sleep(delay);
                 }
-                intro.setText(first + cuv.substring(0, count));
-                count++;
+                else {
+                    intro.setText("");
+                    try {
+                        typing("Welcome to Normal Clicker", 0.75f);
+                    } catch (InterruptedException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
             }
-        });
-        timer.start();
+            intro.setText(first + cuv.substring(0, count));
+            count++;
+        }
     }
 }

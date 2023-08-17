@@ -3,6 +3,7 @@ package game.gameplay;
 
 import game.*;
 import game.screens.Credits;
+import game.screens.IntroFrame;
 import game.usefullclases.Culori;
 import game.usefullclases.Sounds;
 
@@ -422,14 +423,14 @@ public class ClickerFrame extends JFrame {
 
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws InterruptedException {
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
         } catch (Exception ex) {
             System.err.println("Failed to initialize");
         }
 
-        ClickerFrame cf = new ClickerFrame();
+        IntroFrame cf = new IntroFrame();
         cf.setVisible(true);
     }
 
