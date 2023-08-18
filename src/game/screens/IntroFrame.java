@@ -4,9 +4,8 @@ import game.gameplay.ClickerFrame;
 import game.gameplay.Player;
 
 import javax.swing.*;
+import javax.swing.plaf.metal.MetalBorders;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
@@ -16,9 +15,7 @@ public class IntroFrame extends JFrame { //Intro scene, where you choose to cont
     JLabel intro;
     JPanel mp, bp;
 
-    boolean wait = true;
-
-    public IntroFrame() throws InterruptedException {
+    public IntroFrame() {
         // Initialization
         super("Intro");
         setVisible(true);
@@ -49,10 +46,11 @@ public class IntroFrame extends JFrame { //Intro scene, where you choose to cont
 
         add(mp);
         mp.add(intro);
-        typing("Loading.", "..", 2);
-
-        try {Thread.sleep(1050);}
-        catch (InterruptedException ignored){}
+        try {
+            script();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         mp.setBounds(0, 0, 585, 100);
         Continue.setBounds(100, 180, 150, 80);
@@ -95,45 +93,44 @@ public class IntroFrame extends JFrame { //Intro scene, where you choose to cont
             new ClickerFrame();
         });
     }
+    
+    private void script() throws InterruptedException{
+        typing("Loading.", "..", 3);
 
-    public void typing( String message, float speed) throws InterruptedException {
-        int delay = (int) (100 / speed); // Delay between each character in milliseconds
+        typing("Welcome to Normal Clicker", 0.75f);
 
-        int index = 0;
+        Thread.sleep(1000);
+    }
 
-        mp.setLayout(new FlowLayout());
+    //constantPart displays instantly while repeatedPart has a typewriter effect, after it's typed it repeats for _times_ times
+    private void typing(String constantPart, String repeatedPart, int times) throws InterruptedException {
+        intro.setText(constantPart);
 
-        while (index < message.length()) {
-            intro.setText(message.substring(0, index + 1));
-            index++;
+        final int delay = 525;
+
+        //shows the repeatedPart with a typing effect after the constanPart
+        for (int i = 0; i <= repeatedPart.length(); i++) {
+            intro.setText(constantPart + repeatedPart.substring(0, i));
             Thread.sleep(delay);
         }
 
-    }
-
-    public void typing(String first, String cuv, int times) throws InterruptedException {//Intro sequence with a typewriter effect
-        intro.setText(first);
-        int delay = 525;
-
-        int count = 0;
-
-        while(count <= cuv.length()) {
-            if (count == cuv.length()) {
-                if (times > 0) {
-                    typing(first, cuv, times - 1);
-                    Thread.sleep(delay);
-                }
-                else {
-                    intro.setText("");
-                    try {
-                        typing("Welcome to Normal Clicker", 0.75f);
-                    } catch (InterruptedException ex) {
-                        throw new RuntimeException(ex);
-                    }
-                }
-            }
-            intro.setText(first + cuv.substring(0, count));
-            count++;
+        if (times > 1) {
+            Thread.sleep(600);
+            typing(constantPart, repeatedPart, times - 1);
+        }
+        else {
+            Thread.sleep(1000);
+            intro.setText("");
         }
     }
+    
+    private void typing (String message, float speed) throws InterruptedException{
+        int delay = (int) (100 / speed); // Delay between each character in milliseconds
+
+        mp.setLayout(new FlowLayout());
+
+        for (int i = 1; i <= message.length(); i++, Thread.sleep(delay))
+            intro.setText(message.substring(0, i));
+    }
+    
 }
