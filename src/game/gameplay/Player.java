@@ -1,6 +1,6 @@
 package game.gameplay;
 
-import game.usefullclases.Encoder;
+import game.usefullclases.HexEncoderDecoder;
 import game.usefullclases.Sounds;
 
 import java.io.File;
@@ -37,7 +37,7 @@ public class Player {//Gets, sets the variables / progress of the player
         try {
             File temp = File.createTempFile("TempFile", "txt");//creates a normal file
             Scanner scanner = new Scanner(temp);
-            Encoder bitcoin = new Encoder();
+            HexEncoderDecoder bitcoin = new HexEncoderDecoder();
 
             try {//if the text in the file isn't associated with a save it restarts
             FileWriter fr = new FileWriter(temp);
@@ -72,7 +72,7 @@ public class Player {//Gets, sets the variables / progress of the player
     }
 
     public void save () {
-        Encoder bitcoin = new Encoder();
+        HexEncoderDecoder bitcoin = new HexEncoderDecoder();
         String salvare = clicks + "\n" + clickPower + "\n" + price + "\n." + upgradeuri;
 
         try {

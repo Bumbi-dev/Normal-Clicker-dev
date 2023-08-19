@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-public class Encoder {//"Encrypts" / "Decrypts" the save in hex
+public class HexEncoderDecoder {//"Encrypts" / "Decrypts" the save in hex
 
     public String cryptingText(String text) {//returns the text in hex
         char []ch = text.toCharArray();
