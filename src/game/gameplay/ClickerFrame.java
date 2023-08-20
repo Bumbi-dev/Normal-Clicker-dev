@@ -420,7 +420,6 @@ public class ClickerFrame extends JFrame {
                 }
             }
         });
-
     }
 
     public static void main(String[] args) throws InterruptedException {
@@ -430,7 +429,7 @@ public class ClickerFrame extends JFrame {
             System.err.println("Failed to initialize");
         }
 
-        IntroFrame cf = new IntroFrame();
+        ClickerFrame cf = new ClickerFrame();
         cf.setVisible(true);
     }
 

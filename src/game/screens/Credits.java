@@ -15,6 +15,7 @@ public class Credits extends JPanel implements ActionListener {
     String tip = "";
     int textY = 400;
     int ending;
+
     public Credits(int ending, String tip) {
         this.ending = ending;
         this.tip = tip;
@@ -22,6 +23,7 @@ public class Credits extends JPanel implements ActionListener {
         System.setProperty("sun.java2d.opengl", "true");
         SwingUtilities.invokeLater(this::rollingCredits);
     }
+
     public Credits(int ending) {
         this.ending = ending;
 
@@ -29,16 +31,15 @@ public class Credits extends JPanel implements ActionListener {
         SwingUtilities.invokeLater(this::rollingCredits);
     }
 
-    public Credits(String text) {
+    public Credits(String text) {//Custom ending first line
         this.text = text;
+        ending = 999;//doesn't need automatic text
 
         System.setProperty("sun.java2d.opengl", "true");
         SwingUtilities.invokeLater(this::rollingCredits);
     }
 
     private void rollingCredits() {//Displays the Credits scene
-        String text = "";
-
         window = new JFrame("Credits");
         window.add(this);
         window.setResizable(false);
@@ -48,14 +49,11 @@ public class Credits extends JPanel implements ActionListener {
         window.setVisible(true);
 
         switch (ending) {//unique message
-            case 1 -> text = "Wow\n\n" + "You finished the Normal ENDING";
-            case 2 -> text = "\"F\"\n\n" + tip;
+            case 1 -> text = "You finished the Normal ENDING";//first ending
+            case 2 -> text = "\"F\"\n\n" + tip;//Any death ending
+            case 999 -> text += "";//custom message
 
             default -> text = "You finished ENDING: " + ending;
-        }
-
-        if(!this.text.equals("")) {
-            text = this.text;
         }
 
         this.text += "\n\n\n\"A Normal Clicker\"\n\n\n" +
