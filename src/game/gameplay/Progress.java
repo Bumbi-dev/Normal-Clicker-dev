@@ -168,9 +168,9 @@ public class Progress  {
             if(cf.isVisible() && noStress) {
                 cf.dispose();
                 if(clicks >= 100)
-                    new Credits(2, "You could try being more patient next time!");//Bad ENDING
+                    new Credits(Credits.DEATH, "You could try being more patient next time!");//Bad ENDING
                 else
-                    new Credits(2, "Why bother clicking");
+                    new Credits(Credits.DEATH, "Why bother clicking");
             }
         });
 

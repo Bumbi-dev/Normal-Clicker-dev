@@ -6,10 +6,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 
 public class Credits extends JPanel implements ActionListener {
     JFrame window;
     Timer timer = new Timer(20, this);
+
+    public final static int NORMAL_ENDING = 1;
+    public final static int DEATH = 2;
+
 
     String text = "";
     String tip = "";
@@ -51,7 +56,7 @@ public class Credits extends JPanel implements ActionListener {
         switch (ending) {//unique message
             case 1 -> text = "You finished the Normal ENDING";//first ending
             case 2 -> text = "\"F\"\n\n" + tip;//Any death ending
-            case 999 -> text += "";//custom message
+            case 999 -> text += "";//blank message
 
             default -> text = "You finished ENDING: " + ending;
         }
