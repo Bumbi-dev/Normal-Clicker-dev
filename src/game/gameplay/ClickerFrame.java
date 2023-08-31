@@ -3,7 +3,7 @@ package game.gameplay;
 
 import game.*;
 import game.screens.Credits;
-import game.screens.IntroFrame;
+import game.usefullclases.AllItems;
 import game.usefullclases.Culori;
 import game.usefullclases.Sounds;
 
@@ -11,7 +11,6 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -20,7 +19,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.Random;
 
-public class ClickerFrame extends JFrame {
+public class ClickerFrame extends AllItems {
 
     JPanel pc;
     Random rand = new Random();
@@ -30,7 +29,7 @@ public class ClickerFrame extends JFrame {
     Counter count;
     ClickableSquare clickButton;
     Border border;
-    Item rights, moreRights, bonus, question, lessRights, hack, scam, recovery, buyOrDie;
+
     //when adding a new item, add them in the set/getVariables, in Progress class and in the upgradelist
     Item[] upgradeList;
 
