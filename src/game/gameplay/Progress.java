@@ -3,29 +3,26 @@ package game.gameplay;
 import game.*;
 import game.screens.Credits;
 import game.usefullclases.Culori;
+import game.usefullclases.GameVariables;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class Progress  {
+public class Progress extends GameVariables {
     ClickerFrame cf;
     JPanel pc;
 
     Counter count;
-    Item rights, moreRights, bonus, question, lessRights, hack, scam, recovery, buyOrDie;
-    Item[] upgradeList;
 
-    boolean tutorialDone = false, negativeUnlocked, noStress = false, isSecondChapter = false;
-    int x;
-    double clicks, clickPower;
+    boolean noStress = false;
+    int Timer;
 
     public Progress (ClickerFrame cf) {
         this.cf = cf;
     }
 
     void updateProgress() {
-        getVariables();
         count.update(clicks);
 
         if(!buyOrDie.isBought) {
@@ -45,10 +42,9 @@ public class Progress  {
     private void firstChapter() {
         //TUTORIAL PHASE
         if (!rights.isBought) {
-            if (clicks < 10) {
-                setVariables();
+            if (clicks < 10)
                 return;
-            }
+
             pc.add(rights);
             pc.repaint();
             if(clicks >= 100)
@@ -57,10 +53,8 @@ public class Progress  {
             pc.add(count);
             tutorialDone = true;
         }
-        if (!tutorialDone) { //when count appears the tutorial is done, until then you can't make progress
-            setVariables();
+        if (!tutorialDone) //when count appears the tutorial is done, until then you can't make progress
             return;
-        }
         /**------  STARTING  ---------**/
         if (!moreRights.isBought) {// Suspense until 25 clicks, nothing on the screen, then "moreRights" appears
             if (clicks >= 25) {
@@ -79,14 +73,12 @@ public class Progress  {
                 pc.add(bonus);
             }
             pc.repaint();
-            setVariables();
             return;
         } else pc.add(moreRights);
 
         if (clicks < 10 && !(lessRights.isBought || hack.isBought || clickPower >= 2)) {//after another 10 clicks the other buttons appear
             bonus.setVisible(false);
             bonus.setBounds(100, 300, 50, 78);
-            setVariables();
             return;
         }
 
@@ -104,7 +96,6 @@ public class Progress  {
 
         if (!question.desc.getText().equals("???") && clickPower > 1) {
             updateVisibility();
-            setVariables();
             return;
         }
 
@@ -127,12 +118,11 @@ public class Progress  {
 
         //MINIGAME PHASE
         if(noStress) {
-            if(x > 10)
+            if(Timer > 10)
                 if (clicks + 9 >= buyOrDie.price)
                     buyOrDie.setPrice(++buyOrDie.price);
 
             updateVisibility();
-            setVariables();
         }
     }
 
@@ -146,7 +136,6 @@ public class Progress  {
             noStress = true;
             cf.updateComponents();
             while(x.get() > 0 && noStress) {
-                getVariables();
                 buyOrDie.setDesc("Buy or Die: " + x.decrementAndGet() + "s");//displays the time left
                 pc.repaint();
 
@@ -157,9 +146,9 @@ public class Progress  {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                this.x = x.get();
+                this.Timer = x.get();
 
-                if(this.x == 10) {
+                if(this.Timer == 10) {
                     clicks = Math.min(clicks, 100);
                     count.update(clicks);
                     updateVisibility();
@@ -186,10 +175,8 @@ public class Progress  {
                 item.recolor(Culori.available);
             else item.recolor(Culori.notAvailable);
         }
-        setVariables();
     }
     void loadProgress() {//get the progress from file
-        getVariables();
         getObjects();
 
         Player player = new Player();
@@ -200,7 +187,6 @@ public class Progress  {
         moreRights.setPrice(player.price);
 
         upgradeList = new Item[]{rights, moreRights, scam, hack, bonus, lessRights, question, recovery, buyOrDie};
-        cf.upgradeList = upgradeList;
 
         for (Item item : upgradeList)
             if (player.upgradeuri.contains(item.name)) {
@@ -256,23 +242,7 @@ public class Progress  {
 
         question.setVisible(true);
 
-        setVariables();
         updateProgress();
-    }
-
-    private void getVariables() {
-        tutorialDone = cf.tutorialDone;
-        negativeUnlocked = cf.negativeUnlocked;
-        isSecondChapter = cf.isSecondChapter;
-        clicks = cf.clicks;
-        clickPower = cf.clickPower;
-    }
-    private void setVariables() {
-        cf.tutorialDone = tutorialDone;
-        cf.negativeUnlocked = negativeUnlocked;
-        cf.isSecondChapter = isSecondChapter;
-        cf.clicks = clicks;
-        cf.clickPower = clickPower;
     }
 
     private void getObjects() {

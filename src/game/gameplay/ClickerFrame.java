@@ -3,9 +3,9 @@ package game.gameplay;
 
 import game.*;
 import game.screens.Credits;
-import game.usefullclases.AllItems;
 import game.usefullclases.Culori;
 import game.usefullclases.Sounds;
+import game.usefullclases.GameVariables;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -19,7 +19,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.Random;
 
-public class ClickerFrame extends AllItems {
+public class ClickerFrame extends GameVariables {
 
     JPanel pc;
     Random rand = new Random();
@@ -30,12 +30,7 @@ public class ClickerFrame extends AllItems {
     ClickableSquare clickButton;
     Border border;
 
-    //when adding a new item, add them in the set/getVariables, in Progress class and in the upgradelist
-    Item[] upgradeList;
-
-    boolean tutorialDone = false, negativeUnlocked, isSecondChapter = false;
     int cpsVal = 5, ct = 0;
-    double clicks, clickPower;
 
     public ClickerFrame() {
         // Initialize
@@ -371,7 +366,7 @@ public class ClickerFrame extends AllItems {
             }
         });
 
-        //the button
+        //________________THE BUTTON________________
         clickButton.addMouseListener(new MouseAdapter() {
             boolean mouseOut;
 
@@ -440,7 +435,7 @@ public class ClickerFrame extends AllItems {
         });
     }
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
         } catch (Exception ex) {
