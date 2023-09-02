@@ -161,7 +161,6 @@ public class ClickerFrame extends GameVariables {
                 }
 
                 bonus.setBounds(rand.nextInt(20, 530), 300, 50, 78);
-                updateComponents();
                 updateProgress();
             }
 
