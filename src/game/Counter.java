@@ -1,12 +1,12 @@
 package game;
 
-import game.usefullclases.MyConstants;
+import game.usefullclases.Constants;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class Counter extends JLabel {//Displays the number of clicks you have
-    MyConstants m = new MyConstants();
+    Constants m = new Constants();
     int x, y, width, height;
 
     public Counter(double clicks) {

@@ -1,7 +1,7 @@
 package game;
 
 import game.usefullclases.Culori;
-import game.usefullclases.MyConstants;
+import game.usefullclases.Constants;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,7 +9,7 @@ import java.awt.*;
 public class Border extends JPanel {//Border for buttons
     public Color color = Culori.border;
 
-    MyConstants m = new MyConstants();
+    Constants m = new Constants();
 
     int x, y, width, height;
 

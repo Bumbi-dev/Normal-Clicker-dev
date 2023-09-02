@@ -3,7 +3,7 @@ package game.gameplay;
 import game.Border;
 import game.ClickableSquare;
 import game.usefullclases.Culori;
-import game.usefullclases.MyConstants;
+import game.usefullclases.Constants;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,7 +18,6 @@ public class Item extends JPanel {
 
     Border border;
     ClickableSquare button;
-    MyConstants m = new MyConstants();
 
     String name = "";
     boolean isBought = false;
@@ -123,6 +122,6 @@ public class Item extends JPanel {
     }
 
     public void update(int x1, int y1) {//when resizing the screen the item doesn't move
-        super.setBounds(m.panelVariableX + x - x1, m.panelVariableY + y - y1, width, height);
+        super.setBounds(Constants.panelVariableX + x - x1, Constants.panelVariableY + y - y1, width, height);
     }
 }

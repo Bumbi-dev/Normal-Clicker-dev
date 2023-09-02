@@ -1,6 +1,6 @@
 package game;
 
-import game.usefullclases.MyConstants;
+import game.usefullclases.Constants;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,7 +8,7 @@ import java.awt.*;
 public class ClickableSquare extends JPanel {//The clickable part of a button
     Color color;
 
-    MyConstants m = new MyConstants();
+    Constants m = new Constants();
 
     String cuv;
     int x, y, width, height;
