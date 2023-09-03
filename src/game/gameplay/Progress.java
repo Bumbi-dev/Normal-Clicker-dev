@@ -27,6 +27,7 @@ public class Progress extends GameVariables {
 
         if(!buyOrDie.isBought) {
             firstChapter();
+            updateVisibility();
             return;
         }
 
@@ -49,6 +50,7 @@ public class Progress extends GameVariables {
             pc.repaint();
             if(clicks >= 100)
                 new Credits("Such an enthusiast");
+
         } else {
             pc.add(count);
             tutorialDone = true;
@@ -94,15 +96,11 @@ public class Progress extends GameVariables {
         if (clicks >= 50_000)
             bonus.setVisible(false);
 
-        if (!question.desc.getText().equals("???") && clickPower > 1) {
-            updateVisibility();
+        if (!lessRights.isBought)
             return;
-        }
-
-        if(!recovery.isBought)
-            count.setVisible(false);
 
         if(!question.isBought) {
+            count.setVisible(false);
             clicks = Math.min(255, clicks);// The outline slowly darkens until it is pitch black
             int x = (int) (255 - clicks);
 
@@ -117,13 +115,8 @@ public class Progress extends GameVariables {
         pc.add(recovery);
 
         //MINIGAME PHASE
-        if(noStress) {
-            if(Timer > 10)
-                if (clicks + 9 >= buyOrDie.price)
-                    buyOrDie.setPrice(++buyOrDie.price);
-
-            updateVisibility();
-        }
+        if(noStress && Timer > 10 && clicks + 9 >= buyOrDie.price)
+            buyOrDie.setPrice(++buyOrDie.price);
     }
 
     void noStress() {// "minigame" - if you don't buy the item before the timer runs out you "die" / get bad ending, the price increases as you approach it and when there are 5 seconds left the clicks are reset to 100, but the price stays the same
@@ -159,7 +152,7 @@ public class Progress extends GameVariables {
                 if(clicks >= 100)
                     new Credits(Credits.DEATH, "You could try being more patient next time!");//Bad ENDING
                 else
-                    new Credits(Credits.DEATH, "Why bother clicking");
+                    new Credits(Credits.DEATH, "Forgot to click");
             }
         });
 
@@ -188,29 +181,33 @@ public class Progress extends GameVariables {
 
         upgradeList = new Item[]{rights, moreRights, scam, hack, bonus, lessRights, question, recovery, buyOrDie};
 
-        for (Item item : upgradeList)
+        for (Item item : upgradeList)//if the item name is present in the file then it is considered bought and will be invisible
             if (player.upgradeuri.contains(item.name)) {
                 item.isBought = true;
+
                 if(!item.equals(moreRights))
                     item.setVisible(false);
             }
+
+        question.isBought = player.upgradeuri.contains("???");
+
+        if(question.isBought) {
+            firstChapterDone = true;
+        }
 
         if(buyOrDie.isBought)
             isSecondChapter = true;
 
         if(isSecondChapter) {
             moreRights.setVisible(true);
-            if(moreRights.isBought) {
+            if (moreRights.isBought) {
                 scam.setVisible(true);
             }
-            if(scam.isBought)
+            if (scam.isBought)
                 hack.setVisible(true);
-            if(hack.isBought)
+            if (hack.isBought)
                 lessRights.setVisible(true);
         }
-
-        question.isBought = player.upgradeuri.contains("???");
-
         if(scam.isBought) {
             lessRights.setPrice(lessRights.price * 10);
             hack.setPrice(hack.price * 10);

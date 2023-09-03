@@ -3,6 +3,7 @@ package game.gameplay;
 
 import game.*;
 import game.screens.Credits;
+import game.screens.IntroFrame;
 import game.usefullclases.Culori;
 import game.usefullclases.Sounds;
 import game.usefullclases.GameVariables;
@@ -50,6 +51,8 @@ public class ClickerFrame extends GameVariables {
         }
         setIconImage(icon);
 
+        Credits.cf = this;
+
         /**          Components           */
         //button
         clickButton = new ClickableSquare("Click me", new Color(220, 220, 220));
@@ -80,10 +83,10 @@ public class ClickerFrame extends GameVariables {
         lessRights = new Item(Culori.notAvailable, 7000, "Less Rights");//makes all the items disappear except question
         lessRights.setBounds(425, 70, 130, 110);
 
-        question = new Item(Culori.backround, 0, "");//until you afford it it is transparent
+        question = new Item(Culori.backround, 0, "");//invisible until three '?' are unlocked
         question.setBounds(440, 190, 100, 150);
 
-        recovery = new Item(Culori.available, 0, "RECOVERY");//gets into the minigame
+        recovery = new Item(Culori.available, 0, "RECOVERY");//gets into a minigame
         recovery.setBounds(-460, -215, 130, 110);
 
         buyOrDie = new Item(Culori.notAvailable, 100, "Buy or Die");//wins the minigame
@@ -98,7 +101,6 @@ public class ClickerFrame extends GameVariables {
         ps = new Progress(this);
         ps.loadProgress();
         add(pc);
-        updateComponents();
 
         //ADMIN COMMANDS
         pc.setFocusable(true);
@@ -304,14 +306,14 @@ public class ClickerFrame extends GameVariables {
 
                 if (question.border.color.equals(Color.black)) {
                     question.isBought = true;
+                    firstChapterDone = true;
                     clicks = 0;
                     clickPower = 1;
                 }
 
-                if (question.butonColor.equals(Culori.question)) {
-                    dispose();
+                if (question.butonColor.equals(Culori.question))
                     new Credits(Credits.NORMAL_ENDING);//Normal ENDING
-                }
+
             }
 
         });
@@ -405,31 +407,36 @@ public class ClickerFrame extends GameVariables {
             }
         });
 
-        addComponentListener(new ComponentAdapter() {//When the windows is resized, components are aligned
+        addComponentListener(new ComponentAdapter() {//When the window is resized, components are aligned
             private Timer resizeTimer;
 
             @Override
             public void componentResized(ComponentEvent e) {
+                if(!firstChapterDone)
+                    return;
+
                 if (resizeTimer != null && resizeTimer.isRunning()) {
                     resizeTimer.restart(); // Restart the timer if it's already running
-                } else {
-                    resizeTimer = new Timer(300, actionEvent -> updateComponents());
-                    resizeTimer.setRepeats(false); // Only execute once
-                    resizeTimer.start();
+                    return;
                 }
+                resizeTimer = new Timer(300, actionEvent -> updateComponents());
+                resizeTimer.setRepeats(false); // Only execute once
+                resizeTimer.start();
             }
 
             @Override
             public void componentMoved(ComponentEvent e) {
+                if(!firstChapterDone)
+                    return;
+
                 if (resizeTimer != null && resizeTimer.isRunning()) {
                     resizeTimer.restart(); // Restart the timer if it's already running
-                } else {
-                    if (question.isBought) {
-                        resizeTimer = new Timer(300, actionEvent -> updateComponents());
-                        resizeTimer.setRepeats(false); // Only execute once
-                        resizeTimer.start();
-                    }
+                    return;
                 }
+
+                resizeTimer = new Timer(300, actionEvent -> updateComponents());
+                resizeTimer.setRepeats(false); // Only execute once
+                resizeTimer.start();
             }
         });
     }
@@ -461,7 +468,7 @@ public class ClickerFrame extends GameVariables {
         border.update(x, y);
         count.update(x, y);
 
-        if(question.isBought)
+        if(question.isBought && question.isVisible())
             question.setVisible(false);
 
     }

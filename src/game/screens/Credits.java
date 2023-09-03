@@ -1,5 +1,6 @@
 package game.screens;
 
+import game.gameplay.ClickerFrame;
 import game.gameplay.Player;
 
 import javax.swing.*;
@@ -15,6 +16,7 @@ public class Credits extends JPanel implements ActionListener {
     public final static int NORMAL_ENDING = 1;
     public final static int DEATH = 2;
 
+    public static ClickerFrame cf;
 
     String text = "";
     String tip = "";
@@ -45,6 +47,10 @@ public class Credits extends JPanel implements ActionListener {
     }
 
     private void rollingCredits() {//Displays the Credits scene
+        try {
+            cf.dispose();//it closes the gameplay window
+        }catch (Exception ignored) {}
+
         window = new JFrame("Credits");
         window.add(this);
         window.setResizable(false);
