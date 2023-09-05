@@ -50,13 +50,13 @@ public class Progress extends GameVariables {
             pc.repaint();
             if(clicks >= 100)
                 new Credits("Such an enthusiast");
-
         } else {
             pc.add(count);
             tutorialDone = true;
         }
         if (!tutorialDone) //when count appears the tutorial is done, until then you can't make progress
             return;
+
         /**------  STARTING  ---------**/
         if (!moreRights.isBought) {// Suspense until 25 clicks, nothing on the screen, then "moreRights" appears
             if (clicks >= 25) {
@@ -113,6 +113,9 @@ public class Progress extends GameVariables {
         cf.setResizable(true);
         question.recolor(Culori.question);
         pc.add(recovery);
+
+        if(!recovery.isBought)
+            count.setVisible(false);
 
         //MINIGAME PHASE
         if(noStress && Timer > 10 && clicks + 9 >= buyOrDie.price)
@@ -221,7 +224,7 @@ public class Progress extends GameVariables {
             hack.setPrice(1000);
         }
         if(lessRights.isBought) {
-            cf.cpsVal = 0;
+            ClickerFrame.cpsVal = 0;
 
             moreRights.setVisible(false);
             hack.setVisible(false);

@@ -2,8 +2,7 @@ package game.gameplay;
 
 
 import game.*;
-import game.screens.Credits;
-import game.screens.IntroFrame;
+import game.screens.*;
 import game.usefullclases.Culori;
 import game.usefullclases.Sounds;
 import game.usefullclases.GameVariables;
@@ -12,8 +11,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.Duration;
@@ -31,7 +29,7 @@ public class ClickerFrame extends GameVariables {
     ClickableSquare clickButton;
     Border border;
 
-    int cpsVal = 5, ct = 0;
+    public static int cpsVal = 5, ct = 0;
 
     public ClickerFrame() {
         // Initialize

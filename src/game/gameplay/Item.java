@@ -80,11 +80,7 @@ public class Item extends JPanel {
     }
 
     public void addText(String text) {//Adds String at the end of the name
-        text = desc.getText() + text;
-        desc.setText(text);
-        add(desc);
-        name = text;
-        repaint();
+        setText(name + text);
     }
 
     public void setText(String text) {
