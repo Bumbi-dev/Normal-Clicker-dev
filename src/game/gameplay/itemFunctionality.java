@@ -1,6 +1,5 @@
 package game.gameplay;
 
-import game.Counter;
 import game.screens.Credits;
 import game.usefullclases.Culori;
 import game.usefullclases.gameVariablesAndMethods;
@@ -219,7 +218,7 @@ public class itemFunctionality extends gameVariablesAndMethods {
 
                 ClickerFrame.count.setVisible(true);
                 ClickerFrame.count.update(clicks);
-                ps.noStress();
+                ps.buyOrDieMinigame();
             }
         });
         buyOrDie.button.addMouseListener(new MouseAdapter() {
@@ -231,7 +230,7 @@ public class itemFunctionality extends gameVariablesAndMethods {
                     return;
 
                 buyOrDie.isBought = true;
-                ps.noStress = false;
+                ps.isMinigame = false;
                 buyOrDie.setVisible(false);
 
                 moreRights.isBought = false;

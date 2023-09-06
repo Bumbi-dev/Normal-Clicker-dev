@@ -1,11 +1,9 @@
 package game.gameplay;
 
-import game.*;
 import game.screens.Credits;
 import game.usefullclases.Culori;
 import game.usefullclases.gameVariablesAndMethods;
 
-import javax.swing.*;
 import java.awt.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -14,7 +12,7 @@ public class Progress extends gameVariablesAndMethods {
 
     ClickerFrame cf;
 
-    boolean noStress = false;
+    boolean isMinigame = false;
     int Timer;
 
     public Progress (ClickerFrame cf) {
@@ -30,6 +28,7 @@ public class Progress extends gameVariablesAndMethods {
             return;
         }
 
+        //MINIGAME PHASE
         if(!isSecondChapter) {
             question.setVisible(false);
             cf.setResizable(true);
@@ -37,8 +36,7 @@ public class Progress extends gameVariablesAndMethods {
             if(!recovery.isBought)
                 count.setVisible(false);
 
-            //MINIGAME PHASE
-            if(noStress && Timer > 10 && clicks + 9 >= buyOrDie.price)
+            if(isMinigame && Timer > 10 && clicks + 9 >= buyOrDie.price)
                 buyOrDie.setPrice(++buyOrDie.price);
             updateVisibility();
             return;
@@ -57,7 +55,7 @@ public class Progress extends gameVariablesAndMethods {
 
     private void firstChapter() {
         //TUTORIAL PHASE
-        if (!rights.isBought) {
+        if (!rights.isBought) {//when count appears the tutorial is done, until then you can't make progress
             if (clicks < 10)
                 return;
 
@@ -66,7 +64,7 @@ public class Progress extends gameVariablesAndMethods {
             if(clicks >= 100)
                 new Credits("Clicking overdose");
             return;
-        }//when count appears the tutorial is done, until then you can't make progress
+        }
 
         /**------  STARTING  ---------**/
         if (!moreRights.isBought) {// Suspense until 25 clicks, nothing on the screen, then "moreRights" appears
@@ -131,26 +129,23 @@ public class Progress extends gameVariablesAndMethods {
 
     }
 
-    void noStress() {// "minigame" - if you don't buy the item before the timer runs out you "die" / get bad ending, the price increases as you approach it and when there are 10 seconds left the clicks are reset to 100, but the price stays the same
+    void buyOrDieMinigame() {// "minigame" - if you don't buy the item before the timer runs out you "die" / get bad ending, the price increases as you approach it and when there are 10 seconds left the clicks are reset to 100, but the price stays the same
         buyOrDie.setVisible(true);
         buyOrDie.setPrice(100);
         buyOrDie.recolor(Culori.notAvailable);
         AtomicInteger x = new AtomicInteger(50);
 
         cpsThread = new Thread(() -> {//counts down from 50
-            noStress = true;
+            isMinigame = true;
             cf.updateComponents();
-            while(x.get() > 0 && noStress) {
+            while(x.get() > 0 && isMinigame) {
                 buyOrDie.setDesc("Buy or Die: " + x.decrementAndGet() + "s");//displays the time left
                 pc.repaint();
 
-                if(x.get() < 95 && !cf.isVisible())//if the windows is closed the thread is stopped
-                    break;
                 try {
                     Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                } catch (InterruptedException ignored) {}
+
                 this.Timer = x.get();
 
                 if(this.Timer == 10) {
@@ -159,12 +154,11 @@ public class Progress extends gameVariablesAndMethods {
                     updateVisibility();
                 }
             }
-            if(cf.isVisible() && noStress) {
-                cf.dispose();
+            if(cf.isVisible() && isMinigame) {
                 if(clicks >= 100)
                     new Credits(Credits.DEATH, "You could try being more patient next time!");//Bad ENDING
                 else
-                    new Credits(Credits.DEATH, "Forgot to click");
+                    new Credits(Credits.DEATH, "Forgot to click?");
             }
         });
 
@@ -177,7 +171,6 @@ public class Progress extends gameVariablesAndMethods {
             if(item.equals(bonus) || item.equals(question) || item.equals(rights)) {
                 continue;
             }
-            System.out.println(item.name + " " + item.price + " " + clicks);
             if (clicks >= item.price)
                 item.recolor(Culori.available);
             else item.recolor(Culori.notAvailable);
@@ -254,7 +247,7 @@ public class Progress extends gameVariablesAndMethods {
         }
 
         if(recovery.isBought && !buyOrDie.isBought)
-            noStress();
+            buyOrDieMinigame();
 
         if(recovery.isBought) {
             firstChapterDone = true;

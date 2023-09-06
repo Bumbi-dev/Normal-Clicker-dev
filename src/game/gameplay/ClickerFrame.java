@@ -285,7 +285,7 @@ public class ClickerFrame extends gameVariablesAndMethods {
                             upgradeuri.append(item.name);
 
                     Player player = new Player(clicks, clickPower, moreRights.price, upgradeuri.toString());
-                    if(ps.noStress)//resets everything if you try to save when you're in the minigame
+                    if(ps.isMinigame)//resets everything if you try to save when you're in the minigame
                         player = new Player();
                     player.save();
                 }
