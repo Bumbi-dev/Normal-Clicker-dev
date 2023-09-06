@@ -19,7 +19,7 @@ public class gameVariablesAndMethods extends JFrame {//maybe remove JFrame and c
     public static Counter count;
 
     public void updateProgress() {
-        ClickerFrame.ps.updateProgress();
+        ps.updateProgress();
     }
 
     public gameVariablesAndMethods(String text) {

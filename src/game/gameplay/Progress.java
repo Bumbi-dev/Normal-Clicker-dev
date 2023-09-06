@@ -40,6 +40,7 @@ public class Progress extends gameVariablesAndMethods {
             //MINIGAME PHASE
             if(noStress && Timer > 10 && clicks + 9 >= buyOrDie.price)
                 buyOrDie.setPrice(++buyOrDie.price);
+            updateVisibility();
             return;
         }
 
@@ -176,6 +177,7 @@ public class Progress extends gameVariablesAndMethods {
             if(item.equals(bonus) || item.equals(question) || item.equals(rights)) {
                 continue;
             }
+            System.out.println(item.name + " " + item.price + " " + clicks);
             if (clicks >= item.price)
                 item.recolor(Culori.available);
             else item.recolor(Culori.notAvailable);
@@ -200,7 +202,7 @@ public class Progress extends gameVariablesAndMethods {
             }
         question.isBought = player.upgradeuri.contains("???");
 
-        question.setVisible(true);
+        question.setVisible(!question.isBought);
         if(question.isBought) {
             cf.setResizable(true);
             pc.add(recovery);
