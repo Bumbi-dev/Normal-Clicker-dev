@@ -49,7 +49,7 @@ public class Progress extends GameVariables {
             pc.add(rights);
             pc.repaint();
             if(clicks >= 100)
-                new Credits("Such an enthusiast");
+                new Credits("Clicking overdose");
         } else {
             pc.add(count);
             tutorialDone = true;
@@ -126,7 +126,7 @@ public class Progress extends GameVariables {
         buyOrDie.setVisible(true);
         buyOrDie.setPrice(100);
         buyOrDie.recolor(Culori.notAvailable);
-        AtomicInteger x = new AtomicInteger(100);
+        AtomicInteger x = new AtomicInteger(50);
 
         Thread cpsThread = new Thread(() -> {
             noStress = true;
@@ -237,11 +237,16 @@ public class Progress extends GameVariables {
                 question.add(question.border);
             }
         }
+        if(question.isBought)
+            question.setVisible(false);
         if(recovery.isBought && !buyOrDie.isBought)
             noStress();
 
-        question.setVisible(true);
-
+        if(recovery.isBought) {
+            moreRights.setVisible(true);
+            hack.setVisible(true);
+            scam.setVisible(true);
+        }
         updateProgress();
     }
 
