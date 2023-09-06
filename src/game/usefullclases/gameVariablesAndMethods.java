@@ -1,20 +1,30 @@
 package game.usefullclases;
 
+import game.Counter;
+import game.gameplay.ClickerFrame;
 import game.gameplay.Item;
+import game.gameplay.Progress;
 
 import javax.swing.*;
 
-public class GameVariables extends JFrame {//maybe remove JFrame and create object in ClickerFrame class
+public class gameVariablesAndMethods extends JFrame {//maybe remove JFrame and create object in ClickerFrame class
 
     public static boolean tutorialDone = false, negativeUnlocked, firstChapterDone = false, isSecondChapter = false;
     public static double clicks, clickPower;
 
     public static Item rights, moreRights, bonus, question, lessRights, hack, scam, recovery, buyOrDie;
     public static Item []upgradeList = {rights, moreRights, bonus, question, lessRights, hack, scam, recovery, buyOrDie};
+    public static Progress ps;
+    public static JPanel pc;
+    public static Counter count;
 
-    public GameVariables(String text) {
+    public void updateProgress() {
+        ClickerFrame.ps.updateProgress();
+    }
+
+    public gameVariablesAndMethods(String text) {
         super(text);
     }
 
-    public GameVariables() {}//default constructor
+    public gameVariablesAndMethods() {}//default constructor
 }

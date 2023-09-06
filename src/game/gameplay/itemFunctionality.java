@@ -1,16 +1,18 @@
 package game.gameplay;
 
+import game.Counter;
 import game.screens.Credits;
 import game.usefullclases.Culori;
+import game.usefullclases.gameVariablesAndMethods;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Random;
 
-public class itemFunctionality extends ClickerFrame {
-    public itemFunctionality() {
+public class itemFunctionality extends gameVariablesAndMethods {
 
+    public void init() {
         rights.button.addMouseListener(new MouseAdapter() {
             boolean x;// for better looking code
 
@@ -25,6 +27,7 @@ public class itemFunctionality extends ClickerFrame {
                 clicks = 0;
                 clickPower = 0.1f;
 
+                pc.add(count);
                 updateProgress();
             }
         });
@@ -102,7 +105,7 @@ public class itemFunctionality extends ClickerFrame {
 
                 clicks = 15;//the question border matches with the background
                 clickPower = 0.5;
-                cpsVal = 0;
+                ClickerFrame.cpsVal = 0;
 
                 lessRights.setVisible(false);
                 moreRights.setVisible(false);
@@ -131,18 +134,17 @@ public class itemFunctionality extends ClickerFrame {
                     return;
                 }
 
-
                 hack.setPrice(1000);
 
                 if (hack.isBought) {
-                    cpsVal += 10;
+                    ClickerFrame.cpsVal += 10;
                     updateProgress();
                     return;
                 }
 
                 hack.isBought = true;
                 question.addText("?");
-                cps();
+                ClickerFrame.cps();
             }
 
         });
@@ -187,7 +189,6 @@ public class itemFunctionality extends ClickerFrame {
 
                 if (question.border.color.equals(Color.black)) {
                     question.isBought = true;
-                    firstChapterDone = true;
                     clicks = 0;
                     clickPower = 1;
                 }
@@ -207,15 +208,17 @@ public class itemFunctionality extends ClickerFrame {
                 if (e.getButton() != MouseEvent.BUTTON1)
                     return;
 
+                firstChapterDone = true;
+
                 recovery.isBought = true;
                 recovery.setVisible(false);
-                pc.add(buyOrDie);
+                ClickerFrame.pc.add(buyOrDie);
 
                 clicks = 0;
                 clickPower = 1;
 
-                count.setVisible(true);
-                count.update(clicks);
+                ClickerFrame.count.setVisible(true);
+                ClickerFrame.count.update(clicks);
                 ps.noStress();
             }
         });
@@ -244,6 +247,7 @@ public class itemFunctionality extends ClickerFrame {
 
                 isSecondChapter = true;
 
+                Progress.cpsThread.interrupt();
                 updateProgress();
             }
         });

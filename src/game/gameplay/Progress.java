@@ -3,17 +3,16 @@ package game.gameplay;
 import game.*;
 import game.screens.Credits;
 import game.usefullclases.Culori;
-import game.usefullclases.GameVariables;
+import game.usefullclases.gameVariablesAndMethods;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class Progress extends GameVariables {
-    ClickerFrame cf;
-    JPanel pc;
+public class Progress extends gameVariablesAndMethods {
+    public static Thread cpsThread;
 
-    Counter count;
+    ClickerFrame cf;
 
     boolean noStress = false;
     int Timer;
@@ -22,20 +21,35 @@ public class Progress extends GameVariables {
         this.cf = cf;
     }
 
-    void updateProgress() {
+    public void updateProgress() {
         count.update(clicks);
 
-        if(!buyOrDie.isBought) {
+        if(!firstChapterDone) {
             firstChapter();
             updateVisibility();
             return;
         }
 
-        /**_____SECOND CHAPTER_______**/
-        //Recovering Phase
-        //when hack is bought add a new button
+        if(!isSecondChapter) {
+            question.setVisible(false);
+            cf.setResizable(true);
 
+            if(!recovery.isBought)
+                count.setVisible(false);
+
+            //MINIGAME PHASE
+            if(noStress && Timer > 10 && clicks + 9 >= buyOrDie.price)
+                buyOrDie.setPrice(++buyOrDie.price);
+            return;
+        }
+
+        /**_____SECOND CHAPTER_______**/
+
+        if(isSecondChapter)
+            secondChapter();
+        //Recovering Phase
         //slow progress chapter
+
         cf.updateComponents();
         updateVisibility();
     }
@@ -50,12 +64,8 @@ public class Progress extends GameVariables {
             pc.repaint();
             if(clicks >= 100)
                 new Credits("Clicking overdose");
-        } else {
-            pc.add(count);
-            tutorialDone = true;
-        }
-        if (!tutorialDone) //when count appears the tutorial is done, until then you can't make progress
             return;
+        }//when count appears the tutorial is done, until then you can't make progress
 
         /**------  STARTING  ---------**/
         if (!moreRights.isBought) {// Suspense until 25 clicks, nothing on the screen, then "moreRights" appears
@@ -99,8 +109,9 @@ public class Progress extends GameVariables {
         if (!lessRights.isBought)
             return;
 
+        count.setVisible(false);
         if(!question.isBought) {
-            count.setVisible(false);
+
             clicks = Math.min(255, clicks);// The outline slowly darkens until it is pitch black
             int x = (int) (255 - clicks);
 
@@ -110,25 +121,22 @@ public class Progress extends GameVariables {
             return;
         }
 
-        cf.setResizable(true);
         question.recolor(Culori.question);
+        cf.setResizable(true);
         pc.add(recovery);
-
-        if(!recovery.isBought)
-            count.setVisible(false);
-
-        //MINIGAME PHASE
-        if(noStress && Timer > 10 && clicks + 9 >= buyOrDie.price)
-            buyOrDie.setPrice(++buyOrDie.price);
     }
 
-    void noStress() {// "minigame" - if you don't buy the item before the timer runs out you "die" / get bad ending, the price increases as you approach it and when there are 5 seconds left the clicks are reset to 100, but the price stays the same
+    private void secondChapter() {
+
+    }
+
+    void noStress() {// "minigame" - if you don't buy the item before the timer runs out you "die" / get bad ending, the price increases as you approach it and when there are 10 seconds left the clicks are reset to 100, but the price stays the same
         buyOrDie.setVisible(true);
         buyOrDie.setPrice(100);
         buyOrDie.recolor(Culori.notAvailable);
         AtomicInteger x = new AtomicInteger(50);
 
-        Thread cpsThread = new Thread(() -> {
+        cpsThread = new Thread(() -> {//counts down from 50
             noStress = true;
             cf.updateComponents();
             while(x.get() > 0 && noStress) {
@@ -159,6 +167,7 @@ public class Progress extends GameVariables {
             }
         });
 
+        cpsThread.setDaemon(true);
         cpsThread.start();
     }
 
@@ -173,8 +182,6 @@ public class Progress extends GameVariables {
         }
     }
     void loadProgress() {//get the progress from file
-        getObjects();
-
         Player player = new Player();
         player.loadProgress();
 
@@ -191,13 +198,13 @@ public class Progress extends GameVariables {
                 if(!item.equals(moreRights))
                     item.setVisible(false);
             }
-
         question.isBought = player.upgradeuri.contains("???");
 
+        question.setVisible(true);
         if(question.isBought) {
-            firstChapterDone = true;
+            cf.setResizable(true);
+            pc.add(recovery);
         }
-
         if(buyOrDie.isBought)
             isSecondChapter = true;
 
@@ -210,7 +217,13 @@ public class Progress extends GameVariables {
                 hack.setVisible(true);
             if (hack.isBought)
                 lessRights.setVisible(true);
+
+            updateProgress();
+            return;
         }
+
+        if(rights.isBought)
+            pc.add(count);
         if(scam.isBought) {
             lessRights.setPrice(lessRights.price * 10);
             hack.setPrice(hack.price * 10);
@@ -237,31 +250,16 @@ public class Progress extends GameVariables {
                 question.add(question.border);
             }
         }
-        if(question.isBought)
-            question.setVisible(false);
+
         if(recovery.isBought && !buyOrDie.isBought)
             noStress();
 
         if(recovery.isBought) {
+            firstChapterDone = true;
             moreRights.setVisible(true);
             hack.setVisible(true);
             scam.setVisible(true);
         }
         updateProgress();
-    }
-
-    private void getObjects() {
-        count = cf.count;
-        pc = cf.pc;
-
-        rights = cf.rights;
-        moreRights = cf.moreRights;
-        bonus = cf.bonus;
-        question = cf.question;
-        lessRights = cf.lessRights;
-        hack = cf.hack;
-        scam = cf.scam;
-        recovery = cf.recovery;
-        buyOrDie = cf.buyOrDie;
     }
 }

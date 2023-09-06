@@ -5,7 +5,7 @@ import game.*;
 import game.screens.*;
 import game.usefullclases.Culori;
 import game.usefullclases.Sounds;
-import game.usefullclases.GameVariables;
+import game.usefullclases.gameVariablesAndMethods;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -17,13 +17,10 @@ import java.math.RoundingMode;
 import java.time.Duration;
 import java.time.Instant;
 
-public class ClickerFrame extends GameVariables {
+public class ClickerFrame extends gameVariablesAndMethods {
 
-    static JPanel pc;
     static Instant startTime;
 
-    static Progress ps;
-    static Counter count;
     ClickableSquare clickButton;
     Border border;
 
@@ -124,7 +121,7 @@ public class ClickerFrame extends GameVariables {
         pc.requestFocusInWindow();
         pc.addKeyListener(hecu);
 
-        new itemFunctionality();
+        new itemFunctionality().init();
 
         //________________THE BUTTON________________
         clickButton.addMouseListener(new MouseAdapter() {
@@ -143,14 +140,14 @@ public class ClickerFrame extends GameVariables {
                     return;
 
                 Sounds.playSound(Sounds.click);//click sound
-
                 clickButton.recolor(new Color(220, 220, 220));
+
+                clicks += clickPower; //clickpower += clickpower * (rebirth + 1)
                 if (mouseOut) {//doesn't add clicks if the cursor is outside
                     clicks -= clickPower;
                     if (negativeUnlocked)//if the negativeUnlocked is true it takes clicks
                         clicks -= clickPower;
                 }
-                clicks += clickPower; //clickpower += clickpower * (rebirth + 1)
 
                 BigDecimal bd = new BigDecimal(Double.toString(clicks));//Rounds the number
                 bd = bd.setScale(1, RoundingMode.HALF_UP);
@@ -171,7 +168,7 @@ public class ClickerFrame extends GameVariables {
 
             @Override
             public void componentResized(ComponentEvent e) {
-                if(!firstChapterDone)
+                if(!question.isBought)
                     return;
 
                 if (resizeTimer != null && resizeTimer.isRunning()) {
@@ -185,7 +182,7 @@ public class ClickerFrame extends GameVariables {
 
             @Override
             public void componentMoved(ComponentEvent e) {
-                if(!firstChapterDone)
+                if(!question.isBought)
                     return;
 
                 if (resizeTimer != null && resizeTimer.isRunning()) {
@@ -211,10 +208,6 @@ public class ClickerFrame extends GameVariables {
         cf.setVisible(true);
     }
 
-    void updateProgress() {
-        ps.updateProgress();
-    }
-
     void updateComponents() {
         int x = getX(); x -= x % 4;//for alignment
         int y = getY(); y -= y % 4;
@@ -227,20 +220,19 @@ public class ClickerFrame extends GameVariables {
         border.update(x, y);
         count.update(x, y);
 
-        if(question.isBought && question.isVisible())
-            question.setVisible(false);
-
+        if(question.isBought && question.isVisible()) {
+            firstChapterDone = true;
+            updateProgress();
+        }
     }
 
-    void cps() {//free clicks every second
+    static void cps() {//free clicks every second
         Thread cpsThread = new Thread(() -> {
             while (cpsVal > 0) {
-                if(!isFocused())
-                    return;
 
                 clicks += cpsVal;
                 count.update(clicks);
-                updateProgress();
+                ps.updateProgress();
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {

@@ -5,8 +5,7 @@ import game.usefullclases.Constants;
 import javax.swing.*;
 import java.awt.*;
 
-public class Counter extends JLabel {//Displays the number of clicks you have
-    Constants m = new Constants();
+public class Counter extends JLabel {//Displays the number of clicks you have;
     int x, y, width, height;
 
     public Counter(double clicks) {
@@ -59,6 +58,6 @@ public class Counter extends JLabel {//Displays the number of clicks you have
     }
 
     public void update(int x1, int y1) {
-        super.setBounds(m.panelVariableX + x - x1, m.panelVariableY + y - y1, width, height);
+        super.setBounds(Constants.panelVariableX + x - x1, Constants.panelVariableY + y - y1, width, height);
     }
 }
