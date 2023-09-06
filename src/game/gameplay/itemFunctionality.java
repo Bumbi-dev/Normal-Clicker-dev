@@ -2,6 +2,7 @@ package game.gameplay;
 
 import game.screens.Credits;
 import game.usefullclases.Culori;
+import game.usefullclases.Sounds;
 import game.usefullclases.gameVariablesAndMethods;
 
 import java.awt.*;
@@ -19,6 +20,7 @@ public class itemFunctionality extends gameVariablesAndMethods {
             public void mouseReleased(MouseEvent e) {
                 if (e.getButton() != MouseEvent.BUTTON1)//can only be clicked with left click
                     return;
+                Sounds.playMoney();
 
                 rights.isBought = true;
                 rights.setVisible(false);
@@ -37,6 +39,7 @@ public class itemFunctionality extends gameVariablesAndMethods {
             public void mouseReleased(MouseEvent e) {
                 if (e.getButton() != MouseEvent.BUTTON1)
                     return;
+                Sounds.playMoney();
 
                 if (!moreRights.isBought) {
                     clicks += 20;
@@ -58,6 +61,7 @@ public class itemFunctionality extends gameVariablesAndMethods {
             public void mouseReleased(MouseEvent e) {
                 if (e.getButton() != MouseEvent.BUTTON1 || clicks < moreRights.price)
                     return;
+                Sounds.playMoney();
 
                 if (isSecondChapter) {
                     if (moreRights.price <= 101)
@@ -99,6 +103,7 @@ public class itemFunctionality extends gameVariablesAndMethods {
             public void mouseReleased(MouseEvent e) {
                 if (clicks < lessRights.price || e.getButton() != MouseEvent.BUTTON1)
                     return;
+                Sounds.playMoney();
 
                 lessRights.isBought = true;
 
@@ -125,6 +130,7 @@ public class itemFunctionality extends gameVariablesAndMethods {
             public void mouseReleased(MouseEvent e) {
                 if (clicks < hack.price || e.getButton() != MouseEvent.BUTTON1)
                     return;
+                Sounds.playMoney();
 
                 clicks -= hack.price;
 
@@ -154,6 +160,7 @@ public class itemFunctionality extends gameVariablesAndMethods {
             public void mouseReleased(MouseEvent e) {
                 if (clicks < scam.price || e.getButton() != MouseEvent.BUTTON1)
                     return;
+                Sounds.playMoney();
 
                 scam.isBought = true;
                 scam.setVisible(false);
@@ -206,6 +213,7 @@ public class itemFunctionality extends gameVariablesAndMethods {
             public void mouseReleased(MouseEvent e) {
                 if (e.getButton() != MouseEvent.BUTTON1)
                     return;
+                Sounds.playMoney();
 
                 firstChapterDone = true;
 
@@ -228,6 +236,7 @@ public class itemFunctionality extends gameVariablesAndMethods {
             public void mouseReleased(MouseEvent e) {
                 if (e.getButton() != MouseEvent.BUTTON1 || clicks < buyOrDie.price)
                     return;
+                Sounds.playMoney();
 
                 buyOrDie.isBought = true;
                 ps.isMinigame = false;

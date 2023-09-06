@@ -139,7 +139,7 @@ public class ClickerFrame extends gameVariablesAndMethods {
                 if (e.getButton() != MouseEvent.BUTTON1)
                     return;
 
-                Sounds.playSound(Sounds.click);//click sound
+                Sounds.playClick();//click sound
                 clickButton.recolor(new Color(220, 220, 220));
 
                 clicks += clickPower; //clickpower += clickpower * (rebirth + 1)
