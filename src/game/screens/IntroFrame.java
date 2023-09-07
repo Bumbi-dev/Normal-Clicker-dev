@@ -2,6 +2,7 @@ package game.screens;
 
 import game.gameplay.ClickerFrame;
 import game.gameplay.Player;
+import game.usefullclases.Sounds;
 
 import javax.swing.*;
 import javax.swing.plaf.metal.MetalBorders;
@@ -46,11 +47,8 @@ public class IntroFrame extends JFrame { //Intro scene, where you choose to cont
 
         add(mp);
         mp.add(intro);
-        try {
-            script();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
+        script();
 
         mp.setBounds(0, 0, 585, 100);
         Continue.setBounds(100, 180, 150, 80);
@@ -94,12 +92,17 @@ public class IntroFrame extends JFrame { //Intro scene, where you choose to cont
         });
     }
     
-    private void script() throws InterruptedException{
-        typing("Loading.", "..", 3);
+    private void script() {
+        try {
+            typing("Loading.", "..", 3);
 
-        typing("Welcome to Normal Clicker", 0.75f);
+            typing("Welcome to Normal Clicker", 0.75f);
 
-        Thread.sleep(1000);
+            Thread.sleep(1000);
+        }
+        catch (InterruptedException ie) {
+            System.out.println("Intro script exception");
+        }
     }
 
     //constantPart displays instantly while repeatedPart has a typewriter effect, after it's typed it repeats for _times_ times
@@ -107,12 +110,9 @@ public class IntroFrame extends JFrame { //Intro scene, where you choose to cont
         intro.setText(constantPart);
 
         final int delay = 525;
-
-        //shows the repeatedPart with a typing effect after the constanPart
-        for (int i = 0; i <= repeatedPart.length(); i++) {
+        //shows the repeatedPart with a typing effect after the constantPart
+        for (int i = 0; i <= repeatedPart.length(); i++, Thread.sleep(delay))
             intro.setText(constantPart + repeatedPart.substring(0, i));
-            Thread.sleep(delay);
-        }
 
         if (times > 1) {
             Thread.sleep(600);

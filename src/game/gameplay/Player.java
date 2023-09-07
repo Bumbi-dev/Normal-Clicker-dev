@@ -49,7 +49,8 @@ public class Player {//Gets, sets the variables / progress of the player
                 price = Integer.parseInt(scanner.next());
                 scanner.nextLine();
                 upgradeuri = scanner.nextLine();
-            } catch (NumberFormatException | ArrayIndexOutOfBoundsException | NoSuchElementException e) {
+            } catch (Exception e) {
+                System.out.println("Saving file changed, reset progress");
                 Player player = new Player();
                 player.save();
             }
@@ -67,7 +68,7 @@ public class Player {//Gets, sets the variables / progress of the player
 
             Sounds.initialize();//load sounds
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("exception in Player");
         }
     }
 
@@ -80,7 +81,7 @@ public class Player {//Gets, sets the variables / progress of the player
             fr.write(bitcoin.cryptingText(salvare));
             fr.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Player saving exception");
         }
     }
 }

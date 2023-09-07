@@ -27,49 +27,41 @@ public class Sounds {
                 clips[i].open(streams[i]);
                 clips[i].setFramePosition(990000);
                 clips[i].start();
-                System.out.println("asta");
             }
         }
-        catch(Exception ex){
-            ex.printStackTrace();
+        catch(Exception ex) {
+            System.out.println("Sound initialization exception");
         }
     }
 
-    public static void playClick() {//Plays a sound
-        try {
-            if(clips[0].isRunning()) {//if it s running it will play the sound over it
-                try {
-                    clickStream = AudioSystem.getAudioInputStream(files[0]);
-                    clips[0] = AudioSystem.getClip();
-                    clips[0].open(clickStream);
-                } catch (UnsupportedAudioFileException | IOException | LineUnavailableException ex) {
-                    ex.printStackTrace();
-                }
-            }
+    public static void playClick() {//Plays click sound
 
-            clips[0].setFramePosition(0);//start the clip from the beggining and plays it
-            clips[0].start();
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        if(clips[0].isRunning()) {//if it s running it will play the sound over it
+            try {
+                streams[0] = AudioSystem.getAudioInputStream(files[0]);
+                clips[0] = AudioSystem.getClip();
+                clips[0].open(streams[0]);
+            } catch (UnsupportedAudioFileException | IOException | LineUnavailableException ex) {
+                System.out.println("CLick sound exception");
+            }
         }
+        clips[0].setFramePosition(0);//start the clip from the beggining and plays it
+        clips[0].start();
+
     }
 
-    public static void playMoney() {//Plays a sound
-        try {
-            if(clips[1].isRunning()) {//if it s running it will play the sound over it
-                try {
-                    clickStream = AudioSystem.getAudioInputStream(files[1]);
-                    clips[1] = AudioSystem.getClip();
-                    clips[1].open(clickStream);
-                } catch (UnsupportedAudioFileException | IOException | LineUnavailableException ex) {
-                    ex.printStackTrace();
-                }
+    public static void playMoney() {//Plays money sound
+        if(clips[1].isRunning()) {
+            try {
+                streams[1] = AudioSystem.getAudioInputStream(files[1]);
+                clips[1] = AudioSystem.getClip();
+                clips[1].open(streams[1]);
             }
-
-            clips[1].setFramePosition(0);//start the clip from the beggining and plays it
-            clips[1].start();
-        } catch (Exception ex) {
-            ex.printStackTrace();
+            catch (UnsupportedAudioFileException | IOException | LineUnavailableException ex) {
+                System.out.println("Money sound exception");
+            }
         }
+        clips[1].setFramePosition(0);//start the clip from the beggining and plays it
+        clips[1].start();
     }
 }

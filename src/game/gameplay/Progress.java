@@ -144,7 +144,9 @@ public class Progress extends gameVariablesAndMethods {
 
                 try {
                     Thread.sleep(1000);
-                } catch (InterruptedException ignored) {}
+                } catch (InterruptedException ie) {
+                    System.out.println("Minigame timer exception in Progress class");
+                }
 
                 this.Timer = x.get();
 

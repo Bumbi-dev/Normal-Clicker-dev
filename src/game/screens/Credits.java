@@ -48,7 +48,7 @@ public class Credits extends JPanel implements ActionListener {
 
     private void rollingCredits() {//Displays the Credits scene
         try {
-            cf.dispose();//it closes the gameplay window
+            cf.dispose();//it closes the gameplay window if it wasn't already
         }catch (Exception ignored) {}
 
         window = new JFrame("Credits");

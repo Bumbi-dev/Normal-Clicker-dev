@@ -40,7 +40,7 @@ public class ClickerFrame extends gameVariablesAndMethods {
         try {
             icon = ImageIO.read(new File("Assets\\Icon.png"));
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Icon exception in Clicker Frame");
         }
         setIconImage(icon);
 
