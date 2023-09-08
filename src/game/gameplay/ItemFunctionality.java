@@ -10,9 +10,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Random;
 
-public class itemFunctionality extends gameVariablesAndMethods {
+public class ItemFunctionality extends gameVariablesAndMethods {
 
-    public void init() {
+    public ItemFunctionality() {
         rights.button.addMouseListener(new MouseAdapter() {
             boolean x;// for better looking code
 
@@ -154,7 +154,7 @@ public class itemFunctionality extends gameVariablesAndMethods {
 
         });
         scam.button.addMouseListener(new MouseAdapter() {
-            boolean x;
+            byte x;
 
             @Override
             public void mouseReleased(MouseEvent e) {

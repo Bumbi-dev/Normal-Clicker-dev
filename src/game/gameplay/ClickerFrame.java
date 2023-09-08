@@ -67,7 +67,7 @@ public class ClickerFrame extends gameVariablesAndMethods {
         bonus = new Item(Culori.bonus, 0, "bonus"); //free clicks
         bonus.setBounds(450, 250, 50, 78);
 
-        scam = new Item(Culori.notAvailable, 750, "Scam");//make everything more expensive, + 10 CP
+        scam = new Item(Culori.notAvailable, 750, "Scam");//make everything more expensive, + 10 CP, + 1 CP for moreRights
         scam.setBounds(35, 190, 130, 110);
 
         hack = new Item(Culori.notAvailable, 1500, "Hack");//clicks per second +5 first time, then +10
@@ -121,7 +121,7 @@ public class ClickerFrame extends gameVariablesAndMethods {
         pc.requestFocusInWindow();
         pc.addKeyListener(hecu);
 
-        new itemFunctionality().init();
+        new ItemFunctionality();
 
         //________________THE BUTTON________________
         clickButton.addMouseListener(new MouseAdapter() {
