@@ -7,7 +7,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
 
 public class Credits extends JPanel implements ActionListener {
     JFrame window;
@@ -19,13 +18,13 @@ public class Credits extends JPanel implements ActionListener {
     public static ClickerFrame cf;
 
     String text = "";
-    String tip = "";
+    String customLine = "";
     int textY = 400;
-    int ending;
+    int ending = -1;
 
-    public Credits(int ending, String tip) {
+    public Credits(int ending, String customLine) {
         this.ending = ending;
-        this.tip = tip;
+        this.customLine = "\n\n" + customLine;
 
         System.setProperty("sun.java2d.opengl", "true");
         SwingUtilities.invokeLater(this::rollingCredits);
@@ -40,7 +39,6 @@ public class Credits extends JPanel implements ActionListener {
 
     public Credits(String text) {//Custom ending first line
         this.text = text;
-        ending = 999;//doesn't need automatic text
 
         System.setProperty("sun.java2d.opengl", "true");
         SwingUtilities.invokeLater(this::rollingCredits);
@@ -61,8 +59,8 @@ public class Credits extends JPanel implements ActionListener {
 
         switch (ending) {//unique message
             case 1 -> text = "You finished the Normal ENDING";//first ending
-            case 2 -> text = "\"F\"\n\n" + tip;//Any death ending
-            case 999 -> text += "";//blank message
+            case 2 -> text = "\"F\"" + customLine;//Any death ending
+            case -1 -> text += "";//blank message
 
             default -> text = "You finished ENDING: " + ending;
         }
@@ -100,7 +98,6 @@ public class Credits extends JPanel implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
-
         if(textY <= -480) {
             timer.stop();
             window.dispose();

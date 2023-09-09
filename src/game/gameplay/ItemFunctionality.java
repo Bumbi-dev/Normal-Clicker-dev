@@ -199,11 +199,31 @@ public class ItemFunctionality extends gameVariablesAndMethods {
                     clickPower = 1;
                 }
 
-                if (question.butonColor.equals(Culori.question))
-                    new Credits(Credits.NORMAL_ENDING);//Normal ENDING
+                if (!question.butonColor.equals(Culori.question))
+                    return;
 
+                if (!scam.isBought && !hack.isBought) {
+                    new Credits("Nice speedrun!");
+                    return;
+                }
+
+                if (moreRights.price <= 120) {
+                    new Credits("Andrew Tate");
+                    return;
+                }
+
+                if (!scam.isBought) {
+                    new Credits("Entrepreneur");
+                    return;
+                }
+
+                if(!hack.isBought) {
+                    new Credits("Totally not Andrew Tate");
+                    return;
+                }
+
+                new Credits(Credits.NORMAL_ENDING);//Normal ENDING
             }
-
         });
 
         recovery.button.addMouseListener(new MouseAdapter() {
