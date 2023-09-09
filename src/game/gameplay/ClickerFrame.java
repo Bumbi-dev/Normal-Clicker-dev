@@ -204,8 +204,9 @@ public class ClickerFrame extends gameVariablesAndMethods {
             System.err.println("Failed to initialize");
         }
 
-        ClickerFrame cf = new ClickerFrame();
-        cf.setVisible(true);
+        new IntroFrame();
+        //ClickerFrame cf = new ClickerFrame();
+        //cf.setVisible(true);
     }
 
     void updateComponents() {

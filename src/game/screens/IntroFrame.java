@@ -93,6 +93,9 @@ public class IntroFrame extends JFrame { //Intro scene, where you choose to cont
     }
     
     private void script() {
+        Thread soundInitThread = new Thread(Sounds::initialize);
+        soundInitThread.start();
+
         try {
             typing("Loading.", "..", 3);
 
@@ -124,13 +127,15 @@ public class IntroFrame extends JFrame { //Intro scene, where you choose to cont
         }
     }
     
-    private void typing (String message, float speed) throws InterruptedException{
+    private void typing (String message, float speed) throws InterruptedException {
         int delay = (int) (100 / speed); // Delay between each character in milliseconds
 
         mp.setLayout(new FlowLayout());
 
-        for (int i = 1; i <= message.length(); i++, Thread.sleep(delay))
+        for (int i = 1; i <= message.length(); i++, Thread.sleep(delay)) {
             intro.setText(message.substring(0, i));
+            Sounds.playTyping();
+        }
     }
     
 }
