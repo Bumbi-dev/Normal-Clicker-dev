@@ -9,8 +9,6 @@ import java.awt.*;
 public class Border extends JPanel {//Border for buttons
     public Color color = Culori.border;
 
-    Constants m = new Constants();
-
     int x, y, width, height;
 
     public Border() {
@@ -56,6 +54,6 @@ public class Border extends JPanel {//Border for buttons
     }
 
     public void update(int x1, int y1) { //aligns the component
-        super.setBounds(m.panelVariableX + x - x1, m.panelVariableY + y - y1, width, height);
+        super.setBounds(Constants.panelVariableX + x - x1, Constants.panelVariableY + y - y1, width, height);
     }
 }

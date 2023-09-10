@@ -21,12 +21,12 @@ public class Counter extends JLabel {//Displays the number of clicks you have;
             clicks = 0;
 
         String copy = Integer.toString((int) clicks);
-        String customClicks = copy.substring(0, 1);
+        StringBuilder customClicks = new StringBuilder(copy.substring(0, 1));
 
-        for (int i = 1; i < copy.length(); i++) {//puts dot for each 3 digits i.e. 1.000 or 4.420.512
+        for (int i = 1; i < copy.length(); i++) {//puts dot before any 3 digits i.e. 1.000 or 4.420.512
             if ((copy.length() - i) % 3 == 0)
-                customClicks += ".";
-            customClicks += copy.substring(i, i + 1);
+                customClicks.append(".");
+            customClicks.append(copy.charAt(i));
         }
 
         String numberString = Double.toString(clicks);
@@ -35,15 +35,15 @@ public class Counter extends JLabel {//Displays the number of clicks you have;
 
 
         if (!(decimalPart.length() == 1 && decimalPart.charAt(0) == '0'))
-            customClicks += "," + decimalPart;
+            customClicks.append(",").append(decimalPart);
 
         if (customClicks.indexOf("-") == 0)
             if (customClicks.charAt(1) == '.')
-                customClicks = "-" + customClicks.substring(2);
+                customClicks = new StringBuilder("-" + customClicks.substring(2));
 
         setText("Count = " + customClicks);
 
-        setVisible(!customClicks.equals("0"));//if value = 0 doesnt show
+        setVisible(!customClicks.toString().equals("0"));//if value = 0 doesn't show
     }
 
     @Override

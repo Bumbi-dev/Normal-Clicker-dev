@@ -19,12 +19,12 @@ public class Sounds {
     private static AudioInputStream clickStream;
     private static AudioInputStream moneyStream;
     private static AudioInputStream typingStream;
-    private static AudioInputStream[] streams = {clickStream, moneyStream, typingStream};
+    private static final AudioInputStream[] streams = {clickStream, moneyStream, typingStream};
 
     private static Clip clickClip;
     private static Clip moneyClip;
     private static Clip typingClip;
-    private static Clip[] clips = {clickClip, moneyClip, typingClip};
+    private static final Clip[] clips = {clickClip, moneyClip, typingClip};
 
     public static void initialize() {//initializes the sounds
         try {
@@ -72,9 +72,8 @@ public class Sounds {
         clips[1].start();
     }
 
-    private static int turn = 1;
     private static int prevType = -1;
-    private static Random random = new Random();
+    private static final Random random = new Random();
     public static void playTyping() {
         if(prevType != -1 && random.nextInt(1, 5) <= 2)//plays only 3 out of 5 times, and the first time always
             return;

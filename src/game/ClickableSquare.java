@@ -8,8 +8,6 @@ import java.awt.*;
 public class ClickableSquare extends JPanel {//The clickable part of a button
     Color color;
 
-    Constants m = new Constants();
-
     String cuv;
     int x, y, width, height;
 
@@ -71,6 +69,6 @@ public class ClickableSquare extends JPanel {//The clickable part of a button
     }
 
     public void update(int x1, int y1) {
-        super.setBounds(m.panelVariableX + x - x1, m.panelVariableY + y - y1, width, height);
+        super.setBounds(Constants.panelVariableX + x - x1, Constants.panelVariableY + y - y1, width, height);
     }
 }
