@@ -34,47 +34,46 @@ public class Player {//Gets, sets the variables / progress of the player
     }
 
     public void loadProgress () {
-        try {
-            File temp = File.createTempFile("TempFile", "txt");//creates a normal file
-            Scanner scanner = new Scanner(temp);
-            HexEncoderDecoder bitcoin = new HexEncoderDecoder();
+        HexEncoderDecoder bitcoin = new HexEncoderDecoder();
 
-            try {//if the text in the file isn't associated with a save it restarts
-            FileWriter fr = new FileWriter(temp);
-            fr.write(bitcoin.decryptingFile(fila));
-            fr.close();
+        try {//if the text in the file isn't associated with a save it restarts
+            raw = bitcoin.decryptingFile(fila);
 
-                clicks = Float.parseFloat(scanner.next());
-                clickPower = Float.parseFloat(scanner.next());
-                price = Integer.parseInt(scanner.next());
-                scanner.nextLine();
-                upgradeuri = scanner.nextLine();
-            } catch (Exception e) {
-                System.out.println("Saving file changed, reset progress");
-                Player player = new Player();
-                player.save();
-            }
-
-            temp.delete();
-
-            DecimalFormatSymbols symbols = new DecimalFormatSymbols();//reads doubles and approximates them
-            symbols.setDecimalSeparator('.');
-            DecimalFormat decimalFormat = new DecimalFormat("#0.0", symbols);
-
-            String roundedNumber = decimalFormat.format(clicks);
-            clicks = Double.parseDouble(roundedNumber);
-
-            scanner.close();
-
-            Sounds.initialize();//load sounds
-        } catch (IOException e) {
-            System.out.println("exception in Player");
+            clicks = Double.parseDouble(getFromSave());
+            clickPower = Float.parseFloat(getFromSave());
+            price = Integer.parseInt(getFromSave());
+            upgradeuri = getFromSave();
+        } catch (Exception e) {
+            System.out.println("Saving file changed, reset progress");
+            Player player = new Player();
+            player.save();
         }
+
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols();//reads doubles and approximates them
+        symbols.setDecimalSeparator('.');
+        DecimalFormat decimalFormat = new DecimalFormat("#0.0", symbols);
+
+        String roundedNumber = decimalFormat.format(clicks);
+        clicks = Double.parseDouble(roundedNumber);
+
+        Sounds.initialize();//load sounds
+    }
+
+    String raw;
+    private String getFromSave() {//gets the next variable in the String
+        for(int i = 0; i < raw.length(); i++) {
+            if(raw.charAt(i) == '\n') {
+                String temp = raw.substring(0, i);
+                raw = raw.substring(i + 1);
+                return temp;
+            }
+        }
+        return raw;
     }
 
     public void save () {
         HexEncoderDecoder bitcoin = new HexEncoderDecoder();
-        String salvare = clicks + "\n" + clickPower + "\n" + price + "\n." + upgradeuri;
+        String salvare = clicks + "\n" + clickPower + "\n" + price + "\n" + upgradeuri;
 
         try {
             FileWriter fr = new FileWriter(fila);

@@ -202,6 +202,7 @@ public class Progress extends gameVariablesAndMethods {
             cf.setResizable(true);
             pc.add(recovery);
         }
+
         if(buyOrDie.isBought)
             isSecondChapter = true;
 
@@ -230,7 +231,7 @@ public class Progress extends gameVariablesAndMethods {
         if(hack.isBought) {
             question.addText("?");
             hack.setVisible(true);
-            cf.cps();
+            ClickerFrame.cps();
             hack.setPrice(1000);
         }
         if(lessRights.isBought) {
