@@ -195,6 +195,7 @@ public class ClickerFrame extends gameVariablesAndMethods {
                 resizeTimer.start();
             }
         });
+        setVisible(true);
     }
 
     public static void main(String[] args) {
@@ -204,8 +205,7 @@ public class ClickerFrame extends gameVariablesAndMethods {
             System.err.println("Failed to initialize");
         }
 
-        ClickerFrame cf = new ClickerFrame();
-        cf.setVisible(true);
+        new ClickerFrame();
     }
 
     void updateComponents() {
