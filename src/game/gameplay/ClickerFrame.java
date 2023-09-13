@@ -92,7 +92,6 @@ public class ClickerFrame extends gameVariablesAndMethods {
         pc.add(border);
 
         ps = new Progress(this);
-        ps.loadProgress();
         add(pc);
 
         //ADMIN COMMANDS
@@ -112,8 +111,7 @@ public class ClickerFrame extends gameVariablesAndMethods {
                     player.save();
                     dispose();
 
-                    ClickerFrame cf = new ClickerFrame();
-                    cf.setVisible(true);
+                    new ClickerFrame();
                 }
                 updateProgress();
             }
@@ -232,7 +230,6 @@ public class ClickerFrame extends gameVariablesAndMethods {
 
                 clicks += cpsVal;
                 count.update(clicks);
-                ps.updateProgress();
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
@@ -285,7 +282,7 @@ public class ClickerFrame extends gameVariablesAndMethods {
                             upgradeuri.append(item.name);
 
                     Player player = new Player(clicks, clickPower, moreRights.price, upgradeuri.toString());
-                    if(ps.isMinigame)//resets everything if you try to save when you're in the minigame
+                    if(isMinigame)//resets everything if you try to save when you're in the minigame
                         player = new Player();
                     player.save();
                 }

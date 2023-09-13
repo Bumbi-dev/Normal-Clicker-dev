@@ -12,11 +12,11 @@ public class Progress extends gameVariablesAndMethods {
 
     ClickerFrame cf;
 
-    boolean isMinigame = false;
     int Timer;
 
     public Progress (ClickerFrame cf) {
         this.cf = cf;
+        loadProgress();
     }
 
     public void updateProgress() {
