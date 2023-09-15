@@ -4,11 +4,13 @@ import game.gameplay.ClickerFrame;
 import game.gameplay.Player;
 import game.usefullclases.Sounds;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.plaf.metal.MetalBorders;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 
 public class IntroFrame extends JFrame { //Intro scene, where you choose to continue, or start a new save
     // Interface
@@ -24,7 +26,13 @@ public class IntroFrame extends JFrame { //Intro scene, where you choose to cont
         setSize(600, 400);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        Image icon = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB_PRE);//removes the default icon
+
+        Image icon = null;//sets the Icon
+        try {
+            icon = ImageIO.read(new File("Assets\\Icon.png"));
+        } catch (IOException e) {
+            System.out.println("Icon exception in Clicker Frame");
+        }
         setIconImage(icon);
 
         intro = new JLabel();
@@ -42,9 +50,7 @@ public class IntroFrame extends JFrame { //Intro scene, where you choose to cont
         bp = new JPanel(); bp.setBounds(110, 200, 480, 270);
         bp.setLayout(null);
 
-
         // The Introduction
-
         add(mp);
         mp.add(intro);
 
@@ -79,9 +85,8 @@ public class IntroFrame extends JFrame { //Intro scene, where you choose to cont
                 String[] Options = {"Yes", "No"};
                 int PromptResult = JOptionPane.showOptionDialog(null, "Are you sure?", " Start a New Save",
                         JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, Options, Options[1]);
-                if (PromptResult != 0) {
+                if (PromptResult != 0)
                     return;
-                }
             }
 
             dispose();
@@ -93,7 +98,7 @@ public class IntroFrame extends JFrame { //Intro scene, where you choose to cont
     }
     
     private void script() {
-        Thread soundInitThread = new Thread(Sounds::initialize);
+        Thread soundInitThread = new Thread(Sounds::initialize);//intitializing sounds
         soundInitThread.start();
 
         try {

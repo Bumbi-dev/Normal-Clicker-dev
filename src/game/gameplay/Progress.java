@@ -29,25 +29,14 @@ public class Progress extends gameVariablesAndMethods {
         }
 
         //MINIGAME PHASE
-        if(!isSecondChapter) {
-            question.setVisible(false);
-            cf.setResizable(true);
+        question.setVisible(false);
+        cf.setResizable(true);
 
-            if(!recovery.isBought)
-                count.setVisible(false);
+        if(!recovery.isBought)
+            count.setVisible(false);
 
-            if(isMinigame && Timer > 10 && clicks + 9 >= buyOrDie.price)
-                buyOrDie.setPrice(++buyOrDie.price);
-            updateVisibility();
-            return;
-        }
-
-        /**_____SECOND CHAPTER_______**/
-
-        if(isSecondChapter)
-            secondChapter();
-        //Recovering Phase
-        //slow progress chapter
+        if(isMinigame && Timer > 10 && clicks + 9 >= buyOrDie.price)
+            buyOrDie.setPrice(++buyOrDie.price);
 
         cf.updateComponents();
         updateVisibility();
@@ -125,10 +114,6 @@ public class Progress extends gameVariablesAndMethods {
         pc.add(recovery);
     }
 
-    private void secondChapter() {
-
-    }
-
     void buyOrDieMinigame() {// "minigame" - if you don't buy the item before the timer runs out you "die" / get bad ending, the price increases as you approach it and when there are 10 seconds left the clicks are reset to 100, but the price stays the same
         buyOrDie.setVisible(true);
         buyOrDie.setPrice(100);
@@ -168,7 +153,7 @@ public class Progress extends gameVariablesAndMethods {
         cpsThread.start();
     }
 
-    void updateVisibility() {//If the button is affordable it makes them green, if not red
+    void updateVisibility() {//Make button green if affordable, red if not
         for(Item item: upgradeList) {
             if(item.equals(bonus) || item.equals(question) || item.equals(rights)) {
                 continue;
@@ -203,23 +188,6 @@ public class Progress extends gameVariablesAndMethods {
             pc.add(recovery);
         }
 
-        if(buyOrDie.isBought)
-            isSecondChapter = true;
-
-        if(isSecondChapter) {
-            moreRights.setVisible(true);
-            if (moreRights.isBought) {
-                scam.setVisible(true);
-            }
-            if (scam.isBought)
-                hack.setVisible(true);
-            if (hack.isBought)
-                lessRights.setVisible(true);
-
-            updateProgress();
-            return;
-        }
-
         if(rights.isBought)
             pc.add(count);
         if(scam.isBought) {
@@ -252,12 +220,6 @@ public class Progress extends gameVariablesAndMethods {
         if(recovery.isBought && !buyOrDie.isBought)
             buyOrDieMinigame();
 
-        if(recovery.isBought) {
-            firstChapterDone = true;
-            moreRights.setVisible(true);
-            hack.setVisible(true);
-            scam.setVisible(true);
-        }
         updateProgress();
     }
 }

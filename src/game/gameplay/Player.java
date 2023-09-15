@@ -55,8 +55,6 @@ public class Player {//Gets, sets the variables / progress of the player
 
         String roundedNumber = decimalFormat.format(clicks);
         clicks = Double.parseDouble(roundedNumber);
-
-        Sounds.initialize();//load sounds
     }
 
     String raw;

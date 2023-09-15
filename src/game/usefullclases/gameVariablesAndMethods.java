@@ -8,7 +8,7 @@ import javax.swing.*;
 
 public class gameVariablesAndMethods extends JFrame {//maybe remove JFrame and create object in ClickerFrame class
 
-    public static boolean tutorialDone = false, negativeUnlocked, firstChapterDone = false, isSecondChapter = false, isMinigame = false;
+    public static boolean negativeUnlocked, firstChapterDone = false, isMinigame = false;
     public static double clicks, clickPower;
 
     public static Item rights, moreRights, bonus, question, lessRights, hack, scam, recovery, buyOrDie;
