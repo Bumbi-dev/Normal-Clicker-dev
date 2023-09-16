@@ -14,6 +14,8 @@ public class ItemFunctionality extends gameVariablesAndMethods {
 
     public ItemFunctionality() {
         rights.button.addMouseListener(new MouseAdapter() {
+            boolean x;// for better looking code
+
             @Override
             public void mouseReleased(MouseEvent e) {
                 if (e.getButton() != MouseEvent.BUTTON1)//can only be clicked with left click
@@ -31,6 +33,8 @@ public class ItemFunctionality extends gameVariablesAndMethods {
             }
         });
         bonus.button.addMouseListener(new MouseAdapter() {//first time gives 20 clicks, then CP * 20 clicks
+            boolean x;
+
             @Override
             public void mouseReleased(MouseEvent e) {
                 if (e.getButton() != MouseEvent.BUTTON1)
@@ -51,11 +55,27 @@ public class ItemFunctionality extends gameVariablesAndMethods {
 
         });
         moreRights.button.addMouseListener(new MouseAdapter() {//after scam is bought give +2 CP
+            boolean x;
+
             @Override
             public void mouseReleased(MouseEvent e) {
                 if (e.getButton() != MouseEvent.BUTTON1 || clicks < moreRights.price)
                     return;
                 Sounds.playMoney();
+
+                if (isSecondChapter) {
+                    if (moreRights.price <= 101)
+                        scam.setVisible(true);
+
+                    clicks -= moreRights.price;
+                    clickPower += 0.2;
+
+                    moreRights.setPrice((int) (moreRights.price * 1.1));
+                    moreRights.isBought = true;
+
+                    updateProgress();
+                    return;
+                }
 
                 if (!moreRights.isBought) {
                     clicks = 0;
@@ -77,6 +97,8 @@ public class ItemFunctionality extends gameVariablesAndMethods {
         });
 
         lessRights.button.addMouseListener(new MouseAdapter() {
+            boolean x;
+
             @Override
             public void mouseReleased(MouseEvent e) {
                 if (clicks < lessRights.price || e.getButton() != MouseEvent.BUTTON1)
@@ -102,6 +124,8 @@ public class ItemFunctionality extends gameVariablesAndMethods {
 
         });
         hack.button.addMouseListener(new MouseAdapter() {
+            boolean x;
+
             @Override
             public void mouseReleased(MouseEvent e) {
                 if (clicks < hack.price || e.getButton() != MouseEvent.BUTTON1)
@@ -109,6 +133,11 @@ public class ItemFunctionality extends gameVariablesAndMethods {
                 Sounds.playMoney();
 
                 clicks -= hack.price;
+
+                if (isSecondChapter) {
+                    updateProgress();
+                    return;
+                }
 
                 hack.setPrice(1000);
 
@@ -125,6 +154,8 @@ public class ItemFunctionality extends gameVariablesAndMethods {
 
         });
         scam.button.addMouseListener(new MouseAdapter() {
+            byte x;
+
             @Override
             public void mouseReleased(MouseEvent e) {
                 if (clicks < scam.price || e.getButton() != MouseEvent.BUTTON1)
@@ -142,6 +173,11 @@ public class ItemFunctionality extends gameVariablesAndMethods {
                 if (hack.price > 1001)
                     hack.setPrice(hack.price * 10);
 
+                if (isSecondChapter) {
+                    hack.setVisible(true);
+                    return;
+                }
+
                 question.addText("?");
 
                 updateProgress();
@@ -150,6 +186,8 @@ public class ItemFunctionality extends gameVariablesAndMethods {
         });
 
         question.button.addMouseListener(new MouseAdapter() {//ending
+            boolean x;
+
             @Override
             public void mouseReleased(MouseEvent e) {
                 if (e.getButton() != MouseEvent.BUTTON1)
@@ -189,6 +227,8 @@ public class ItemFunctionality extends gameVariablesAndMethods {
         });
 
         recovery.button.addMouseListener(new MouseAdapter() {
+            boolean x;
+
             @Override
             public void mouseReleased(MouseEvent e) {
                 if (e.getButton() != MouseEvent.BUTTON1)
@@ -210,14 +250,33 @@ public class ItemFunctionality extends gameVariablesAndMethods {
             }
         });
         buyOrDie.button.addMouseListener(new MouseAdapter() {
+            boolean x;
+
             @Override
             public void mouseReleased(MouseEvent e) {
                 if (e.getButton() != MouseEvent.BUTTON1 || clicks < buyOrDie.price)
                     return;
+                Sounds.playMoney();
 
-                //THE GOOD ENDING
+                buyOrDie.isBought = true;
+                ps.isMinigame = false;
+                buyOrDie.setVisible(false);
+
+                moreRights.isBought = false;
+                scam.isBought = false;
+                hack.isBought = false;
+                lessRights.isBought = false;
+
+                moreRights.setPrice(100);
+                moreRights.setVisible(true);
+
+                clicks = 0;
+                clickPower = 0.2;
+
+                isSecondChapter = true;
+
                 Progress.cpsThread.interrupt();
-                new Credits(Credits.GOOD_ENDING);
+                updateProgress();
             }
         });
     }

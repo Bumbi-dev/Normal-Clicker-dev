@@ -7,7 +7,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 
 public class Credits extends JPanel implements ActionListener {
     JFrame window;
@@ -15,11 +14,10 @@ public class Credits extends JPanel implements ActionListener {
 
     public final static int NORMAL_ENDING = 1;
     public final static int DEATH = 2;
-    public final static int GOOD_ENDING = 3;
 
     public static ClickerFrame cf;
 
-    String text = "\n\n\n\n";
+    String text = "";
     String customLine = "";
     int textY = 400;
     int ending = -1;
@@ -47,9 +45,6 @@ public class Credits extends JPanel implements ActionListener {
     }
 
     private void rollingCredits() {//Displays the Credits scene
-        File fila = new File("Date Player.txt");//deletes the save
-        fila.delete();
-
         try {
             cf.dispose();//it closes the gameplay window if it wasn't already
         }catch (Exception ignored) {}
@@ -65,8 +60,6 @@ public class Credits extends JPanel implements ActionListener {
         switch (ending) {//unique message
             case 1 -> text = "You finished the Normal ENDING";//first ending
             case 2 -> text = "\"F\"" + customLine;//Any death ending
-            case 3 -> text = "\n\nFinally... \n\n Someone finished THE GOOD ENDING \n\n\n Congratulations man!" +
-                    "\n\n\nMore coming soon.";
             case -1 -> text += "";//blank message
 
             default -> text = "You finished ENDING: " + ending;
@@ -80,6 +73,9 @@ public class Credits extends JPanel implements ActionListener {
                 "Thank you for playing!";
 
         repaint();
+
+        Player player = new Player();
+        player.save();
     }
 
     public void paintComponent(Graphics g) {

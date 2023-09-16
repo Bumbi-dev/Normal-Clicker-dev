@@ -96,7 +96,28 @@ public class ClickerFrame extends gameVariablesAndMethods {
 
         //ADMIN COMMANDS
         pc.setFocusable(true);
+        KeyListener hecu = new KeyAdapter() {
+            int x;
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_K)
+                    clicks += clickPower;
+                if (e.getKeyCode() == KeyEvent.VK_L) {
+                    clicks += clickPower * 100;
+                }
+                if (e.getKeyCode() == KeyEvent.VK_R) {
+                    Player player = new Player();
+                    player.save();
+                    dispose();
+
+                    new ClickerFrame();
+                }
+                updateProgress();
+            }
+        };
         pc.requestFocusInWindow();
+        pc.addKeyListener(hecu);
 
         new ItemFunctionality();
 
@@ -182,7 +203,7 @@ public class ClickerFrame extends gameVariablesAndMethods {
             System.err.println("Failed to initialize");
         }
 
-        new IntroFrame();
+        new ClickerFrame();
     }
 
     void updateComponents() {

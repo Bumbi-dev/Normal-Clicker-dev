@@ -92,7 +92,7 @@ public class Sounds {
         catch (UnsupportedAudioFileException | IOException | LineUnavailableException ex) {
             System.out.println("Typing sound exception");
         }
-
+        System.out.println(prevType + " " + clips[2].toString());
         clips[2].setFramePosition(0);//start the clip from the beginning and plays it
         clips[2].start();
     }
