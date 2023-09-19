@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 public class Credits extends JPanel implements ActionListener {
     JFrame window;
@@ -17,7 +18,7 @@ public class Credits extends JPanel implements ActionListener {
 
     public static ClickerFrame cf;
 
-    String text = "";
+    String text = "\n\n\n\n";
     String customLine = "";
     int textY = 400;
     int ending = -1;
@@ -45,6 +46,9 @@ public class Credits extends JPanel implements ActionListener {
     }
 
     private void rollingCredits() {//Displays the Credits scene
+        File fila = new File("Date Player.txt");//deletes the save
+        fila.delete();
+
         try {
             cf.dispose();//it closes the gameplay window if it wasn't already
         }catch (Exception ignored) {}
@@ -73,9 +77,6 @@ public class Credits extends JPanel implements ActionListener {
                 "Thank you for playing!";
 
         repaint();
-
-        Player player = new Player();
-        player.save();
     }
 
     public void paintComponent(Graphics g) {
