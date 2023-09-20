@@ -8,8 +8,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
-import java.util.NoSuchElementException;
-import java.util.Scanner;
 
 public class Player {//Gets, sets the variables / progress of the player
 

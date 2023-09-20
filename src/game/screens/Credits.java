@@ -1,7 +1,6 @@
 package game.screens;
 
 import game.gameplay.ClickerFrame;
-import game.gameplay.Player;
 
 import javax.swing.*;
 import java.awt.*;
