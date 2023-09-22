@@ -32,7 +32,7 @@ public class ItemFunctionality extends gameVariablesAndMethods {
                 updateProgress();
             }
         });
-        bonus.button.addMouseListener(new MouseAdapter() {//first time gives 20 clicks, then CP * 20 clicks
+        bonus.button.addMouseListener(new MouseAdapter() {//first time gives 0-5 clicks, then CP * 20 clicks
             boolean x;
 
             @Override
@@ -42,8 +42,10 @@ public class ItemFunctionality extends gameVariablesAndMethods {
                 Sounds.playMoney();
 
                 if (!moreRights.isBought) {
-                    clicks += 20;
+                    clicks += Math.abs(new Random().nextInt() % 10 / 2.0 + 0.1);
                     bonus.setVisible(false);
+                    updateProgress();
+                    return;
                 } else {
                     clicks += clickPower * 20;
                 }

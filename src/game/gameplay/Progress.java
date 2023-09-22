@@ -5,6 +5,7 @@ import game.usefullclases.Culori;
 import game.usefullclases.gameVariablesAndMethods;
 
 import java.awt.*;
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Progress extends gameVariablesAndMethods {
@@ -80,9 +81,12 @@ public class Progress extends gameVariablesAndMethods {
                 moreRights.recolor(Culori.available);
             } else moreRights.recolor(Culori.notAvailable);
 
-            if ((int) clicks == 50) {
-                pc.add(bonus);
-            }
+            if (clicks >= 30)
+                if (Math.abs(new Random().nextInt() % 100) < 1) {
+                    pc.add(bonus);
+                    bonus.setVisible(true);
+                }
+
             pc.repaint();
             return;
         } else pc.add(moreRights);
