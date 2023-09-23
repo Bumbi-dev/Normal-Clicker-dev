@@ -42,7 +42,7 @@ public class ItemFunctionality extends gameVariablesAndMethods {
                 Sounds.playMoney();
 
                 if (!moreRights.isBought) {
-                    clicks += Math.abs(new Random().nextInt() % 10 / 2.0 + 0.1);
+                    clicks += Math.abs(new Random().nextInt() % 10 / 2.0 + 0.1);//random value 0-5
                     bonus.setVisible(false);
                     updateProgress();
                     return;
@@ -51,7 +51,7 @@ public class ItemFunctionality extends gameVariablesAndMethods {
                 }
 
                 Random rand = new Random();
-                bonus.setBounds(rand.nextInt(20, 530), 300, 50, 78);
+                bonus.setBounds(rand.nextInt(20, 530), 300, 50, 78);//moves the button from right to left at a random position
                 updateProgress();
             }
 
