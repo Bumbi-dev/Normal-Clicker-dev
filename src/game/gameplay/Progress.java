@@ -104,11 +104,14 @@ public class Progress extends gameVariablesAndMethods {
         pc.add(scam);
         pc.repaint();
 
-        if (clicks >= 25_000 && !lessRights.isBought)
-            bonus.setVisible(true);
-        if (clicks >= 50_000)
-            bonus.setVisible(false);
 
+        int y = Math.abs(new Random().nextInt()) % 1000;
+
+        if(y <= 3 && scam.isBought) {
+            pc.add(bonus);
+            bonus.setVisible(true);
+            System.out.println("zai");
+        }
         if (!lessRights.isBought)
             return;
 
@@ -226,6 +229,8 @@ public class Progress extends gameVariablesAndMethods {
 
         if(rights.isBought)
             pc.add(count);
+        if(moreRights.isBought)
+            bonus.setBounds(new Random().nextInt(20, 530), 300, 50, 78);
         if(scam.isBought) {
             lessRights.setPrice(lessRights.price * 10);
             hack.setPrice(hack.price * 10);

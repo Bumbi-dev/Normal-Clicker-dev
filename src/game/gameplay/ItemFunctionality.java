@@ -47,14 +47,13 @@ public class ItemFunctionality extends gameVariablesAndMethods {
                     updateProgress();
                     return;
                 } else {
-                    clicks += clickPower * 20;
+                    clicks += clickPower * 75;
                 }
 
-                Random rand = new Random();
-                bonus.setBounds(rand.nextInt(20, 530), 300, 50, 78);//moves the button from right to left at a random position
+                bonus.setVisible(false);
+                bonus.setBounds(new Random().nextInt(20, 530), 300, 50, 78);//moves the button from right to left at a random position
                 updateProgress();
             }
-
         });
         moreRights.button.addMouseListener(new MouseAdapter() {//after scam is bought give +2 CP
             boolean x;
@@ -83,6 +82,7 @@ public class ItemFunctionality extends gameVariablesAndMethods {
                     clicks = 0;
                     clickPower += 0.9;
 
+                    bonus.setBounds(new Random().nextInt(20, 530), 300, 50, 78);
                     moreRights.isBought = true;
                 } else {
                     clicks -= moreRights.price;

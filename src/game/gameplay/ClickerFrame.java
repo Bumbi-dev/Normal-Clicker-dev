@@ -203,7 +203,7 @@ public class ClickerFrame extends gameVariablesAndMethods {
             System.err.println("Failed to initialize");
         }
 
-        new IntroFrame();
+        new ClickerFrame();
     }
 
     void updateComponents() {
