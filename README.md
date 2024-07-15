@@ -1,1 +1,1 @@
-Changed the "game enginge" to Godot some time ago however maybe someone finds this and does it better than me.
+Changed the "game enginge" to Godot some time ago. I hope you use this as inspiration and do something great.
